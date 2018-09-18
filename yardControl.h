@@ -16,11 +16,11 @@
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.              */
 /* *********************************************************************************** */
 
-#ifndef yardContol_h
-#define yardContol_h
+#ifndef yardControl_h
+#define yardControl_h
 
 #include <stdio.h>
 #include <wiringPi.h>
 #include <pcf8574.h>
 
-#endif /* yardContol_h */
+#endif /* yardControl_h */

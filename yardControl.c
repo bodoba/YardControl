@@ -16,8 +16,7 @@
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.              */
 /* *********************************************************************************** */
 
-#include "yardContol.h"
-// gcc -o i2ctest i2ctest.c  -lwiringPi
+#include "yardControl.h"
 
 #define PINBASE 64
 

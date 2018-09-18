@@ -18,36 +18,37 @@
 
 #include "yardControl.h"
 
-#define PINBASE 64
+#define ADDR_IOEXT_0   0x38
+#define PINBASE_0        64
 
-#define LED_A PINBASE+0
-#define LED_B PINBASE+1
-#define LED_C PINBASE+2
-#define LED_D PINBASE+3
+#define VALVE_A  PINBASE_0+0
+#define VALVE_B  PINBASE_0+1
+#define VALVE_C  PINBASE_0+2
+#define VALVE_D  PINBASE_0+3
 
-#define BTN_A PINBASE+4
-#define BTN_B PINBASE+5
-#define BTN_C PINBASE+6
-#define BTN_D PINBASE+7
+#define BUTTON_A PINBASE_0+4
+#define BUTTON_B PINBASE_0+5
+#define BUTTON_C PINBASE_0+6
+#define BUTTON_D PINBASE_0+7
 
 int main( int rgc, char *argv ) {
     wiringPiSetup () ;
-    pcf8574Setup (PINBASE, 0x38);
+    pcf8574Setup (PINBASE_0, ADDR_IOEXT_0);
     
-    pinMode (LED_A, OUTPUT);
-    pinMode (LED_B, OUTPUT);
-    pinMode (LED_C, OUTPUT);
-    pinMode (LED_D, OUTPUT);
+    pinMode (VALVE_A, OUTPUT);
+    pinMode (VALVE_B, OUTPUT);
+    pinMode (VALVE_C, OUTPUT);
+    pinMode (VALVE_D, OUTPUT);
     
-    pinMode (BTN_A, INPUT);
-    pinMode (BTN_B, INPUT);
-    pinMode (BTN_C, INPUT);
-    pinMode (BTN_D, INPUT);
+    pinMode (BUTTON_A, INPUT);
+    pinMode (BUTTON_B, INPUT);
+    pinMode (BUTTON_C, INPUT);
+    pinMode (BUTTON_D, INPUT);
     
-    digitalWrite (LED_A,  LOW) ;
-    digitalWrite (LED_B,  LOW) ;
-    digitalWrite (LED_C,  LOW) ;
-    digitalWrite (LED_D,  LOW) ;
+    digitalWrite (VALVE_A,  LOW) ;
+    digitalWrite (VALVE_B,  LOW) ;
+    digitalWrite (VALVE_C,  LOW) ;
+    digitalWrite (VALVE_D,  LOW) ;
     
     int stateA=0;
     int stateB=0;
@@ -55,18 +56,17 @@ int main( int rgc, char *argv ) {
     int stateD=0;
     
     for ( ;; ) {
-        if ( digitalRead(BTN_A) == 0 ) { stateA = stateA ? 0 : 1; }
-        if ( digitalRead(BTN_B) == 0 ) { stateB = stateB ? 0 : 1; }
-        if ( digitalRead(BTN_C) == 0 ) { stateC = stateC ? 0 : 1; }
-        if ( digitalRead(BTN_D) == 0 ) { stateD = stateD ? 0 : 1; }
+        if ( digitalRead(BUTTON_A) == 0 ) { stateA = stateA ? 0 : 1; }
+        if ( digitalRead(BUTTON_B) == 0 ) { stateB = stateB ? 0 : 1; }
+        if ( digitalRead(BUTTON_C) == 0 ) { stateC = stateC ? 0 : 1; }
+        if ( digitalRead(BUTTON_D) == 0 ) { stateD = stateD ? 0 : 1; }
         
-        digitalWrite ( LED_A, stateA );
-        digitalWrite ( LED_B, stateB );
-        digitalWrite ( LED_C, stateC );
-        digitalWrite ( LED_D, stateD );
+        digitalWrite ( VALVE_A, stateA );
+        digitalWrite ( VALVE_B, stateB );
+        digitalWrite ( VALVE_C, stateC );
+        digitalWrite ( VALVE_D, stateD );
         
         delay(50);
-        
     }
     return 0;
 }

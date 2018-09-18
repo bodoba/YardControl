@@ -23,4 +23,18 @@
 #include <wiringPi.h>
 #include <pcf8574.h>
 
+
+#define ADDR_IOEXT_0   0x38
+#define PINBASE_0        64
+
+#define VALVE_A  PINBASE_0+0
+#define VALVE_B  PINBASE_0+1
+#define VALVE_C  PINBASE_0+2
+#define VALVE_D  PINBASE_0+3
+
+#define BUTTON_A PINBASE_0+4
+#define BUTTON_B PINBASE_0+5
+#define BUTTON_C PINBASE_0+6
+#define BUTTON_D PINBASE_0+7
+
 #endif /* yardControl_h */

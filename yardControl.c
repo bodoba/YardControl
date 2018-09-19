@@ -55,7 +55,7 @@ bool readButton( pushbutton_t *button ) {
         }
 
         // if a radio group has been defined clear state of all other buttons in this group
-        if ( button->state && button->RadioGroup > 0 ) {
+        if ( button->state && button->radioGroup > 0 ) {
             int btnIndex = 0;
             while ( pushButtons[btnIndex].btnPin >= 0 ) {
                 pushButtons[btnIndex].state = false;

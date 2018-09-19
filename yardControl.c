@@ -31,11 +31,17 @@ pushbutton_t pushButtons[] = {
     // Button Pin, Led Pin, state, last reading, locked, radio group
     
     // Manual valves control, only one shall be active
-    {BUTTON_A, VALVE_A, false, -1, false, 1},
-    {BUTTON_B, VALVE_B, false, -1, false, 1},
-    {BUTTON_C, VALVE_C, false, -1, false, 1},
-    {BUTTON_D, VALVE_D, true, -1, true,  1},
+    {BUTTON_A,    VALVE_A,  false, -1, false, 1},
+    {BUTTON_B,    VALVE_B,  false, -1, false, 1},
+    {BUTTON_C,    VALVE_C,  false, -1, false, 1},
+    {BUTTON_D,    VALVE_D,  false, -1, false, 1},
 
+    /*
+    {BUTTON_P1,   LED_P1,   false, -1, false, 2},
+    {BUTTON_P2,   LED_P2,   false, -1, false, 2},
+    {BUTTON_AUTO, LED_AUTO, false, -1, false, 0},
+    */
+    
     // end marker
     {-1, -1, false, -1, false, -1},
 };

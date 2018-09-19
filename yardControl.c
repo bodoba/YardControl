@@ -64,7 +64,7 @@ void setup ( void ) {
     while ( pushButtons[btnIndex].btnPin >= 0 ) {
         pinMode(pushButtons[btnIndex].btnPin, INPUT);
         pinMode(pushButtons[btnIndex].ledPin, OUTPUT);
-        digitWrite(pushButtons[btnIndex].ledPin, LOW);
+        digitalWrite(pushButtons[btnIndex].ledPin, LOW);
         btnIndex++;
     }
 }

@@ -30,10 +30,10 @@ pushbutton_t pushButtons[] = {
     // Button Pin, Led Pin, state, last reading, locked
     
     // Manual valves control
-    {BUTTON_A, VALVE_A, false, -1, false},
-    {BUTTON_B, VALVE_B, false, -1, false},
-    {BUTTON_C, VALVE_C, false, -1, false},
-    {BUTTON_D, VALVE_D, false, -1, false},
+    {BUTTON_A, VALVE_A, false, -1, false, 1},
+    {BUTTON_B, VALVE_B, false, -1, false, 1},
+    {BUTTON_C, VALVE_C, false, -1, false, 1},
+    {BUTTON_D, VALVE_D, false, -1, false, 0},
 
     // end marker
     {-1, -1, false, false, (time_t)0},
@@ -43,13 +43,29 @@ pushbutton_t pushButtons[] = {
  * Read push button
  * ----------------------------------------------------------------------------------- */
 bool readButton( pushbutton_t *button ) {
+    // read the button pin
     int newReading = digitalRead(button->btnPin);
     
+    // if there has been a change
     if ( newReading != button->lastReading ) {
         button->lastReading = newReading;
+        // button pressed toggles state
         if ( newReading == 0 ) {
             button->state = button->state ? false : true;
         }
+
+        // if a radio group has been defined clear state of all other buttons in this group
+        if ( button->state && button->RadioGroup > 0 ) {
+            int btnIndex = 0;
+            while ( pushButtons[btnIndex].btnPin >= 0 ) {
+                pushButtons[btnIndex].state = false;
+                digitalWrite( pushButtons[btnIndex].ledPin, HIGH);
+            }
+            // set myself to true again
+            button->state=true;
+        }
+        
+        // set indicator led
         digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
     }
     return button->state;

@@ -56,6 +56,7 @@ typedef struct {
     bool    state;        // button state
     int     lastReading;  // last button reading
     bool    locked;       // when locked, button value can't be changed manually
+    int     radioGroup;   // >  0 defines radio button group
 } pushbutton_t;
 
 #endif /* yardControl_h */

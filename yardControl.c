@@ -18,12 +18,12 @@
 
 #include "yardControl.h"
 
-/* -----------------------------------------------------------------------------------
+/* ----------------------------------------------------------------------------------- *
  * Prototypes
  * ----------------------------------------------------------------------------------- */
 bool readButton( pushbutton_t *button );
 
-/* -----------------------------------------------------------------------------------
+/* ----------------------------------------------------------------------------------- *
  * Definition of the pushbuttons
  * ----------------------------------------------------------------------------------- */
 pushbutton_t pushButtons[] = {
@@ -35,51 +35,57 @@ pushbutton_t pushButtons[] = {
     {BUTTON_D, VALVE_D, false, false, (time_t)0},
 
     // end marker
-    {0, 0, false, false, (time_t)0},
+    {-1, -1, false, false, (time_t)0},
 };
 
-/* -----------------------------------------------------------------------------------
+/* ----------------------------------------------------------------------------------- *
  * Read push button
  * ----------------------------------------------------------------------------------- */
 bool readButton( pushbutton_t *button ) {
-
+    
+    if ( digitalRead(button->btnPin) == 0 ) {
+        button->state = button->state ? 0 : 1;
+    }
+    digitalWrite ( button->ledPin, button->state );
+    
     return button->state;
 }
 
-int main( int rgc, char *argv[] ) {
+/* ----------------------------------------------------------------------------------- *
+ * Initial setup
+ * ----------------------------------------------------------------------------------- */
+void setup ( void ) {
+    // initialize wiring PI and attached IO extender
     wiringPiSetup () ;
     pcf8574Setup (PINBASE_0, ADDR_IOEXT_0);
+
+    // setup pin modes for buttons
+    int btnIndex = 0;    
+    while ( pushButtons[btnIndex].btnPin >= 0 ) {
+        pinMode(pushButtons[btnIndex].btnPin, INPUT);
+        pinMode(pushButtons[btnIndex].ledPin, OUTPUT);
+        digitWrite(pushButtons[btnIndex].ledPin, LOW);
+        btnIndex++;
+    }
+}
+
+/* ----------------------------------------------------------------------------------- *
+ * Initial setup
+ * ----------------------------------------------------------------------------------- */
+int main( int rgc, char *argv[] ) {
+
+    // initialize system
+    setup();
     
-    pinMode (VALVE_A, OUTPUT);
-    pinMode (VALVE_B, OUTPUT);
-    pinMode (VALVE_C, OUTPUT);
-    pinMode (VALVE_D, OUTPUT);
-    
-    pinMode (BUTTON_A, INPUT);
-    pinMode (BUTTON_B, INPUT);
-    pinMode (BUTTON_C, INPUT);
-    pinMode (BUTTON_D, INPUT);
-    
-    digitalWrite (VALVE_A,  LOW) ;
-    digitalWrite (VALVE_B,  LOW) ;
-    digitalWrite (VALVE_C,  LOW) ;
-    digitalWrite (VALVE_D,  LOW) ;
-    
-    int stateA=0;
-    int stateB=0;
-    int stateC=0;
-    int stateD=0;
-    
+    // main loop
     for ( ;; ) {
-        if ( digitalRead(BUTTON_A) == 0 ) { stateA = stateA ? 0 : 1; }
-        if ( digitalRead(BUTTON_B) == 0 ) { stateB = stateB ? 0 : 1; }
-        if ( digitalRead(BUTTON_C) == 0 ) { stateC = stateC ? 0 : 1; }
-        if ( digitalRead(BUTTON_D) == 0 ) { stateD = stateD ? 0 : 1; }
-        
-        digitalWrite ( VALVE_A, stateA );
-        digitalWrite ( VALVE_B, stateB );
-        digitalWrite ( VALVE_C, stateC );
-        digitalWrite ( VALVE_D, stateD );
+
+        // update button values
+        int btnIndex = 0;
+        while ( pushButtons[btnIndex].btnPin >= 0 ) {
+            readButton(&pushButtons[btnIndex]);
+        }
+
         
         delay(50);
     }

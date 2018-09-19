@@ -50,7 +50,7 @@ bool readButton( pushbutton_t *button ) {
         if ( newReading == 0 ) {
             button->state = button->state ? false : true;
         }
-        digitalWrite ( button->ledPin, button->state ? HIGH:LOW);
+        digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
     }
     return button->state;
 }
@@ -68,7 +68,7 @@ void setup ( void ) {
     while ( pushButtons[btnIndex].btnPin >= 0 ) {
         pinMode(pushButtons[btnIndex].btnPin, INPUT);
         pinMode(pushButtons[btnIndex].ledPin, OUTPUT);
-        digitalWrite(pushButtons[btnIndex].ledPin, pushButtons[btnIndex].state ? HIGH:LOW);
+        digitalWrite(pushButtons[btnIndex].ledPin, pushButtons[btnIndex].state ? LOW : HIGH);
         btnIndex++;
     }
 }

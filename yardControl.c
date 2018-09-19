@@ -44,33 +44,36 @@ pushbutton_t pushButtons[] = {
  * Read push button
  * ----------------------------------------------------------------------------------- */
 bool readButton( pushbutton_t *button ) {
-    // read the button pin
-    int newReading = digitalRead(button->btnPin);
-    
-    // if there has been a change
-    if ( newReading != button->lastReading ) {
-        button->lastReading = newReading;
-        // button pressed toggles state
-        if ( newReading == 0 ) {
-            button->state = button->state ? false : true;
-        }
+    // respect lock state
+    if ( !button->locked ) {
+        // read the button pin
+        int newReading = digitalRead(button->btnPin);
         
-        // if a radio group has been defined clear state of all other buttons in this group
-        if ( button->state && button->radioGroup > 0 ) {
-            int btnIndex = 0;
-            while ( pushButtons[btnIndex].btnPin >= 0 ) {
-                if ( pushButtons[btnIndex].radioGroup == button->radioGroup ) {
-                    pushButtons[btnIndex].state = false;
-                    digitalWrite( pushButtons[btnIndex].ledPin, HIGH);
-                }
-                btnIndex++;
+        // if there has been a change
+        if ( newReading != button->lastReading ) {
+            button->lastReading = newReading;
+            // button pressed toggles state
+            if ( newReading == 0 ) {
+                button->state = button->state ? false : true;
             }
-            // set myself to true again
-            button->state=true;
+            
+            // if a radio group has been defined clear state of all other buttons in this group
+            if ( button->state && button->radioGroup > 0 ) {
+                int btnIndex = 0;
+                while ( pushButtons[btnIndex].btnPin >= 0 ) {
+                    if ( pushButtons[btnIndex].radioGroup == button->radioGroup ) {
+                        pushButtons[btnIndex].state = false;
+                        digitalWrite( pushButtons[btnIndex].ledPin, HIGH);
+                    }
+                    btnIndex++;
+                }
+                // set myself to true again
+                button->state=true;
+            }
+            
+            // set indicator led
+            digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
         }
-        
-        // set indicator led
-        digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
     }
     return button->state;
 }

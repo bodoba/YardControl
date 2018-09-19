@@ -21,7 +21,7 @@
 /* -----------------------------------------------------------------------------------
  * Prototypes
  * ----------------------------------------------------------------------------------- */
-bool readButton( bushbutton_t *button );
+bool readButton( pushbutton_t *button );
 
 /* -----------------------------------------------------------------------------------
  * Definition of the pushbuttons
@@ -41,7 +41,7 @@ pushbutton_t pushButtons[] = {
 /* -----------------------------------------------------------------------------------
  * Read push button
  * ----------------------------------------------------------------------------------- */
-bool readButton( bushbutton_t *button ) {
+bool readButton( pushbutton_t *button ) {
 
     return button->state;
 }

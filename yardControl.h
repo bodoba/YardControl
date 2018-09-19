@@ -40,9 +40,9 @@
 typedef struct {
     int     btnPin;
     int     ledPin;
-    bool    status;
-    bool    last_status;
-    bool    locked;
+    boolean    status;
+    boolean    last_status;
+    boolean    locked;
     time_t  lastChange;
 } pushbutton_t;
 

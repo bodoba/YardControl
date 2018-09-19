@@ -84,9 +84,9 @@ int main( int rgc, char *argv[] ) {
         int btnIndex = 0;
         while ( pushButtons[btnIndex].btnPin >= 0 ) {
             readButton(&pushButtons[btnIndex]);
+            btnIndex++;
         }
 
-        
         delay(50);
     }
     return 0;

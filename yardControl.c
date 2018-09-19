@@ -15,28 +15,29 @@
 /*  You should have received a copy of the GNU General Public License                  */
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.              */
 /* *********************************************************************************** */
-
 #include "yardControl.h"
 
 /* ----------------------------------------------------------------------------------- *
  * Prototypes
  * ----------------------------------------------------------------------------------- */
-bool readButton( pushbutton_t *button );
+bool readButton(pushbutton_t *button);
+void setup(void);
+int  main( int rgc, char *argv[] );
 
 /* ----------------------------------------------------------------------------------- *
  * Definition of the pushbuttons
  * ----------------------------------------------------------------------------------- */
 pushbutton_t pushButtons[] = {
-    // Button Pin, Led Pin, state, last reading, locked
+    // Button Pin, Led Pin, state, last reading, locked, radio group
     
-    // Manual valves control
+    // Manual valves control, only one shall be active
     {BUTTON_A, VALVE_A, false, -1, false, 1},
     {BUTTON_B, VALVE_B, false, -1, false, 1},
-    {BUTTON_C, VALVE_C, false, -1, false, 2},
-    {BUTTON_D, VALVE_D, false, -1, false, 2},
+    {BUTTON_C, VALVE_C, false, -1, false, 1},
+    {BUTTON_D, VALVE_D, false, -1, false, 1},
 
     // end marker
-    {-1, -1, false, false, (time_t)0},
+    {-1, -1, false, -1, false, -1},
 };
 
 /* ----------------------------------------------------------------------------------- *
@@ -53,7 +54,7 @@ bool readButton( pushbutton_t *button ) {
         if ( newReading == 0 ) {
             button->state = button->state ? false : true;
         }
-
+        
         // if a radio group has been defined clear state of all other buttons in this group
         if ( button->state && button->radioGroup > 0 ) {
             int btnIndex = 0;

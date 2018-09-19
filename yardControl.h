@@ -20,6 +20,7 @@
 #define yardControl_h
 
 #include <stdio.h>
+#include <stdtypes.h>
 #include <wiringPi.h>
 #include <pcf8574.h>
 #include <time.h>

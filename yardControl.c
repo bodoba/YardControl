@@ -42,14 +42,15 @@ pushbutton_t pushButtons[] = {
  * Read push button
  * ----------------------------------------------------------------------------------- */
 bool readButton( pushbutton_t *button ) {
-    bool newState = digitalRead(button->btnPin);
-    bool oldState = button->lastState ? 1 : 0;
+    int newReading = digitalRead(button->btnPin);
     
-    if ( digitalRead(button->btnPin) == 0 ) {
-        button->state = button->state ? false : true;
+    if ( newReading != button->lastReading ) {
+        button->lastReading = newReading;
+        if ( newReading == 0 ) {
+            button->state = button->state ? false : true;
+        }
+        digitalWrite ( button->ledPin, button->state );
     }
-    digitalWrite ( button->ledPin, button->state );
-    
     return button->state;
 }
 

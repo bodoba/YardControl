@@ -54,7 +54,7 @@ typedef struct {
     int     btnPin;       // Input pin
     int     ledPin;       // LED indicating button state
     bool    state;        // button state
-    bool    lastState;    // last button state
+    int     lastReading;  // last button reading
     bool    locked;       // when locked, button value can't be changed manually
     time_t  lastChange;   // time stamp of last change
 } pushbutton_t;

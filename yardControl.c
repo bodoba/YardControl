@@ -32,8 +32,8 @@ pushbutton_t pushButtons[] = {
     // Manual valves control
     {BUTTON_A, VALVE_A, false, -1, false, 1},
     {BUTTON_B, VALVE_B, false, -1, false, 1},
-    {BUTTON_C, VALVE_C, false, -1, false, 1},
-    {BUTTON_D, VALVE_D, false, -1, false, 0},
+    {BUTTON_C, VALVE_C, false, -1, false, 2},
+    {BUTTON_D, VALVE_D, false, -1, false, 2},
 
     // end marker
     {-1, -1, false, false, (time_t)0},

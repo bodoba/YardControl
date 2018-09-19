@@ -27,12 +27,13 @@ bool readButton( pushbutton_t *button );
  * Definition of the pushbuttons
  * ----------------------------------------------------------------------------------- */
 pushbutton_t pushButtons[] = {
-
+    // Button Pin, Led Pin, state, last reading, locked
+    
     // Manual valves control
-    {BUTTON_A, VALVE_A, false, false, (time_t)0},
-    {BUTTON_B, VALVE_B, false, false, (time_t)0},
-    {BUTTON_C, VALVE_C, false, false, (time_t)0},
-    {BUTTON_D, VALVE_D, false, false, (time_t)0},
+    {BUTTON_A, VALVE_A, false, -1, false},
+    {BUTTON_B, VALVE_B, false, -1, false},
+    {BUTTON_C, VALVE_C, false, -1, false},
+    {BUTTON_D, VALVE_D, false, -1, false},
 
     // end marker
     {-1, -1, false, false, (time_t)0},

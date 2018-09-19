@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <wiringPi.h>
 #include <pcf8574.h>
-
+#include <time.h>
 
 #define ADDR_IOEXT_0   0x38
 #define PINBASE_0        64
@@ -36,5 +36,15 @@
 #define BUTTON_B PINBASE_0+5
 #define BUTTON_C PINBASE_0+6
 #define BUTTON_D PINBASE_0+7
+
+typedef struct {
+    int     btnPin;
+    int     ledPin;
+    bool    status;
+    bool    last_status;
+    bool    locked;
+    time_t  lastChange;
+} pushbutton_t;
+
 
 #endif /* yardControl_h */

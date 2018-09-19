@@ -18,14 +18,33 @@
 
 #include "yardControl.h"
 
+/* -----------------------------------------------------------------------------------
+ * Prototypes
+ * ----------------------------------------------------------------------------------- */
+bool readButton( bushbutton_t *button );
+
+/* -----------------------------------------------------------------------------------
+ * Definition of the pushbuttons
+ * ----------------------------------------------------------------------------------- */
 pushbutton_t pushButtons[] = {
+
+    // Manual valves control
     {BUTTON_A, VALVE_A, false, false, (time_t)0},
     {BUTTON_B, VALVE_B, false, false, (time_t)0},
     {BUTTON_C, VALVE_C, false, false, (time_t)0},
     {BUTTON_D, VALVE_D, false, false, (time_t)0},
+
     // end marker
     {0, 0, false, false, (time_t)0},
 };
+
+/* -----------------------------------------------------------------------------------
+ * Read push button
+ * ----------------------------------------------------------------------------------- */
+bool readButton( bushbutton_t *button ) {
+
+    return button->state;
+}
 
 int main( int rgc, char *argv[] ) {
     wiringPiSetup () ;

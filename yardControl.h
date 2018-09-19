@@ -25,26 +25,38 @@
 #include <pcf8574.h>
 #include <time.h>
 
+/* ----------------------------------------------------------------------------------- *
+ * PCF8574 io extender
+ * ----------------------------------------------------------------------------------- */
 #define ADDR_IOEXT_0   0x38
 #define PINBASE_0        64
 
+/* ----------------------------------------------------------------------------------- *
+ * output pins for valve control
+ * ----------------------------------------------------------------------------------- */
 #define VALVE_A  PINBASE_0+0
 #define VALVE_B  PINBASE_0+1
 #define VALVE_C  PINBASE_0+2
 #define VALVE_D  PINBASE_0+3
 
+/* ----------------------------------------------------------------------------------- *
+ * input pins for push buttons
+ * ----------------------------------------------------------------------------------- */
 #define BUTTON_A PINBASE_0+4
 #define BUTTON_B PINBASE_0+5
 #define BUTTON_C PINBASE_0+6
 #define BUTTON_D PINBASE_0+7
 
+/* ----------------------------------------------------------------------------------- *
+ * Definition of a push button
+ * ----------------------------------------------------------------------------------- */
 typedef struct {
-    int     btnPin;
-    int     ledPin;
-    bool    status;
-    bool    last_status;
-    bool    locked;
-    time_t  lastChange;
+    int     btnPin;       // Input pin
+    int     ledPin;       // LED indicating button state
+    bool    state;        // button state
+    bool    last_status;  // last button state
+    bool    locked;       // when locked, button value can't be changed manually
+    time_t  lastChange;   // time stamp of last change
 } pushbutton_t;
 
 #endif /* yardControl_h */

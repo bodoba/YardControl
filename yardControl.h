@@ -47,5 +47,4 @@ typedef struct {
     time_t  lastChange;
 } pushbutton_t;
 
-
 #endif /* yardControl_h */

@@ -18,6 +18,13 @@
 
 #include "yardControl.h"
 
+bushbutton_t pushButtons[] = {
+    {BUTTON_A, VALVE_A, false, false, (time_t)0},
+    {BUTTON_B, VALVE_B, false, false, (time_t)0},
+    {BUTTON_C, VALVE_C, false, false, (time_t)0},
+    {BUTTON_D, VALVE_D, false, false, (time_t)0},
+    {0, 0, false, false, (time_t)0},
+};
 
 int main( int rgc, char *argv[] ) {
     wiringPiSetup () ;

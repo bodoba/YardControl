@@ -34,7 +34,7 @@ pushbutton_t pushButtons[] = {
     {BUTTON_A, VALVE_A, false, -1, false, 1},
     {BUTTON_B, VALVE_B, false, -1, false, 1},
     {BUTTON_C, VALVE_C, false, -1, false, 1},
-    {BUTTON_D, VALVE_D, false, -1, false, 1},
+    {BUTTON_D, VALVE_D, false, -1, true,  1},
 
     // end marker
     {-1, -1, false, -1, false, -1},

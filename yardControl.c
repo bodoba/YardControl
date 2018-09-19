@@ -62,6 +62,7 @@ bool readButton( pushbutton_t *button ) {
                     pushButtons[btnIndex].state = false;
                     digitalWrite( pushButtons[btnIndex].ledPin, HIGH);
                 }
+                btnIndex++;
             }
             // set myself to true again
             button->state=true;

@@ -36,18 +36,18 @@
 /* ----------------------------------------------------------------------------------- *
  * output pins for valve control
  * ----------------------------------------------------------------------------------- */
-#define VALVE_A  PINBASE_0+0
-#define VALVE_B  PINBASE_0+1
-#define VALVE_C  PINBASE_0+2
-#define VALVE_D  PINBASE_0+3
+#define VALVE_A     PINBASE_0+0
+#define VALVE_B     PINBASE_0+1
+#define VALVE_C     PINBASE_0+2
+#define VALVE_D     PINBASE_0+3
 
 /* ----------------------------------------------------------------------------------- *
  * Output pins for control LEDs
  * ----------------------------------------------------------------------------------- */
-#define NC_1_0   PINBASE_1+0
-#define LED_AUTO PINBASE_1+1
-#define LED_P1   PINBASE_1+2
-#define LED_P2   PINBASE_1+3
+#define NC_1_0      PINBASE_1+0
+#define LED_AUTO    PINBASE_1+1
+#define LED_P1      PINBASE_1+2
+#define LED_P2      PINBASE_1+3
 
 /* ----------------------------------------------------------------------------------- *
  * input pins for push buttons
@@ -79,7 +79,7 @@ typedef struct {
     int     lastReading;           // last button reading
     bool    locked;                // when locked, button value can't be changed manually
     int     radioGroup;            // >  0 defines radio button group
-    void    (*cb) (struct pushbutton_t *button); // callback for button state change
+    void    (*callback) (struct pushbutton_t *button); // callback for button state change
 } pushbutton_t;
 
 #endif /* yardControl_h */

@@ -50,7 +50,7 @@ pushbutton_t pushButtons[] = {
  * Set LED of push button
  * ----------------------------------------------------------------------------------- */
 void setLed( pushbutton_t *button ) {
-    digitalWrite ( button->ledPin, button->state ? LOW : HIGH)
+    digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
 }
 
 /* ----------------------------------------------------------------------------------- *

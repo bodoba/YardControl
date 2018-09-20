@@ -72,14 +72,14 @@
 /* ----------------------------------------------------------------------------------- *
  * Definition of a push button
  * ----------------------------------------------------------------------------------- */
-typedef struct pushbutton {
+typedef struct {
     int     btnPin;                // Input pin
     int     ledPin;                // LED indicating button state
     bool    state;                 // button state
     int     lastReading;           // last button reading
     bool    locked;                // when locked, button value can't be changed manually
     int     radioGroup;            // >  0 defines radio button group
-    void    (*cb) (pushbutton*); // callback for button state change
+    void    (*cb) (struct pushbutton_t *button); // callback for button state change
 } pushbutton_t;
 
 #endif /* yardControl_h */

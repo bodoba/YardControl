@@ -32,7 +32,7 @@
 #define PINBASE_0        64
 
 #define ADDR_IOEXT_1   0x39
-#define PINBASE_1        64
+#define PINBASE_1        72
 
 /* ----------------------------------------------------------------------------------- *
  * output pins for valve control

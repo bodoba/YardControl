@@ -60,24 +60,23 @@ bool readButton( pushbutton_t *button ) {
             // button pressed toggles state
             if ( newReading == 0 ) {
                 button->state = button->state ? false : true;
-            }
-            
-            // if a radio group has been defined clear state of all buttons in this group
-            if ( button->state && button->radioGroup > 0 ) {
-                int btnIndex = 0;
-                while ( pushButtons[btnIndex].btnPin >= 0 ) {
-                    if ( pushButtons[btnIndex].radioGroup == button->radioGroup ) {
-                        pushButtons[btnIndex].state = false;
-                        digitalWrite( pushButtons[btnIndex].ledPin, HIGH);
+                
+                // if a radio group has been defined clear state of all buttons in this group
+                if ( button->state && button->radioGroup > 0 ) {
+                    int btnIndex = 0;
+                    while ( pushButtons[btnIndex].btnPin >= 0 ) {
+                        if (   pushButtons[btnIndex].radioGroup == button->radioGroup
+                            && pushButtons[btnIndex].btnPin != button->btnPin) {
+                            pushButtons[btnIndex].state = false;
+                            digitalWrite( pushButtons[btnIndex].ledPin, HIGH);
+                        }
+                        btnIndex++;
                     }
-                    btnIndex++;
                 }
-                // set myself to true again
-                button->state=true;
-            }
             
-            // set indicator led
-            digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
+                // set indicator led
+                digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
+            }
         }
     }
     return button->state;

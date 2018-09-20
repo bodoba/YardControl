@@ -31,15 +31,15 @@ pushbutton_t pushButtons[] = {
     // Button Pin, Led Pin, state, last reading, locked, radio group
     
     // Manual valves control, only one shall be active
-    {BUTTON_A,    VALVE_A,  false, -1, false, 1},
-    {BUTTON_B,    VALVE_B,  false, -1, false, 1},
-    {BUTTON_C,    VALVE_C,  false, -1, false, 1},
-    {BUTTON_D,    VALVE_D,  false, -1, false, 1},
+//    {BUTTON_A,    VALVE_A,  false, -1, false, 1},
+//    {BUTTON_B,    VALVE_B,  false, -1, false, 1},
+//    {BUTTON_C,    VALVE_C,  false, -1, false, 1},
+//    {BUTTON_D,    VALVE_D,  false, -1, false, 1},
 
-//    {BUTTON_P1,   LED_P1,   false, -1, false, 1},
-//    {BUTTON_P2,   LED_P2,   false, -1, false, 1},
+    {BUTTON_P1,   LED_P1,   false, -1, false, 1},
+    {BUTTON_P2,   LED_P2,   false, -1, false, 1},
 
-//    {BUTTON_AUTO, LED_AUTO, false, -1, false, 1},
+    {BUTTON_AUTO, LED_AUTO, false, -1, false, 1},
     
     // end marker
     {-1, -1, false, -1, false, -1},
@@ -89,8 +89,8 @@ bool readButton( pushbutton_t *button ) {
 void setup ( void ) {
     // initialize wiring PI and attached IO extender
     wiringPiSetup () ;
-    pcf8574Setup (PINBASE_0, ADDR_IOEXT_1);
-//    pcf8574Setup (PINBASE_1, ADDR_IOEXT_1);
+//    pcf8574Setup (PINBASE_0, ADDR_IOEXT_0);
+    pcf8574Setup (PINBASE_1, ADDR_IOEXT_1);
 
     // setup pin modes for buttons
     int btnIndex = 0;    

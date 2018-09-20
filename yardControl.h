@@ -45,9 +45,9 @@
 /* ----------------------------------------------------------------------------------- *
  * Output pins for control LEDs
  * ----------------------------------------------------------------------------------- */
-#define LED_P1   PINBASE_1+1
-#define LED_P2   PINBASE_1+3
-#define LED_AUTO PINBASE_1+5
+#define LED_P1   PINBASE_1+4
+#define LED_P2   PINBASE_1+5
+#define LED_AUTO PINBASE_1+6
 
 /* ----------------------------------------------------------------------------------- *
  * input pins for push buttons
@@ -58,8 +58,8 @@
 #define BUTTON_D    PINBASE_0+7
 
 #define BUTTON_P1   PINBASE_1+0
-#define BUTTON_P2   PINBASE_1+2
-#define BUTTON_AUTO PINBASE_1+4
+#define BUTTON_P2   PINBASE_1+1
+#define BUTTON_AUTO PINBASE_1+2
 
 
 /* ----------------------------------------------------------------------------------- *

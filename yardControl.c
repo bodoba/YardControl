@@ -36,21 +36,20 @@ pushbutton_t pushButtons[] = {
     {BUTTON_C,    VALVE_C,  false, -1, false, 1},
     {BUTTON_D,    VALVE_D,  false, -1, false, 1},
 
-    /*
     {BUTTON_P1,   LED_P1,   false, -1, false, 2},
     {BUTTON_P2,   LED_P2,   false, -1, false, 2},
+
     {BUTTON_AUTO, LED_AUTO, false, -1, false, 0},
-    */
     
     // end marker
     {-1, -1, false, -1, false, -1},
 };
 
 /* ----------------------------------------------------------------------------------- *
- * Read push button
+ * Process push button
  * ----------------------------------------------------------------------------------- */
 bool readButton( pushbutton_t *button ) {
-    // respect lock state
+    // respect locked state
     if ( !button->locked ) {
         // read the button pin
         int newReading = digitalRead(button->btnPin);
@@ -63,7 +62,7 @@ bool readButton( pushbutton_t *button ) {
                 button->state = button->state ? false : true;
             }
             
-            // if a radio group has been defined clear state of all other buttons in this group
+            // if a radio group has been defined clear state of all buttons in this group
             if ( button->state && button->radioGroup > 0 ) {
                 int btnIndex = 0;
                 while ( pushButtons[btnIndex].btnPin >= 0 ) {
@@ -91,6 +90,7 @@ void setup ( void ) {
     // initialize wiring PI and attached IO extender
     wiringPiSetup () ;
     pcf8574Setup (PINBASE_0, ADDR_IOEXT_0);
+    pcf8574Setup (PINBASE_1, ADDR_IOEXT_1);
 
     // setup pin modes for buttons
     int btnIndex = 0;    

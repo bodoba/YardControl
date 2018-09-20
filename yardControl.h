@@ -31,6 +31,9 @@
 #define ADDR_IOEXT_0   0x38
 #define PINBASE_0        64
 
+#define ADDR_IOEXT_1   0x39
+#define PINBASE_1        72
+
 /* ----------------------------------------------------------------------------------- *
  * output pins for valve control
  * ----------------------------------------------------------------------------------- */
@@ -40,12 +43,24 @@
 #define VALVE_D  PINBASE_0+3
 
 /* ----------------------------------------------------------------------------------- *
+ * Output pins for control LEDs
+ * ----------------------------------------------------------------------------------- */
+#define LED_P1   PINBASE_1+1
+#define LED_P2   PINBASE_1+3
+#define LED_AUTO PINBASE_1+5
+
+/* ----------------------------------------------------------------------------------- *
  * input pins for push buttons
  * ----------------------------------------------------------------------------------- */
-#define BUTTON_A PINBASE_0+4
-#define BUTTON_B PINBASE_0+5
-#define BUTTON_C PINBASE_0+6
-#define BUTTON_D PINBASE_0+7
+#define BUTTON_A    PINBASE_0+4
+#define BUTTON_B    PINBASE_0+5
+#define BUTTON_C    PINBASE_0+6
+#define BUTTON_D    PINBASE_0+7
+
+#define BUTTON_P1   PINBASE_1+0
+#define BUTTON_P2   PINBASE_1+2
+#define BUTTON_AUTO PINBASE_1+4
+
 
 /* ----------------------------------------------------------------------------------- *
  * Definition of a push button

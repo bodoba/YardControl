@@ -89,7 +89,7 @@ bool readButton( pushbutton_t *button ) {
 void setup ( void ) {
     // initialize wiring PI and attached IO extender
     wiringPiSetup () ;
-    pcf8574Setup (PINBASE_1, ADDR_IOEXT_0);
+    pcf8574Setup (PINBASE_0, ADDR_IOEXT_0);
 //    pcf8574Setup (PINBASE_1, ADDR_IOEXT_1);
 
     // setup pin modes for buttons

@@ -98,7 +98,7 @@ void setup ( void ) {
         pinMode(pushButtons[btnIndex].btnPin, INPUT);
         pinMode(pushButtons[btnIndex].ledPin, OUTPUT);
 //        digitalWrite(pushButtons[btnIndex].ledPin, pushButtons[btnIndex].state ? LOW : HIGH);
-        digitalWrite(pushButtons[btnIndex].ledPin, LOW);
+        digitalWrite(pushButtons[btnIndex].ledPin, HIGH);
 
         btnIndex++;
     }

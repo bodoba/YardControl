@@ -28,7 +28,7 @@
 /* ----------------------------------------------------------------------------------- *
  * PCF8574 io extender
  * ----------------------------------------------------------------------------------- */
-#define ADDR_IOEXT_0   0x39
+#define ADDR_IOEXT_0   0x38
 #define PINBASE_0        64
 
 #define ADDR_IOEXT_1   0x39
@@ -45,9 +45,10 @@
 /* ----------------------------------------------------------------------------------- *
  * Output pins for control LEDs
  * ----------------------------------------------------------------------------------- */
-#define LED_P1   PINBASE_1+4
-#define LED_P2   PINBASE_1+5
-#define LED_AUTO PINBASE_1+6
+#define NC_1_0   PINBASE_1+0
+#define LED_P1   PINBASE_1+1
+#define LED_P2   PINBASE_1+2
+#define LED_AUTO PINBASE_1+3
 
 /* ----------------------------------------------------------------------------------- *
  * input pins for push buttons
@@ -57,9 +58,10 @@
 #define BUTTON_C    PINBASE_0+6
 #define BUTTON_D    PINBASE_0+7
 
-#define BUTTON_P1   PINBASE_1+0
-#define BUTTON_P2   PINBASE_1+1
-#define BUTTON_AUTO PINBASE_1+2
+#define NC_1_4      PINBASE_1+4
+#define BUTTON_P1   PINBASE_1+5
+#define BUTTON_P2   PINBASE_1+6
+#define BUTTON_AUTO PINBASE_1+7
 
 
 /* ----------------------------------------------------------------------------------- *

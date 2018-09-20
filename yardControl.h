@@ -15,7 +15,6 @@
 /*  You should have received a copy of the GNU General Public License                  */
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.              */
 /* *********************************************************************************** */
-
 #ifndef yardControl_h
 #define yardControl_h
 
@@ -64,15 +63,23 @@
 #define BUTTON_P2   PINBASE_1+7
 
 /* ----------------------------------------------------------------------------------- *
+ * radio groups for bush buttons
+ * ----------------------------------------------------------------------------------- */
+#define RG_NONE      0
+#define RG_VALVES    1
+#define RG_SEQUENCES 2
+
+/* ----------------------------------------------------------------------------------- *
  * Definition of a push button
  * ----------------------------------------------------------------------------------- */
 typedef struct {
-    int     btnPin;       // Input pin
-    int     ledPin;       // LED indicating button state
-    bool    state;        // button state
-    int     lastReading;  // last button reading
-    bool    locked;       // when locked, button value can't be changed manually
-    int     radioGroup;   // >  0 defines radio button group
+    int     btnPin;                // Input pin
+    int     ledPin;                // LED indicating button state
+    bool    state;                 // button state
+    int     lastReading;           // last button reading
+    bool    locked;                // when locked, button value can't be changed manually
+    int     radioGroup;            // >  0 defines radio button group
+    void    (*cb) (pushbutton_t*); // callback for button state change
 } pushbutton_t;
 
 #endif /* yardControl_h */

@@ -23,6 +23,7 @@
 bool readButton(pushbutton_t *button);
 void setup(void);
 int  main( int rgc, char *argv[] );
+void setLed( pushbutton_t *button );
 
 /* ----------------------------------------------------------------------------------- *
  * Definition of the pushbuttons
@@ -44,6 +45,13 @@ pushbutton_t pushButtons[] = {
     // end marker
     {-1, -1, false, -1, false, -1},
 };
+
+/* ----------------------------------------------------------------------------------- *
+ * Set LED of push button
+ * ----------------------------------------------------------------------------------- */
+void setLed( pushbutton_t *button ) {
+    digitalWrite ( button->ledPin, button->state ? LOW : HIGH)
+}
 
 /* ----------------------------------------------------------------------------------- *
  * Process push button

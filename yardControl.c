@@ -31,15 +31,15 @@ pushbutton_t pushButtons[] = {
     // Button Pin, Led Pin, state, last reading, locked, radio group
     
     // Manual valves control, only one shall be active
-    {BUTTON_A,    VALVE_A,  false, -1, false, 1},
-    {BUTTON_B,    VALVE_B,  false, -1, false, 1},
-    {BUTTON_C,    VALVE_C,  false, -1, false, 1},
-    {BUTTON_D,    VALVE_D,  false, -1, false, 1},
+    {BUTTON_A,    VALVE_A,  true, -1, false, 1},
+    {BUTTON_B,    VALVE_B,  true, -1, false, 1},
+    {BUTTON_C,    VALVE_C,  true, -1, false, 1},
+    {BUTTON_D,    VALVE_D,  true, -1, false, 1},
 
-    {BUTTON_P1,   LED_P1,   false, -1, false, 1},
-    {BUTTON_P2,   LED_P2,   false, -1, false, 1},
+    {BUTTON_P1,   LED_P1,   true, -1, false, 1},
+    {BUTTON_P2,   LED_P2,   true, -1, false, 1},
 
-    {BUTTON_AUTO, LED_AUTO, false, -1, false, 1},
+    {BUTTON_AUTO, LED_AUTO, true, -1, false, 1},
     
     // end marker
     {-1, -1, false, -1, false, -1},
@@ -97,8 +97,7 @@ void setup ( void ) {
     while ( pushButtons[btnIndex].btnPin >= 0 ) {
         pinMode(pushButtons[btnIndex].btnPin, INPUT);
         pinMode(pushButtons[btnIndex].ledPin, OUTPUT);
-//        digitalWrite(pushButtons[btnIndex].ledPin, pushButtons[btnIndex].state ? LOW : HIGH);
-        digitalWrite(pushButtons[btnIndex].ledPin, HIGH);
+        digitalWrite(pushButtons[btnIndex].ledPin, pushButtons[btnIndex].state ? LOW : HIGH);
 
         btnIndex++;
     }

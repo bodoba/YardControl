@@ -65,8 +65,9 @@ bool readButton( pushbutton_t *button ) {
                 if ( button->state && button->radioGroup > 0 ) {
                     int btnIndex = 0;
                     while ( pushButtons[btnIndex].btnPin >= 0 ) {
-                        if (   pushButtons[btnIndex].radioGroup == button->radioGroup
-                            && pushButtons[btnIndex].btnPin != button->btnPin) {
+                        if ( pushButtons[btnIndex].radioGroup == button->radioGroup
+                               && pushButtons[btnIndex].btnPin != button->btnPin
+                               && pushButtons[btnIndex].state ) {
                             pushButtons[btnIndex].state = false;
                             digitalWrite( pushButtons[btnIndex].ledPin, HIGH);
                         }

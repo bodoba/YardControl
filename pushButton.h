@@ -1,4 +1,4 @@
-/* *********************************************************************************** */
+//* *********************************************************************************** */
 /*                                                                                     */
 /*  Copyright (c) 2018 by Bodo Bauer <bb@bb-zone.com>                                  */
 /*                                                                                     */
@@ -15,57 +15,27 @@
 /*  You should have received a copy of the GNU General Public License                  */
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.              */
 /* *********************************************************************************** */
-#ifndef yardControl_h
-#define yardControl_h
+#include <stdbool.h>
 
-#include <stdio.h>
-#include <pcf8574.h>
-
-/* ----------------------------------------------------------------------------------- *
- * PCF8574 io extender
- * ----------------------------------------------------------------------------------- */
-#define ADDR_IOEXT_0   0x38
-#define PINBASE_0        64
-
-#define ADDR_IOEXT_1   0x39
-#define PINBASE_1        72
+#ifndef pushButton_h
+#define pushButton_h
 
 /* ----------------------------------------------------------------------------------- *
- * output pins for valve control
+ * Definition of a push button
  * ----------------------------------------------------------------------------------- */
-#define VALVE_A     PINBASE_0+0
-#define VALVE_B     PINBASE_0+1
-#define VALVE_C     PINBASE_0+2
-#define VALVE_D     PINBASE_0+3
+typedef struct pushbutton_t {
+    int     btnPin;                // Input pin
+    int     ledPin;                // LED indicating button state
+    bool    state;                 // button state
+    int     lastReading;           // last button reading
+    bool    locked;                // when locked, button value can't be changed manually
+    int     radioGroup;            // >  0 defines radio button group
+    void    (*callback) (struct pushbutton_t *button); // callback for button state change
+} pushbutton_t;
 
 /* ----------------------------------------------------------------------------------- *
- * Output pins for control LEDs
+ * Prototypes
  * ----------------------------------------------------------------------------------- */
-#define NC_1_0      PINBASE_1+0
-#define LED_AUTO    PINBASE_1+1
-#define LED_P1      PINBASE_1+2
-#define LED_P2      PINBASE_1+3
+bool readButton(pushbutton_t *button);
 
-/* ----------------------------------------------------------------------------------- *
- * input pins for push buttons
- * ----------------------------------------------------------------------------------- */
-#define BUTTON_A    PINBASE_0+4
-#define BUTTON_B    PINBASE_0+5
-#define BUTTON_C    PINBASE_0+6
-#define BUTTON_D    PINBASE_0+7
-
-#define NC_1_4      PINBASE_1+4
-#define BUTTON_AUTO PINBASE_1+5
-#define BUTTON_P1   PINBASE_1+6
-#define BUTTON_P2   PINBASE_1+7
-
-/* ----------------------------------------------------------------------------------- *
- * radio groups for bush buttons
- * ----------------------------------------------------------------------------------- */
-#define RG_NONE      0
-#define RG_VALVES    1
-#define RG_SEQUENCES 2
-
-
-
-#endif /* yardControl_h */
+#endif /* pushButton_h */

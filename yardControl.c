@@ -58,7 +58,7 @@ void setLed( pushbutton_t *button ) {
  * ----------------------------------------------------------------------------------- */
 bool readButton( pushbutton_t *button ) {
     // respect locked state
-    if ( !button.locked) {
+    if ( !button->locked) {
         // read the button pin
         int newReading = digitalRead(button->btnPin);
         

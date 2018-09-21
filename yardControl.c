@@ -18,6 +18,8 @@
 #include "yardControl.h"
 #include "pushButton.h"
 #include <wiringPi.h>
+#include <stdio.h>
+#include <pcf8574.h>
 
 /* ----------------------------------------------------------------------------------- *
  * Prototypes
@@ -53,7 +55,6 @@ pushbutton_t pushButtons[] = {
 void setLed( pushbutton_t *button ) {
     digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
 }
-
 
 /* ----------------------------------------------------------------------------------- *
  * Initial setup

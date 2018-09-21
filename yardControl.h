@@ -18,9 +18,6 @@
 #ifndef yardControl_h
 #define yardControl_h
 
-#include <stdio.h>
-#include <pcf8574.h>
-
 /* ----------------------------------------------------------------------------------- *
  * PCF8574 io extender
  * ----------------------------------------------------------------------------------- */
@@ -65,7 +62,5 @@
 #define RG_NONE      0
 #define RG_VALVES    1
 #define RG_SEQUENCES 2
-
-
 
 #endif /* yardControl_h */

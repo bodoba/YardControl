@@ -21,7 +21,7 @@
 /* ----------------------------------------------------------------------------------- *
  * Process push button
  * ----------------------------------------------------------------------------------- */
-bool readButton( pushbutton_t *button ) {
+bool readButton( pushbutton_t *button, pushbutton_t *buttonList) {
     // respect locked state
     if ( !button->locked) {
         // read the button pin
@@ -38,15 +38,15 @@ bool readButton( pushbutton_t *button ) {
                 if ( button->state && button->radioGroup > 0 ) {
                     int btnIndex = 0;
                     // clear state of active members in radio group
-                    while ( pushButtons[btnIndex].btnPin >= 0 ) {
-                        if ( pushButtons[btnIndex].radioGroup == button->radioGroup   // same radio group
-                            && pushButtons[btnIndex].btnPin != button->btnPin      // not myself
-                            && pushButtons[btnIndex].state ) {                     // active
+                    while ( buttonList[btnIndex].btnPin >= 0 ) {
+                        if ( buttonList[btnIndex].radioGroup == button->radioGroup   // same radio group
+                            && buttonList[btnIndex].btnPin != button->btnPin         // not myself
+                            && buttonList[btnIndex].state ) {                        // active
                             // clear state
-                            pushButtons[btnIndex].state = false;
+                            buttonList[btnIndex].state = false;
                             // trigger callback function
-                            if ( pushButtons[btnIndex].callback != NULL ) {
-                                (*pushButtons[btnIndex].callback)(&pushButtons[btnIndex]);
+                            if ( buttonList[btnIndex].callback != NULL ) {
+                                (*buttonList[btnIndex].callback)(&buttonList[btnIndex]);
                             }
                         }
                         btnIndex++;

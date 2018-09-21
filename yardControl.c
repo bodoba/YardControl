@@ -88,7 +88,7 @@ int main( int rgc, char *argv[] ) {
         // update button values
         int btnIndex = 0;
         while ( pushButtons[btnIndex].btnPin >= 0 ) {
-            readButton(&pushButtons[btnIndex]);
+            readButton(&pushButtons[btnIndex], pushButtons);
             btnIndex++;
         }
 

@@ -36,6 +36,6 @@ typedef struct pushbutton_t {
 /* ----------------------------------------------------------------------------------- *
  * Prototypes
  * ----------------------------------------------------------------------------------- */
-bool readButton(pushbutton_t *button);
+bool readButton(pushbutton_t *button, pushbutton_t *buttonList);
 
 #endif /* pushButton_h */

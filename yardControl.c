@@ -88,7 +88,7 @@ void lockValveControl (bool on ) {
             if (pushButtons[btnIndex].radioGroup == RG_VALVES) {
                 pushButtons[btnIndex].locked = false;
             }
-            btnIndex++:
+            btnIndex++;
         }
     }
 }

@@ -104,7 +104,7 @@ void selectSequence( pushbutton_t *button );
  * ----------------------------------------------------------------------------------- */
 void automaticMode( pushbutton_t *button ) {
     setLed( button );
-    lockValveControl(button->state);
+    lockValveControl(!button->state);
     systemMode = button->state ? AUTOMATIC_MODE:MANUAL_MODE;
 }
 

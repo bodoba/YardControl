@@ -57,6 +57,16 @@ pushbutton_t pushButtons[] = {
 };
 
 /* ----------------------------------------------------------------------------------- *
+ * System modes
+ * ----------------------------------------------------------------------------------- */
+enum Modes { MANUAL_MODE, AUTOMATIC_MODE } systemMode;
+
+/* ----------------------------------------------------------------------------------- *
+ * Sequence to run
+ * ----------------------------------------------------------------------------------- */
+int activeSequence = 0;
+
+/* ----------------------------------------------------------------------------------- *
  * Enable/Disable manual valve control
  * ----------------------------------------------------------------------------------- */
 void lockValveControl (bool on ) {
@@ -77,11 +87,6 @@ void lockValveControl (bool on ) {
 }
 
 /* ----------------------------------------------------------------------------------- *
- * Modes
- * ----------------------------------------------------------------------------------- */
-enum Modes { MANUAL_MODE, AUTOMATIC_MODE } systemMode;
-
-/* ----------------------------------------------------------------------------------- *
  * Switch Valve
  * ----------------------------------------------------------------------------------- */
 void switchValve( pushbutton_t *button ) {
@@ -100,6 +105,7 @@ void runSequence( pushbutton_t *button ) {
 void selectSequence( pushbutton_t *button ) {
     digitalWrite ( LED_S1, button->state ? LOW : HIGH);
     digitalWrite ( LED_S2, button->state ? HIGH : LOW);
+    activeSequence = button->state ? 1:0;
 }
 
 /* ----------------------------------------------------------------------------------- *
@@ -135,6 +141,10 @@ void setup ( void ) {
         digitalWrite(pushButtons[btnIndex].ledPin, pushButtons[btnIndex].state ? LOW : HIGH);
         btnIndex++;
     }
+
+    digitalWrite ( LED_S1, HIGH);
+    digitalWrite ( LED_S2, LOW);
+    
     systemMode = MANUAL_MODE;
 }
 

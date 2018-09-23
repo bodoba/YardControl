@@ -29,6 +29,7 @@ int  main( int rgc, char *argv[] );
 void lockValveControl (bool on );
 
 // Bush button actions
+void setLed( pushbutton_t *button );
 void switchValve( pushbutton_t *button );
 void runSequence( pushbutton_t *button );
 void selectSequence( pushbutton_t *button );
@@ -96,7 +97,7 @@ void lockValveControl (bool on ) {
  * Switch Valve
  * ----------------------------------------------------------------------------------- */
 void switchValve( pushbutton_t *button ) {
-    digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
+    setLed( button );
 }
 
 /* ----------------------------------------------------------------------------------- *
@@ -137,6 +138,13 @@ void automaticMode( pushbutton_t *button ) {
 }
 
 /* ----------------------------------------------------------------------------------- *
+ * Set LED of push button
+ * ----------------------------------------------------------------------------------- */
+void setLed( pushbutton_t *button ) {
+    digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
+}
+
+/* ----------------------------------------------------------------------------------- *
  * Initial setup
  * ----------------------------------------------------------------------------------- */
 void setup ( void ) {
@@ -163,7 +171,7 @@ void setup ( void ) {
 /* ----------------------------------------------------------------------------------- *
  * Main
  * ----------------------------------------------------------------------------------- */
-int main( int argc, char *argv[] ) {
+int main( int rgc, char *argv[] ) {
 
     // initialize system
     setup();

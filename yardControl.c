@@ -86,12 +86,13 @@ void automaticMode( pushbutton_t *button ) {
             btnValve->state  = false;
             switchValve( btnValve );
         }
-        
+        systemMode = AUTOMATIC_MODE;
     } else {
         // enable manual valve control
         for (int buttonIdx=0; buttonIdx<=3; buttonIdx++ ) {
             pushButtons[buttonIdx].locked = false;
         }
+        systemMode = MANUAL_MODE;
     }
 }
 
@@ -119,6 +120,7 @@ void setup ( void ) {
         digitalWrite(pushButtons[btnIndex].ledPin, pushButtons[btnIndex].state ? LOW : HIGH);
         btnIndex++;
     }
+    systemMode = MANUAL_MODE;
 }
 
 /* ----------------------------------------------------------------------------------- *

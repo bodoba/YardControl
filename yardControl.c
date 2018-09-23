@@ -76,14 +76,14 @@ void automaticMode( pushbutton_t *button ) {
     
     if ( button->state ) {
         // disable manual valve control
-        for (int buttonIdx=0; buttonidx<=3; buttonIdx++ ) {
+        for (int buttonIdx=0; buttonIdx<=3; buttonIdx++ ) {
             pushButtons[buttonIdx].locked = true;
             pushButtons[buttonIdx].state  = false;
             digitalWrite ( pushButtons[buttonIdx].ledPin, HIGH);
         }
     } else {
         // enable manual valve control
-        for (int buttonIdx=0; buttonidx<=3; buttonIdx++ ) {
+        for (int buttonIdx=0; buttonIdx<=3; buttonIdx++ ) {
             pushButtons[buttonIdx].locked = false;
         }
     }

@@ -55,6 +55,11 @@ pushbutton_t pushButtons[] = {
 };
 
 /* ----------------------------------------------------------------------------------- *
+ * Modes
+ * ----------------------------------------------------------------------------------- */
+enum Modes { MANUAL_MODE, AUTOMATIC_MODE } systemMode;
+
+/* ----------------------------------------------------------------------------------- *
  * Switch Valve
  * ----------------------------------------------------------------------------------- */
 void switchValve( pushbutton_t *button ) {
@@ -73,7 +78,6 @@ void runSequence( pushbutton_t *button ) {
  * ----------------------------------------------------------------------------------- */
 void automaticMode( pushbutton_t *button ) {
     setLed( button );
-    
     if ( button->state ) {
         // disable manual valve control
         for (int buttonIdx=0; buttonIdx<=3; buttonIdx++ ) {
@@ -82,6 +86,7 @@ void automaticMode( pushbutton_t *button ) {
             btnValve->state  = false;
             switchValve( btnValve );
         }
+        
     } else {
         // enable manual valve control
         for (int buttonIdx=0; buttonIdx<=3; buttonIdx++ ) {

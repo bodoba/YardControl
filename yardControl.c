@@ -67,7 +67,7 @@ enum Modes { MANUAL_MODE, AUTOMATIC_MODE } systemMode;
 int activeSequence = 0;
 
 /* ----------------------------------------------------------------------------------- *
- * Enable/Disable manual valve control
+ * Enable/Disable manual valve control (radio group: RG_VALVES)
  * ----------------------------------------------------------------------------------- */
 void lockValveControl (bool on ) {
     int btnIndex = 0;
@@ -105,6 +105,12 @@ void switchValve( pushbutton_t *button ) {
  * ----------------------------------------------------------------------------------- */
 void runSequence( pushbutton_t *button ) {
     setLed( button );
+
+    // enable/disable manual valve control
+    lockValveControl(!button->state);
+    
+    // enable/disable sequence change
+    pushButton[4].locked = !button->state;
 }
 /* ----------------------------------------------------------------------------------- *
  * Select sequence to run
@@ -120,7 +126,11 @@ void selectSequence( pushbutton_t *button ) {
  * ----------------------------------------------------------------------------------- */
 void automaticMode( pushbutton_t *button ) {
     setLed( button );
+
+    // enable/disable manual valve control
     lockValveControl(!button->state);
+
+    // set system mode
     systemMode = button->state ? AUTOMATIC_MODE:MANUAL_MODE;
 }
 

@@ -59,7 +59,7 @@ pushbutton_t pushButtons[] = {
 /* ----------------------------------------------------------------------------------- *
  * System modes
  * ----------------------------------------------------------------------------------- */
-enum Modes { MANUAL_MODE, AUTOMATIC_MODE } systemMode;
+enum Modes { MANUAL_MODE, SEQUENCE_MODE, AUTOMATIC_MODE } systemMode;
 
 /* ----------------------------------------------------------------------------------- *
  * Sequence to run
@@ -111,6 +111,8 @@ void runSequence( pushbutton_t *button ) {
     
     // enable/disable sequence change
     pushButtons[4].locked = button->state;
+
+    systemMode = button->state ? SEQUENCE_MODE:MANUAL_MODE;
 }
 
 /* ----------------------------------------------------------------------------------- *

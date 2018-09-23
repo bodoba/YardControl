@@ -130,6 +130,9 @@ void automaticMode( pushbutton_t *button ) {
     // enable/disable manual valve control
     lockValveControl(!button->state);
 
+    // enable/disable sequence change
+    pushButtons[4].locked = button->state;
+    
     // set system mode
     systemMode = button->state ? AUTOMATIC_MODE:MANUAL_MODE;
 }

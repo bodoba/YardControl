@@ -76,16 +76,16 @@ void automaticMode( pushbutton_t *button ) {
     
     if ( button->state ) {
         // disable manual valve control
-        puchButtons[0].locked=true;
-        puchButtons[1].locked=true;
-        puchButtons[2].locked=true;
-        puchButtons[3].locked=true;
+        pushButtons[0].locked=true;
+        pushButtons[1].locked=true;
+        pushButtons[2].locked=true;
+        pushButtons[3].locked=true;
     } else {
         // enable manual valve control
-        puchButtons[0].locked=false;
-        puchButtons[1].locked=false;
-        puchButtons[2].locked=false;
-        puchButtons[3].locked=false;
+        pushButtons[0].locked=false;
+        pushButtons[1].locked=false;
+        pushButtons[2].locked=false;
+        pushButtons[3].locked=false;
     }
 }
 

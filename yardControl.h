@@ -30,10 +30,10 @@
 /* ----------------------------------------------------------------------------------- *
  * output pins for valve control
  * ----------------------------------------------------------------------------------- */
-#define VALVE_A       PINBASE_0+0   // control valve A
-#define VALVE_B       PINBASE_0+1   // control valve B
-#define VALVE_C       PINBASE_0+2   // control valve C
-#define VALVE_D       PINBASE_0+3   // control valve D
+#define VALVE_A       PINBASE_0+0  // control valve A
+#define VALVE_B       PINBASE_0+1  // control valve B
+#define VALVE_C       PINBASE_0+2  // control valve C
+#define VALVE_D       PINBASE_0+3  // control valve D
 
 /* ----------------------------------------------------------------------------------- *
  * Output pins for control LEDs
@@ -51,9 +51,9 @@
 #define BUTTON_C      PINBASE_0+6   // switch valve C
 #define BUTTON_D      PINBASE_0+7   // switch valve D
 
-#define NC_1_4        PINBASE_1+4
+#define NC_1_4        PINBASE_1+4   // not connected
 #define BUTTON_AUTO   PINBASE_1+5   // toggle automatic mode
-#define BUTTON_SELECT INBASE_1+6    // select between sequence 1 and 2
+#define BUTTON_SELECT PINBASE_1+6   // select between sequence 1 and 2
 #define BUTTON_RUN    PINBASE_1+7   // run selected sequence
 
 /* ----------------------------------------------------------------------------------- *

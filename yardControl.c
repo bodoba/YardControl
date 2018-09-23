@@ -26,7 +26,12 @@
  * ----------------------------------------------------------------------------------- */
 void setup(void);
 int  main( int rgc, char *argv[] );
+
+// Bush button actions
 void setLed( pushbutton_t *button );
+void switchValve( pushbutton_t *button );
+void runSequence( pushbutton_t *button );
+void automaticMode( pushbutton_t *button );
 
 /* ----------------------------------------------------------------------------------- *
  * Definition of the pushbuttons
@@ -35,19 +40,40 @@ pushbutton_t pushButtons[] = {
     // Button Pin, Led Pin, state, last reading, locked, radio group
     
     // Manual valves control, only one shall be active
-    {BUTTON_A,    VALVE_A,  false, -1, false, RG_VALVES,    &setLed},
-    {BUTTON_B,    VALVE_B,  false, -1, false, RG_VALVES,    &setLed},
-    {BUTTON_C,    VALVE_C,  false, -1, false, RG_VALVES,    &setLed},
-    {BUTTON_D,    VALVE_D,  false, -1, false, RG_VALVES,    &setLed},
+    {BUTTON_A,    VALVE_A,  false, -1, false, RG_VALVES,    &switchValve},
+    {BUTTON_B,    VALVE_B,  false, -1, false, RG_VALVES,    &switchValve},
+    {BUTTON_C,    VALVE_C,  false, -1, false, RG_VALVES,    &switchValve},
+    {BUTTON_D,    VALVE_D,  false, -1, false, RG_VALVES,    &switchValve},
 
-    {BUTTON_P1,   LED_P1,   false, -1, false, RG_SEQUENCES, &setLed},
-    {BUTTON_P2,   LED_P2,   false, -1, false, RG_SEQUENCES, &setLed},
+    {BUTTON_P1,   LED_P1,   false, -1, false, RG_SEQUENCES, &runSequence},
+    {BUTTON_P2,   LED_P2,   false, -1, false, RG_SEQUENCES, &runSequence},
 
-    {BUTTON_AUTO, LED_AUTO, false, -1, false, RG_NONE,      &setLed},
+    {BUTTON_AUTO, LED_AUTO, false, -1, false, RG_NONE,      &automaticMode},
     
     // end marker
     {-1, -1, false, -1, false, -1},
 };
+
+/* ----------------------------------------------------------------------------------- *
+ * Switch Valve
+ * ----------------------------------------------------------------------------------- */
+void switchValve( pushbutton_t *button ) {
+    setLed( button );
+}
+
+/* ----------------------------------------------------------------------------------- *
+ * runProgram Sequence
+ * ----------------------------------------------------------------------------------- */
+void runSequence( pushbutton_t *button ) {
+    setLed( button );
+}
+
+/* ----------------------------------------------------------------------------------- *
+ * Run in automatic mode
+ * ----------------------------------------------------------------------------------- */
+void automaticMode( pushbutton_t *button ) {
+    setLed( button );
+}
 
 /* ----------------------------------------------------------------------------------- *
  * Set LED of push button
@@ -76,7 +102,7 @@ void setup ( void ) {
 }
 
 /* ----------------------------------------------------------------------------------- *
- * M  A  I  N
+ * Main
  * ----------------------------------------------------------------------------------- */
 int main( int rgc, char *argv[] ) {
 
@@ -85,14 +111,12 @@ int main( int rgc, char *argv[] ) {
     
     // main loop
     for ( ;; ) {
-
-        // update button values
+        // process bush buttons
         int btnIndex = 0;
         while ( pushButtons[btnIndex].btnPin >= 0 ) {
             readButton(&pushButtons[btnIndex], pushButtons);
             btnIndex++;
         }
-
         delay(50);
     }
     return 0;

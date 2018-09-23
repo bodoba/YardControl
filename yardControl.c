@@ -110,7 +110,7 @@ void runSequence( pushbutton_t *button ) {
     lockValveControl(!button->state);
     
     // enable/disable sequence change
-    pushButton[4].locked = !button->state;
+    pushButtons[4].locked = !button->state;
 }
 /* ----------------------------------------------------------------------------------- *
  * Select sequence to run

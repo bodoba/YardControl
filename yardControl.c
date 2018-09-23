@@ -112,6 +112,7 @@ void runSequence( pushbutton_t *button ) {
     // enable/disable sequence change
     pushButtons[4].locked = button->state;
 }
+
 /* ----------------------------------------------------------------------------------- *
  * Select sequence to run
  * ----------------------------------------------------------------------------------- */
@@ -132,7 +133,12 @@ void automaticMode( pushbutton_t *button ) {
 
     // enable/disable sequence change
     pushButtons[4].locked = button->state;
-    
+
+    // enable/disable sequence start
+    pushButtons[5].state  = false;
+    pushButtons[5].locked = button->state;
+    digitalWrite (LED_RUN, HIGH);
+
     // set system mode
     systemMode = button->state ? AUTOMATIC_MODE:MANUAL_MODE;
 }

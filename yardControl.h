@@ -30,37 +30,37 @@
 /* ----------------------------------------------------------------------------------- *
  * output pins for valve control
  * ----------------------------------------------------------------------------------- */
-#define VALVE_A     PINBASE_0+0
-#define VALVE_B     PINBASE_0+1
-#define VALVE_C     PINBASE_0+2
-#define VALVE_D     PINBASE_0+3
+#define VALVE_A       PINBASE_0+0   // control valve A
+#define VALVE_B       PINBASE_0+1   // control valve B
+#define VALVE_C       PINBASE_0+2   // control valve C
+#define VALVE_D       PINBASE_0+3   // control valve D
 
 /* ----------------------------------------------------------------------------------- *
  * Output pins for control LEDs
  * ----------------------------------------------------------------------------------- */
-#define NC_1_0      PINBASE_1+0
-#define LED_AUTO    PINBASE_1+1
-#define LED_P1      PINBASE_1+2
-#define LED_P2      PINBASE_1+3
+#define LED_S2        PINBASE_1+0  // sequence 2 selected
+#define LED_AUTO      PINBASE_1+1  // automatic mode enabled
+#define LED_S1        PINBASE_1+2  // sequence 1 selected
+#define LED_RUN       PINBASE_1+3  // selected sequence is running
 
 /* ----------------------------------------------------------------------------------- *
  * input pins for push buttons
  * ----------------------------------------------------------------------------------- */
-#define BUTTON_A    PINBASE_0+4
-#define BUTTON_B    PINBASE_0+5
-#define BUTTON_C    PINBASE_0+6
-#define BUTTON_D    PINBASE_0+7
+#define BUTTON_A      PINBASE_0+4   // switch valve A
+#define BUTTON_B      PINBASE_0+5   // switch valve B
+#define BUTTON_C      PINBASE_0+6   // switch valve C
+#define BUTTON_D      PINBASE_0+7   // switch valve D
 
-#define NC_1_4      PINBASE_1+4
-#define BUTTON_AUTO PINBASE_1+5
-#define BUTTON_P1   PINBASE_1+6
-#define BUTTON_P2   PINBASE_1+7
+#define NC_1_4        PINBASE_1+4
+#define BUTTON_AUTO   PINBASE_1+5   // toggle automatic mode
+#define BUTTON_SELECT INBASE_1+6    // select between sequence 1 and 2
+#define BUTTON_RUN    PINBASE_1+7   // run selected sequence
 
 /* ----------------------------------------------------------------------------------- *
  * radio groups for bush buttons
  * ----------------------------------------------------------------------------------- */
-#define RG_NONE      0
-#define RG_VALVES    1
-#define RG_SEQUENCES 2
+#define RG_NONE       0
+#define RG_VALVES     1
+#define RG_SEQUENCES  2
 
 #endif /* yardControl_h */

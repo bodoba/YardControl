@@ -42,15 +42,15 @@ pushbutton_t pushButtons[] = {
     // Button Pin, Led Pin, state, last reading, locked, radio group
     
     // Manual valves control, only one shall be active
-    {BUTTON_A,      VALVE_A,  false, -1, false, RG_VALVES,     &switchValve},
-    {BUTTON_B,      VALVE_B,  false, -1, false, RG_VALVES,     &switchValve},
-    {BUTTON_C,      VALVE_C,  false, -1, false, RG_VALVES,     &switchValve},
-    {BUTTON_D,      VALVE_D,  false, -1, false, RG_VALVES,     &switchValve},
+    {BUTTON_A,      VALVE_A,  false, -1, false, RG_VALVES,   &switchValve},
+    {BUTTON_B,      VALVE_B,  false, -1, false, RG_VALVES,   &switchValve},
+    {BUTTON_C,      VALVE_C,  false, -1, false, RG_VALVES,   &switchValve},
+    {BUTTON_D,      VALVE_D,  false, -1, false, RG_VALVES,   &switchValve},
 
-    {BUTTON_SELECT, LED_S1,   false, -1, false, RG_SEQUENCES,  &selectSequence},
-    {BUTTON_RUN,    LED_RUN,  false, -1, false, RG_SEQUENCES,  &runSequence},
+    {BUTTON_SELECT, LED_S1,   false, -1, false, RG_NONE,     &selectSequence},
+    {BUTTON_RUN,    LED_RUN,  false, -1, false, RG_NONE,     &runSequence},
 
-    {BUTTON_AUTO,   LED_AUTO, false, -1, false, RG_NONE,       &automaticMode},
+    {BUTTON_AUTO,   LED_AUTO, false, -1, false, RG_NONE,     &automaticMode},
     
     // end marker
     {-1, -1, false, -1, false, -1},
@@ -70,18 +70,25 @@ int activeSequence = 0;
  * Enable/Disable manual valve control
  * ----------------------------------------------------------------------------------- */
 void lockValveControl (bool on ) {
+    int btnIndex = 0;
     if ( !on ) {
         // disable manual valve control
-        for (int buttonIdx=0; buttonIdx<=3; buttonIdx++ ) {
-            pushbutton_t *btnValve = &pushButtons[buttonIdx];
-            btnValve->locked = true;
-            btnValve->state  = false;
-            switchValve( btnValve );
+        while ( pushButtons[btnIndex].btnPin >= 0 ) {
+            if (pushButtons[btnIndex].radioGroup == RG_VALVES) {
+                pushbutton_t *btnValve = &pushButtons[btnIndex];
+                btnValve->locked = true;
+                btnValve->state  = false;
+                switchValve( btnValve );
+            }
+            btnIndex++;
         }
     } else {
         // enable manual valve control
-        for (int buttonIdx=0; buttonIdx<=3; buttonIdx++ ) {
-            pushButtons[buttonIdx].locked = false;
+        while ( pushButtons[btnIndex].btnPin >= 0 ) {
+            if (pushButtons[btnIndex].radioGroup == RG_VALVES) {
+                pushButtons[buttonIdx].locked = false;
+            }
+            btnIndex++:
         }
     }
 }

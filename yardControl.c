@@ -42,15 +42,15 @@ pushbutton_t pushButtons[] = {
     // Button Pin, Led Pin, state, last reading, locked, radio group
     
     // Manual valves control, only one shall be active
-    {BUTTON_A,      VALVE_A,  false, -1, false, RG_VALVES,    &switchValve},
-    {BUTTON_B,      VALVE_B,  false, -1, false, RG_VALVES,    &switchValve},
-    {BUTTON_C,      VALVE_C,  false, -1, false, RG_VALVES,    &switchValve},
-    {BUTTON_D,      VALVE_D,  false, -1, false, RG_VALVES,    &switchValve},
+    {BUTTON_A,      VALVE_A,  false, -1, false, RG_VALVES,     &switchValve},
+    {BUTTON_B,      VALVE_B,  false, -1, false, RG_VALVES,     &switchValve},
+    {BUTTON_C,      VALVE_C,  false, -1, false, RG_VALVES,     &switchValve},
+    {BUTTON_D,      VALVE_D,  false, -1, false, RG_VALVES,     &switchValve},
 
-    {BUTTON_SELECT, LED_S1,   false, -1, false, RG_SEQUENCES, &runSequence},
-    {BUTTON_RUN,    LED_RUN,   false, -1, false, RG_SEQUENCES, &runSequence},
+    {BUTTON_SELECT, LED_S1,   false, -1, false, RG_SEQUENCES,  &selectSequence},
+    {BUTTON_RUN,    LED_RUN,  false, -1, false, RG_SEQUENCES,  &runSequence},
 
-    {BUTTON_AUTO,   LED_AUTO, false, -1, false, RG_NONE,      &automaticMode},
+    {BUTTON_AUTO,   LED_AUTO, false, -1, false, RG_NONE,       &automaticMode},
     
     // end marker
     {-1, -1, false, -1, false, -1},
@@ -97,7 +97,10 @@ void runSequence( pushbutton_t *button ) {
 /* ----------------------------------------------------------------------------------- *
  * Select sequence to run
  * ----------------------------------------------------------------------------------- */
-void selectSequence( pushbutton_t *button );
+void selectSequence( pushbutton_t *button ) {
+    digitalWrite ( LED_S1, button->state ? LOW : HIGH);
+    digitalWrite ( LED_S2, button->state ? HIGH : LOW);
+}
 
 /* ----------------------------------------------------------------------------------- *
  * run in automatic mode

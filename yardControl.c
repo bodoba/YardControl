@@ -86,7 +86,7 @@ void lockValveControl (bool on ) {
         // enable manual valve control
         while ( pushButtons[btnIndex].btnPin >= 0 ) {
             if (pushButtons[btnIndex].radioGroup == RG_VALVES) {
-                pushButtons[buttonIdx].locked = false;
+                pushButtons[btnIndex].locked = false;
             }
             btnIndex++:
         }

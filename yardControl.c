@@ -104,6 +104,8 @@ bool readConfig(char *configFile) {
                     char *token = cursor;
                     char *value = nextValue(&cursor);
                     
+                    printf( "%s :: %s\n", token, value);
+                    
                 }
             }
             free(line);

@@ -27,7 +27,7 @@
 void setup(void);
 int  main( int rgc, char *argv[] );
 void lockValveControl (bool on );
-void readConfig ( char *configFile );
+bool readConfig ( char *configFile );
 
 // Bush button actions
 void setLed( pushbutton_t *button );

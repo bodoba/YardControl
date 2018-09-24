@@ -118,7 +118,7 @@ bool readConfig(void) {
                         char *valve = cursor;
                         char *time  = nextValue(&cursor);
                         printf( "  VALVE [%02d] %s on for %s minutes\n", step, valve, time);
-                        step++:
+                        step++;
                     }
                 }
             }

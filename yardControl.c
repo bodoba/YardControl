@@ -101,6 +101,8 @@ bool readConfig(void) {
                     line[length-1] = '\0';
                 }
                 
+                while ( *cursor == ' ' || *cursor == '\t' ) cursor++;
+                
                 if ( *cursor != '#') {                          /* skip '#' comments   */
                     char *token = cursor;
                     char *value = nextValue(&cursor);

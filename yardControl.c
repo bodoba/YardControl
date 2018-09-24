@@ -43,7 +43,7 @@ enum Modes { MANUAL_MODE, SEQUENCE_MODE, AUTOMATIC_MODE } systemMode;
 void setup(void);
 int  main( int rgc, char *argv[] );
 void lockValveControl (bool on );
-bool readConfig ( char *configFile );
+bool readConfig (void);
 
 // Bush button actions
 void setLed( pushbutton_t *button );
@@ -83,7 +83,7 @@ char *nextValue( char **cursor) {
     return *cursor;
 }
 
-bool readConfig(char *configFile) {
+bool readConfig(void) {
     FILE *fp = NULL;
     fp = fopen(configFile, "rb");
     
@@ -249,7 +249,8 @@ int main( int argc, char *argv[] ) {
             configFile = strdup(argv[++i]);
         }
     }
-
+    readConfig();
+    
     setupIO();                              /* initialize IO ports                     */
     
     for ( ;; ) {                            /* never end working                       */

@@ -107,8 +107,9 @@ bool readConfig(void) {
                     if (!strcmp(token, "SEQUENCE")) {
                         printf( "SEQUENCE %s\n", value);
                     } else if (!strcmp(token, "VALVE")) {
+                        char *valve = cursor;
                         char *time  = nextValue(&cursor);
-                        printf( "VALVE %s on for %s minutes\n", cursor, time);
+                        printf( "VALVE %s on for %s minutes\n", valve, time);
                     }
                 }
             }

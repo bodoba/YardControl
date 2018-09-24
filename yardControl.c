@@ -19,6 +19,7 @@
 #include "pushButton.h"
 #include <wiringPi.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <pcf8574.h>
 
 /* ----------------------------------------------------------------------------------- *

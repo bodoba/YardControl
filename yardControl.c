@@ -104,8 +104,11 @@ bool readConfig(void) {
                     char *token = cursor;
                     char *value = nextValue(&cursor);
                     
-                    printf( "%s :: %s\n", token, value);
-                    
+                    if (!strcmp(token, "SEQUENCE")) {
+                        printf( "SEQUENCE %s\n", value);
+                    } else if (!strcmp(token, "VALVE")) {
+                        printf( "VALVE    %s\n", value);
+                    }
                 }
             }
             free(line);

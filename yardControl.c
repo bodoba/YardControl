@@ -18,9 +18,12 @@
 #include "yardControl.h"
 #include "pushButton.h"
 #include <wiringPi.h>
+#include <pcf8574.h>
+
+#include <string.h>
+#include <syslog.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <pcf8574.h>
 
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without... ;)

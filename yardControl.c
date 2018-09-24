@@ -27,6 +27,7 @@
 void setup(void);
 int  main( int rgc, char *argv[] );
 void lockValveControl (bool on );
+void readConfig ( char *configFile );
 
 // Bush button actions
 void setLed( pushbutton_t *button );
@@ -65,6 +66,50 @@ enum Modes { MANUAL_MODE, SEQUENCE_MODE, AUTOMATIC_MODE } systemMode;
  * Sequence to run
  * ----------------------------------------------------------------------------------- */
 int activeSequence = 0;
+
+/* ----------------------------------------------------------------------------------- *
+ * Read config file
+ * ----------------------------------------------------------------------------------- */
+char *nextValue( char **cursor) {
+    while (**cursor && **cursor != ' ') (*cursor)++;                   /*   skip token */
+    **cursor = '\0'; (*cursor)++;                                      /* end of token */
+    while (**cursor && **cursor == ' ') (*cursor)++;                   /* skip spaces  */
+    return *cursor;
+}
+
+bool readConfig(char *configFile) {
+    FILE *fp = NULL;
+    fp = fopen(configFile, "rb");
+    
+    if (fp) {
+        char  *line=NULL;
+        char  *cursor;
+        size_t n=0;
+        size_t length = getline(&line, &n, fp);
+        
+        while ( length != -1) {
+            if ( length > 1 ) {                              /* skip empty lines       */
+                cursor = line;
+                if ( line[length-1] == '\n' ) {             /* remove trailing newline */
+                    line[length-1] = '\0';
+                }
+                
+                if ( *cursor != '#') {                          /* skip '#' comments   */
+                    char *token = cursor;
+                    char *value = nextValue(&cursor);
+                    
+                }
+            }
+            free(line);
+            n=0;
+            length = getline(&line, &n, fp);
+        }
+        fclose(fp);
+    }
+    return true;
+}
+
+
 
 /* ----------------------------------------------------------------------------------- *
  * Enable/Disable manual valve control (radio group: RG_VALVES)
@@ -166,7 +211,8 @@ void setup ( void ) {
     while ( pushButtons[btnIndex].btnPin >= 0 ) {
         pinMode(pushButtons[btnIndex].btnPin, INPUT);
         pinMode(pushButtons[btnIndex].ledPin, OUTPUT);
-        digitalWrite(pushButtons[btnIndex].ledPin, pushButtons[btnIndex].state ? LOW : HIGH);
+        digitalWrite(pushButtons[btnIndex].ledPin,
+                     pushButtons[btnIndex].state ? LOW : HIGH);
         btnIndex++;
     }
 

@@ -124,6 +124,9 @@ bool readConfig(void) {
             n=0;
             length = getline(&line, &n, fp);
         }
+        if ( sequence >= 0 ) {
+            printf("SEQUENCE END %02d\n", sequence);
+        }
         fclose(fp);
     }
     return true;

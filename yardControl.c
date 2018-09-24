@@ -109,14 +109,14 @@ bool readConfig(void) {
                     
                     if (!strcmp(token, "SEQUENCE")) {
                         if ( sequence >= 0 ) {
-                            printf("SEQUENCE END %02d\n", sequence);
+                            printf("SEQUENCE END   %02d\n", sequence);
                         }
                         sequence++;
                         printf("SEQUENCE START %02d\n", sequence);
                     } else if (!strcmp(token, "VALVE")) {
                         char *valve = cursor;
                         char *time  = nextValue(&cursor);
-                        printf( "VALVE %s on for %s minutes\n", valve, time);
+                        printf( "  VALVE %s on for %s minutes\n", valve, time);
                     }
                 }
             }
@@ -125,7 +125,7 @@ bool readConfig(void) {
             length = getline(&line, &n, fp);
         }
         if ( sequence >= 0 ) {
-            printf("SEQUENCE END %02d\n", sequence);
+            printf("SEQUENCE END   %02d\n", sequence);
         }
         fclose(fp);
     }

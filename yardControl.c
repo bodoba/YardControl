@@ -109,10 +109,10 @@ bool readConfig(void) {
                     
                     if (!strcmp(token, "SEQUENCE")) {
                         if ( sequence >= 0 ) {
-                            printf("SEQUENCE END %02d", sequence);
+                            printf("SEQUENCE END %02d\n", sequence);
                         }
                         sequence++;
-                        printf("SEQUENCE START %02d", sequence);
+                        printf("SEQUENCE START %02d\n", sequence);
                     } else if (!strcmp(token, "VALVE")) {
                         char *valve = cursor;
                         char *time  = nextValue(&cursor);

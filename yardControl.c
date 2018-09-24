@@ -22,6 +22,18 @@
 #include <pcf8574.h>
 
 /* ----------------------------------------------------------------------------------- *
+ * Some globals we can't do without... ;)
+ * ----------------------------------------------------------------------------------- */
+int  debug          = DEBUG;                     /* debug level                        */
+int  activeSequence = SEQUENCE;                  /* sequence to run                    */
+char *configFile    = CONFIG_FILE;               /* configuration file                 */
+
+/* ----------------------------------------------------------------------------------- *
+ * System modes
+ * ----------------------------------------------------------------------------------- */
+enum Modes { MANUAL_MODE, SEQUENCE_MODE, AUTOMATIC_MODE } systemMode;
+
+/* ----------------------------------------------------------------------------------- *
  * Prototypes
  * ----------------------------------------------------------------------------------- */
 void setup(void);
@@ -56,16 +68,6 @@ pushbutton_t pushButtons[] = {
     // end marker
     {-1, -1, false, -1, false, -1},
 };
-
-/* ----------------------------------------------------------------------------------- *
- * System modes
- * ----------------------------------------------------------------------------------- */
-enum Modes { MANUAL_MODE, SEQUENCE_MODE, AUTOMATIC_MODE } systemMode;
-
-/* ----------------------------------------------------------------------------------- *
- * Sequence to run
- * ----------------------------------------------------------------------------------- */
-int activeSequence = 0;
 
 /* ----------------------------------------------------------------------------------- *
  * Read config file
@@ -200,7 +202,7 @@ void setLed( pushbutton_t *button ) {
 /* ----------------------------------------------------------------------------------- *
  * Initial setup
  * ----------------------------------------------------------------------------------- */
-void setup ( void ) {
+void setupIO ( void ) {
     // initialize wiring PI and attached IO extender
     wiringPiSetup () ;
     pcf8574Setup (PINBASE_0, ADDR_IOEXT_0);
@@ -226,12 +228,25 @@ void setup ( void ) {
  * Main
  * ----------------------------------------------------------------------------------- */
 int main( int rgc, char *argv[] ) {
-
-    // initialize system
-    setup();
+    openlog(NULL, LOG_PID, LOG_USER);       /* use syslog to create a trace            */
     
-    // main loop
-    for ( ;; ) {
+    /* ------------------------------------------------------------------------------- */
+    /* Process command line options                                                    */
+    /* ------------------------------------------------------------------------------- */
+    
+    /* FIXME: Use getopt_long and provide some help to the user just in case...        */
+    for (int i=0; i<argc; i++) {
+        if (!strcmp(argv[i], "-d")) {       /* '-d' turns debug mode on                */
+            debug++;
+        }
+        if (!strcmp(argv[i], "-c")) {       /* '-c' specify configuration file         */
+            configFile = strdup(argv[++i]);
+        }
+    }
+
+    setupIO();                              /* initialize IO ports                     */
+    
+    for ( ;; ) {                            /* never end working                       */
         // process bush buttons
         int btnIndex = 0;
         while ( pushButtons[btnIndex].btnPin >= 0 ) {

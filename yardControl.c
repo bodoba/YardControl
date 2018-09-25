@@ -181,9 +181,9 @@ void dumpSequence( int sequenceIdx ) {
     int step = 0;
     int lastON = 0, lastOFF = 0;
     
-    printf("# -----------------------#\n", sequenceIdx );
-    printf("# Sequence %d             #\n", sequenceIdx );
-    printf("# -----------------------#\n", sequenceIdx );
+    printf("# -------------------------------------------------#\n");
+    printf("# Sequence %d                                       #\n", sequenceIdx );
+    printf("# -------------------------------------------------#\n");
     printf("SEQUENCE START\n");
     sequence_t *seq = sequence[sequenceIdx];
     while ( seq[step].offset >= 0 ) {

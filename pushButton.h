@@ -24,6 +24,7 @@
  * Definition of a push button
  * ----------------------------------------------------------------------------------- */
 typedef struct pushbutton_t {
+    char    name;                  // button name
     int     btnPin;                // Input pin
     int     ledPin;                // LED indicating button state
     bool    state;                 // button state

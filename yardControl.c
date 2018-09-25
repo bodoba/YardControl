@@ -62,18 +62,18 @@ pushbutton_t pushButtons[] = {
     // Button Pin, Led Pin, state, last reading, locked, radio group
     
     // Manual valves control, only one shall be active
-    {BUTTON_A,      VALVE_A,  false, -1, false, RG_VALVES,   &switchValve},
-    {BUTTON_B,      VALVE_B,  false, -1, false, RG_VALVES,   &switchValve},
-    {BUTTON_C,      VALVE_C,  false, -1, false, RG_VALVES,   &switchValve},
-    {BUTTON_D,      VALVE_D,  false, -1, false, RG_VALVES,   &switchValve},
+    {'A', BUTTON_A,      VALVE_A,  false, -1, false, RG_VALVES,   &switchValve},
+    {'B', BUTTON_B,      VALVE_B,  false, -1, false, RG_VALVES,   &switchValve},
+    {'C', BUTTON_C,      VALVE_C,  false, -1, false, RG_VALVES,   &switchValve},
+    {'D', BUTTON_D,      VALVE_D,  false, -1, false, RG_VALVES,   &switchValve},
 
-    {BUTTON_SELECT, LED_S1,   false, -1, false, RG_NONE,     &selectSequence},
-    {BUTTON_RUN,    LED_RUN,  false, -1, false, RG_NONE,     &runSequence},
+    {'S', BUTTON_SELECT, LED_S1,   false, -1, false, RG_NONE,     &selectSequence},
+    {'R', BUTTON_RUN,    LED_RUN,  false, -1, false, RG_NONE,     &runSequence},
 
-    {BUTTON_AUTO,   LED_AUTO, false, -1, false, RG_NONE,     &automaticMode},
+    {'P', BUTTON_AUTO,   LED_AUTO, false, -1, false, RG_NONE,     &automaticMode},
     
     // end marker
-    {-1, -1, false, -1, false, -1},
+    {'0', -1, -1, false, -1, false, -1},
 };
 
 /* ----------------------------------------------------------------------------------- *
@@ -182,7 +182,7 @@ void dumpSequence( int sequenceIdx ) {
     printf("Sequence %02d\n", sequenceIdx );
     sequence_t *seq = sequence[sequenceIdx];
     while ( seq[step].offset >= 0 ) {
-        printf("  %03d t+%04d %s\n", step, seq[step].offset, seq[step].state? "ON":"OFF" );
+        printf("  %03d t+%04d %c %s\n", step, seq[step].offset, seq[step].valve->name, seq[step].state? "ON":"OFF" );
         step++;
     }
 }

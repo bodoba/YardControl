@@ -179,7 +179,10 @@ bool readConfig(void) {
  * ----------------------------------------------------------------------------------- */
 void dumpSequence( int sequenceIdx ) {
     int step = 0;
-    printf("# Sequence %02d\n", sequenceIdx );
+
+    printf("# -----------------------#\n", sequenceIdx );
+    printf("# Sequence %d           #\n", sequenceIdx );
+    printf("# -----------------------#\n", sequenceIdx );
     printf("SEQUENCE START\n");
     sequence_t *seq = sequence[sequenceIdx];
     while ( seq[step].offset >= 0 ) {

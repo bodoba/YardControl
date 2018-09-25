@@ -138,7 +138,7 @@ bool readConfig(void) {
                                 sequence[sequenceIdx][step].valve  = &pushButtons[buttonIdx];
                                 sequence[sequenceIdx][step].state  = true;
                                 step++;
-                                offset += time;
+                                offset += (time*60);
 
                                 // turn valve off
                                 sequence[sequenceIdx][step].offset = offset;

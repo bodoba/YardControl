@@ -30,6 +30,7 @@ typedef struct sequence_t {
 } sequence_t;
 
 #define MAX_STEP        100  // max 100 steps per sequence (50 commands)
+#define TIME_SCALE       60
 
 /* ----------------------------------------------------------------------------------- *
  * PCF8574 IO extender

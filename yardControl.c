@@ -121,7 +121,7 @@ bool readConfig(void) {
                     } else if (!strcmp(token, "PAUSE")) {
                         int time  = atoi(value);
                         if (time > 0 ) {
-                            offset+=(time*60-1);
+                            offset+=(time*TIME_SCALE-1);
                         } else {
                             printf ( "[%s:%04d] ERROR: Wromg time in DELAY: %d\n", configFile, lineNo, time );
                         }
@@ -138,7 +138,7 @@ bool readConfig(void) {
                                 sequence[sequenceIdx][step].valve  = &pushButtons[buttonIdx];
                                 sequence[sequenceIdx][step].state  = true;
                                 step++;
-                                offset += (time*60);
+                                offset += (time*TIME_SCALE);
 
                                 // turn valve off
                                 sequence[sequenceIdx][step].offset = offset;
@@ -189,11 +189,11 @@ void dumpSequence( int sequenceIdx ) {
     while ( seq[step].offset >= 0 ) {
         if ( seq[step].state ) {
             if ( seq[step].offset > (lastOFF+1) ) {
-                printf("  PAUSE %d\n", (seq[step].offset-lastOFF)/60 );
+                printf("  PAUSE %d\n", (seq[step].offset-lastOFF)/TIME_SCALE );
             }
             lastON = seq[step].offset;
         } else {
-            printf("  VALVE %c %d\n", seq[step].valve->name, (seq[step].offset-lastON)/60 );
+            printf("  VALVE %c %d\n", seq[step].valve->name, (seq[step].offset-lastON)/TIME_SCALE );
             lastOFF = seq[step].offset;
         }
         printf("#                     %03d t+%04d %c %s\n",

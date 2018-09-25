@@ -116,7 +116,7 @@ bool readConfig(void) {
                         if ( sequenceIdx >= 0 ) {
                             printf("SEQUENCE END   %02d\n", sequenceIdx);
                         }
-                        sequencIdxe++;
+                        sequencIdx++;
                         printf("SEQUENCE START %02d\n", sequenceIdx);
                         step   = 0;
                         offset = 0;
@@ -131,7 +131,7 @@ bool readConfig(void) {
                                 
                             } else {
                                 printf ( "ERROR: Unknown valve: %s\n", valve );
-                            }                            
+                            }
                         } else {
                             printf ( "ERROR: Wromg time: %d\n", time );
                         }

@@ -121,6 +121,13 @@ bool readConfig(void) {
                         printf("SEQUENCE START %02d\n", sequenceIdx);
                         step   = 0;
                         offset = 0;
+                    } else if (!strcmp(token, "PAUSE")) {
+                        int time  = atoi(value);
+                        if (time > 0 ) {
+                            offset+=time;
+                        } else {
+                            printf ( "ERROR: Wromg time in DELAY: %d\n", time );
+                        }
                     } else if (!strcmp(token, "VALVE")) {
                         char *valve = cursor;
                         int time  = atoi(nextValue(&cursor));
@@ -148,11 +155,13 @@ bool readConfig(void) {
                                 // turn valve on
                                 sequence[sequenceIdx][step].offset = -1;
                             } else {
-                                printf ( "ERROR: Unknown valve: %s\n", valve );
+                                printf ( "ERROR: Unknown VALVE: %s\n", valve );
                             }
                         } else {
-                            printf ( "ERROR: Wromg time: %d\n", time );
+                            printf ( "ERROR: Wromg time in VALVE: %d\n", time );
                         }
+                    } else {
+                        printf ( "WARNING: Skipping unknown command: %s\n", token );
                     }
                 }
             }

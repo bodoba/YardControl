@@ -189,14 +189,18 @@ void dumpSequence( int sequenceIdx ) {
     while ( seq[step].offset >= 0 ) {
         if ( seq[step].state ) {
             if ( seq[step].offset > (lastOFF+1) ) {
-                printf("    PAUSE %d\n", seq[step].offset-lastOFF );
+                printf("  PAUSE %d\n", seq[step].offset-lastOFF );
             }
             lastON = seq[step].offset;
         } else {
-            printf("    VALVE %c %d\n", seq[step].valve->name, seq[step].offset-lastON );
+            printf("  VALVE %c %d\n", seq[step].valve->name, seq[step].offset-lastON );
             lastOFF = seq[step].offset;
         }
-        printf("#    %03d t+%04d %c %s\n", step, seq[step].offset, seq[step].valve->name, seq[step].state? "ON":"OFF" );
+        printf("#                     %03d t+%04d %c %s\n",
+               step,
+               seq[step].offset,
+               seq[step].valve->name,
+               seq[step].state? "ON":"OFF");
         step++;
     }
 }

@@ -21,6 +21,7 @@
 #include <pcf8574.h>
 
 #include <string.h>
+#include <ctype.h>
 #include <syslog.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -143,7 +144,7 @@ bool readConfig(void) {
             length = getline(&line, &n, fp);
         }
         if ( sequence >= 0 ) {
-            printf("SEQUENCE END   %02d\n", sequence);
+            printf("SEQUENCE END   %02d\n", sequenceIdx);
         }
         fclose(fp);
     }

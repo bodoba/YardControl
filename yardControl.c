@@ -121,7 +121,7 @@ bool readConfig(void) {
                     } else if (!strcmp(token, "PAUSE")) {
                         int time  = atoi(value);
                         if (time > 0 ) {
-                            offset+=(time-1);
+                            offset+=(time*60-1);
                         } else {
                             printf ( "[%s:%04d] ERROR: Wromg time in DELAY: %d\n", configFile, lineNo, time );
                         }
@@ -189,11 +189,11 @@ void dumpSequence( int sequenceIdx ) {
     while ( seq[step].offset >= 0 ) {
         if ( seq[step].state ) {
             if ( seq[step].offset > (lastOFF+1) ) {
-                printf("  PAUSE %d\n", seq[step].offset-lastOFF );
+                printf("  PAUSE %d\n", (seq[step].offset-lastOFF)/60 );
             }
             lastON = seq[step].offset;
         } else {
-            printf("  VALVE %c %d\n", seq[step].valve->name, seq[step].offset-lastON );
+            printf("  VALVE %c %d\n", seq[step].valve->name, (seq[step].offset-lastON)/60 );
             lastOFF = seq[step].offset;
         }
         printf("#                     %03d t+%04d %c %s\n",

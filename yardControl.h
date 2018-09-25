@@ -17,7 +17,7 @@
 /* *********************************************************************************** */
 #ifndef yardControl_h
 #define yardControl_h
-#include "bushButton.h"
+#include "pushButton.h"
 
 /* ----------------------------------------------------------------------------------- *
  * A step in a sequence

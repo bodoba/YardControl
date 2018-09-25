@@ -43,9 +43,10 @@ enum Modes { MANUAL_MODE, SEQUENCE_MODE, AUTOMATIC_MODE } systemMode;
  * Prototypes
  * ----------------------------------------------------------------------------------- */
 void setup(void);
-int  main( int rgc, char *argv[] );
-void lockValveControl (bool on );
+int  main(int rgc, char *argv[]);
+void lockValveControl(bool on);
 bool readConfig (void);
+void dumpSequence(int sequenceIdx);
 
 // Bush button actions
 void setLed( pushbutton_t *button );
@@ -94,8 +95,6 @@ bool readConfig(void) {
     sequence[0][0].offset = -1;
     sequence[1][0].offset = -1;
     
-
-
     if (fp) {
         char  *line=NULL;
         char  *cursor;
@@ -168,9 +167,24 @@ bool readConfig(void) {
         }
         fclose(fp);
     }
+
+    dumpSequence( 0 );
+    dumpSequence( 1 );
+
     return true;
 }
 
+/* ----------------------------------------------------------------------------------- *
+ * Dump sequence definition
+ * ----------------------------------------------------------------------------------- */
+void dumpSequence( int sequenceIdx ) {
+    int step = 0;
+    sequence_t *seq = &sequence[sequneceIdx];
+    while ( sequence[step].offset >= 0 ) {
+
+        step++;
+    }
+}
 
 
 /* ----------------------------------------------------------------------------------- *

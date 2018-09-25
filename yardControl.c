@@ -116,7 +116,7 @@ bool readConfig(void) {
                         if ( sequenceIdx >= 0 ) {
                             printf("SEQUENCE END   %02d\n", sequenceIdx);
                         }
-                        sequencIdx++;
+                        sequenceIdx++;
                         printf("SEQUENCE START %02d\n", sequenceIdx);
                         step   = 0;
                         offset = 0;

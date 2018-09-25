@@ -181,7 +181,7 @@ void dumpSequence( int sequenceIdx ) {
     int step = 0;
 
     printf("# -----------------------#\n", sequenceIdx );
-    printf("# Sequence %d           #\n", sequenceIdx );
+    printf("# Sequence %d             #\n", sequenceIdx );
     printf("# -----------------------#\n", sequenceIdx );
     printf("SEQUENCE START\n");
     sequence_t *seq = sequence[sequenceIdx];

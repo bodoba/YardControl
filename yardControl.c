@@ -151,7 +151,7 @@ bool readConfig(void) {
                                 sequence[sequenceIdx][step].offset = -1;
                             } else {
                                 if ( step >= (MAX_STEP-2) ) {
-                                    printf ( "[%s:%04d] ERROR: Sequence too long, ignoring line\n", configFile, lineNo );
+                                    printf ( "[%s:%04d] ERROR: Sequence too long, ignoring line \n", configFile, lineNo );
                                 } else {
                                     printf ( "[%s:%04d] ERROR: Unknown VALVE: %s\n", configFile, lineNo, valve );
                                 }
@@ -184,28 +184,34 @@ bool readConfig(void) {
 void dumpSequence( int sequenceIdx ) {
     int step = 0;
     int lastON = 0, lastOFF = 0;
-    
-    printf("# -------------------------------------------------#\n");
-    printf("# Sequence %d                                       #\n", sequenceIdx );
-    printf("# -------------------------------------------------#\n");
-    printf("SEQUENCE START\n");
     sequence_t *seq = sequence[sequenceIdx];
-    while ( seq[step].offset >= 0 ) {
-        if ( seq[step].state ) {
-            if ( seq[step].offset > (lastOFF+1) ) {
-                printf("  PAUSE %d\n", (seq[step].offset-lastOFF)/TIME_SCALE );
+
+    if ( seq[0].offset >=0 ) {
+        printf("# -------------------------------------------------#\n");
+        printf("# Sequence %d                                       #\n", sequenceIdx );
+        printf("# -------------------------------------------------#\n");
+        printf("SEQUENCE START\n");
+        while ( seq[step].offset >= 0 ) {
+            if ( seq[step].state ) {
+                if ( seq[step].offset > (lastOFF+1) ) {
+                    printf("  PAUSE %d\n", (seq[step].offset-lastOFF)/TIME_SCALE );
+                }
+                lastON = seq[step].offset;
+            } else {
+                printf("  VALVE %c %d\n", seq[step].valve->name, (seq[step].offset-lastON)/TIME_SCALE );
+                lastOFF = seq[step].offset;
             }
-            lastON = seq[step].offset;
-        } else {
-            printf("  VALVE %c %d\n", seq[step].valve->name, (seq[step].offset-lastON)/TIME_SCALE );
-            lastOFF = seq[step].offset;
+            printf("#                     %03d t+%04d %c %s\n",
+                   step,
+                   seq[step].offset,
+                   seq[step].valve->name,
+                   seq[step].state? "ON":"OFF");
+            step++;
         }
-        printf("#                     %03d t+%04d %c %s\n",
-               step,
-               seq[step].offset,
-               seq[step].valve->name,
-               seq[step].state? "ON":"OFF");
-        step++;
+    } else {
+        printf("# -------------------------------------------------#\n");
+        printf("# Sequence %d not defined                           #\n", sequenceIdx );
+        printf("# -------------------------------------------------#\n");
     }
 }
 

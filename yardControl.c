@@ -134,7 +134,7 @@ bool readConfig(void) {
                         int buttonIdx;
                         if (time > 0 ) {
                             buttonIdx = toupper(*valve) - 'A';
-                            if ( buttonIdx >= 0 || buttonIdx <= 3 ) {   // Add step to sequence
+                            if ( buttonIdx >= 0 && buttonIdx <= 3 ) {   // Add step to sequence
                                 
                                 // turn valve on
                                 printf ( "  %02d: %05d %c ON\n", step, offset, buttonIdx+'A' );

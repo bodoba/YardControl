@@ -179,7 +179,7 @@ bool readConfig(void) {
  * ----------------------------------------------------------------------------------- */
 void dumpSequence( int sequenceIdx ) {
     int step = 0;
-    sequence_t *seq = &sequence[sequenceIdx];
+    sequence_t *seq = sequence[sequenceIdx];
     while ( seq[step]->offset >= 0 ) {
 
         step++;

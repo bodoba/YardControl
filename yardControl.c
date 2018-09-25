@@ -179,13 +179,13 @@ bool readConfig(void) {
  * ----------------------------------------------------------------------------------- */
 void dumpSequence( int sequenceIdx ) {
     int step = 0;
+    printf("Sequence %02d\n", sequenceIdx );
     sequence_t *seq = sequence[sequenceIdx];
     while ( seq[step].offset >= 0 ) {
-
+        printf("  %03d t+%04d %s\n", step, seq[step].offset, seq[step].state? "ON":"OFF" );
         step++;
     }
 }
-
 
 /* ----------------------------------------------------------------------------------- *
  * Enable/Disable manual valve control (radio group: RG_VALVES)

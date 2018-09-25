@@ -17,6 +17,7 @@
 /* *********************************************************************************** */
 #ifndef yardControl_h
 #define yardControl_h
+#include "bushButton.h"
 
 /* ----------------------------------------------------------------------------------- *
  * A step in a sequence
@@ -24,7 +25,7 @@
 
 typedef struct sequence_t {
     int          offset;     // offset after sequence start this action shall be triggered
-    bushbutton_t valve;      // valve to be switched on
+    bushButton_t valve;      // valve to be switched on
 } sequence_t;
 
 /* ----------------------------------------------------------------------------------- *

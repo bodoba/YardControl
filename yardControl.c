@@ -129,7 +129,7 @@ bool readConfig(void) {
                             buttonIdx = toupper(*valve) - 'A';
                             if ( buttonIdx >= 0 || buttonIdx <= 3 ) {
                                 // Add step to sequence
-                                printf ( "  %02d: %05d %s\n", step, time, buttonIdx+'A' );
+                                printf ( "  %02d: %05d %c\n", step, time, buttonIdx+'A' );
                             } else {
                                 printf ( "ERROR: Unknown valve: %s\n", valve );
                             }

@@ -124,7 +124,7 @@ bool readConfig(void) {
                     } else if (!strcmp(token, "PAUSE")) {
                         int time  = atoi(value);
                         if (time > 0 ) {
-                            offset+=time;
+                            offset+=(time-1);
                         } else {
                             printf ( "ERROR: Wromg time in DELAY: %d\n", time );
                         }

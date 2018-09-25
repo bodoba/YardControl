@@ -179,10 +179,14 @@ bool readConfig(void) {
  * ----------------------------------------------------------------------------------- */
 void dumpSequence( int sequenceIdx ) {
     int step = 0;
-    printf("Sequence %02d\n", sequenceIdx );
+    printf("# Sequence %02d\n", sequenceIdx );
+    printf("SEQUENCE START\n");
     sequence_t *seq = sequence[sequenceIdx];
     while ( seq[step].offset >= 0 ) {
-        printf("  %03d t+%04d %c %s\n", step, seq[step].offset, seq[step].valve->name, seq[step].state? "ON":"OFF" );
+        printf("#    %03d t+%04d %c %s\n", step, seq[step].offset, seq[step].valve->name, seq[step].state? "ON":"OFF" );
+        if ( !seq[step].state ) {
+            printf("    VALVE %c ??\n", seq[step].valve->name );
+        }
         step++;
     }
 }

@@ -32,7 +32,7 @@
 int  debug          = DEBUG;                  /* debug level                           */
 int  activeSequence = SEQUENCE;               /* sequence to run                       */
 char *configFile    = CONFIG_FILE;            /* configuration file                    */
-sequence_t sequence[2][40];                   /* two program sequences of max 40 steps */
+sequence_t sequence[2][MAX_STEP];             /* two program sequences of max 40 steps */
 
 /* ----------------------------------------------------------------------------------- *
  * System modes
@@ -88,7 +88,7 @@ char *nextValue( char **cursor) {
 bool readConfig(void) {
     FILE *fp = NULL;
     fp = fopen(configFile, "rb");
-    int sequenceIdx = -1, step = -1, offset=-1;
+    int sequenceIdx = -1, step = -1, offset=-1, lineNo=1;
     
     // start with two empty sequences
     sequence[0][0].offset = -1;
@@ -126,7 +126,7 @@ bool readConfig(void) {
                         if (time > 0 ) {
                             offset+=(time-1);
                         } else {
-                            printf ( "ERROR: Wromg time in DELAY: %d\n", time );
+                            printf ( "[%s:%04d] ERROR: Wromg time in DELAY: %d\n", configFile, lineNo, time );
                         }
                     } else if (!strcmp(token, "VALVE")) {
                         char *valve = cursor;
@@ -134,10 +134,9 @@ bool readConfig(void) {
                         int buttonIdx;
                         if (time > 0 ) {
                             buttonIdx = toupper(*valve) - 'A';
-                            if ( buttonIdx >= 0 && buttonIdx <= 3 ) {   // Add step to sequence
+                            if ( buttonIdx >= 0 && buttonIdx <= 3 && step < (MAX_STEP-2)) {   // Add step to sequence
                                 
                                 // turn valve on
-                                printf ( "  %02d: %05d %c ON\n", step, offset, buttonIdx+'A' );
                                 sequence[sequenceIdx][step].offset = offset;
                                 sequence[sequenceIdx][step].valve  = &pushButtons[buttonIdx];
                                 sequence[sequenceIdx][step].state  = true;
@@ -145,29 +144,29 @@ bool readConfig(void) {
                                 offset += time;
 
                                 // turn valve off
-                                printf ( "  %02d: %05d %c OFF\n", step, offset, buttonIdx+'A' );
                                 sequence[sequenceIdx][step].offset = offset;
                                 sequence[sequenceIdx][step].valve  = &pushButtons[buttonIdx];
                                 sequence[sequenceIdx][step].state  = false;
                                 step++;
                                 offset++;
                                 
-                                // turn valve on
+                                // Add End marker
                                 sequence[sequenceIdx][step].offset = -1;
                             } else {
-                                printf ( "ERROR: Unknown VALVE: %s\n", valve );
+                                printf ( "[%s:%04d] ERROR: Unknown VALVE: %s\n", configFile, lineNo, valve );
                             }
                         } else {
-                            printf ( "ERROR: Wromg time in VALVE: %d\n", time );
+                            printf ( "[%s:%04d] ERROR: Wromg time in VALVE: %d\n", configFile, lineNo, time );
                         }
                     } else {
-                        printf ( "WARNING: Skipping unknown command: %s\n", token );
+                        printf ( "[%s:%04d] WARNING: Skipping unknown command: %s\n", configFile, lineNo, token );
                     }
                 }
             }
             free(line);
             n=0;
             length = getline(&line, &n, fp);
+            lineNo++;
         }
         if ( sequence >= 0 ) {
             printf("SEQUENCE END   %02d\n", sequenceIdx);

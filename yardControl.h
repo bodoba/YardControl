@@ -29,8 +29,10 @@ typedef struct sequence_t {
     bool         state;      // new state of valve
 } sequence_t;
 
+#define MAX_STEP        100  // max 100 steps per sequence (50 commands)
+
 /* ----------------------------------------------------------------------------------- *
- * PCF8574 io extender
+ * PCF8574 IO extender
  * ----------------------------------------------------------------------------------- */
 #define ADDR_IOEXT_0   0x38
 #define PINBASE_0        64

@@ -130,7 +130,7 @@ bool readConfig(void) {
                         int time  = atoi(nextValue(&cursor));
                         int buttonIdx;
                         if (time > 0 ) {
-                            buttonIdx = toupper(*valve) - 'A';
+                            buttonIdx = toupper(*valve) - 'A';  // A->0, B->1, C->2, D->3
                             if ( buttonIdx >= 0 && buttonIdx <= 3 && step < (MAX_STEP-2)) {   // Add step to sequence
                                 
                                 // turn valve on
@@ -150,7 +150,11 @@ bool readConfig(void) {
                                 // Add End marker
                                 sequence[sequenceIdx][step].offset = -1;
                             } else {
-                                printf ( "[%s:%04d] ERROR: Unknown VALVE: %s\n", configFile, lineNo, valve );
+                                if ( step >= (MAX_STEP-2) ) {
+                                    printf ( "[%s:%04d] ERROR: Sequence too long, ignoring line\n", configFile, lineNo );
+                                } else {
+                                    printf ( "[%s:%04d] ERROR: Unknown VALVE: %s\n", configFile, lineNo, valve );
+                                }
                             }
                         } else {
                             printf ( "[%s:%04d] ERROR: Wromg time in VALVE: %d\n", configFile, lineNo, time );

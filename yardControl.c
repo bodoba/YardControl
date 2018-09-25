@@ -86,7 +86,7 @@ char *nextValue( char **cursor) {
 bool readConfig(void) {
     FILE *fp = NULL;
     fp = fopen(configFile, "rb");
-    int sequence = -1, step = -1;
+    int sequence = -1, step = -1, offset=-1;
     
     if (fp) {
         char  *line=NULL;
@@ -113,10 +113,15 @@ bool readConfig(void) {
                         }
                         sequence++;
                         printf("SEQUENCE START %02d\n", sequence);
-                        step = 0;
+                        step   = 0;
+                        offset = 0;
                     } else if (!strcmp(token, "VALVE")) {
                         char *valve = cursor;
                         char *time  = nextValue(&cursor);
+                        
+                        
+                        
+                        
                         printf( "  VALVE [%02d] %s on for %s minutes\n", step, valve, time);
                         step++;
                     }

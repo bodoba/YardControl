@@ -19,6 +19,16 @@
 #define yardControl_h
 
 /* ----------------------------------------------------------------------------------- *
+ * A step in a sequence
+ * ----------------------------------------------------------------------------------- */
+typedef enum valve_t { valveA, valveB, valveC, valveD } valve_t;
+
+typedef struct sequence_t {
+    int     offset;     // offset after sequence start this action shall be triggered
+    valve_t valve;      // valve to be switched on
+} sequence_t;
+
+/* ----------------------------------------------------------------------------------- *
  * PCF8574 io extender
  * ----------------------------------------------------------------------------------- */
 #define ADDR_IOEXT_0   0x38

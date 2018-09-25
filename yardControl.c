@@ -127,8 +127,9 @@ bool readConfig(void) {
                         int buttonIdx;
                         if (time > 0 ) {
                             buttonIdx = toupper(*valve) - 'A';
-                            if ( buttonIdx >= 0 || buttonIdx <= 3 ) {
-                                // Add step to sequence
+                            if ( buttonIdx >= 0 || buttonIdx <= 3 ) {   // Add step to sequence
+                                
+                                // turn valve on
                                 printf ( "  %02d: %05d %c ON\n", step, offset, buttonIdx+'A' );
                                 sequence[sequenceIdx][step].offset = offset;
                                 sequence[sequenceIdx][step].valve  = &pushButtons[buttonIdx];
@@ -136,12 +137,16 @@ bool readConfig(void) {
                                 step++;
                                 offset += time;
 
+                                // turn valve off
                                 printf ( "  %02d: %05d %c OFF\n", step, offset, buttonIdx+'A' );
                                 sequence[sequenceIdx][step].offset = offset;
                                 sequence[sequenceIdx][step].valve  = &pushButtons[buttonIdx];
                                 sequence[sequenceIdx][step].state  = false;
                                 step++;
                                 offset++;
+                                
+                                // turn valve on
+                                sequence[sequenceIdx][step].offset = -1;
                             } else {
                                 printf ( "ERROR: Unknown valve: %s\n", valve );
                             }

@@ -94,6 +94,8 @@ bool readConfig(void) {
     sequence[0][0].offset = -1;
     sequence[1][0].offset = -1;
     
+
+
     if (fp) {
         char  *line=NULL;
         char  *cursor;
@@ -114,11 +116,7 @@ bool readConfig(void) {
                     char *value = nextValue(&cursor);
                     
                     if (!strcmp(token, "SEQUENCE")) {
-                        if ( sequenceIdx >= 0 ) {
-                            printf("SEQUENCE END   %02d\n", sequenceIdx);
-                        }
                         sequenceIdx++;
-                        printf("SEQUENCE START %02d\n", sequenceIdx);
                         step   = 0;
                         offset = 0;
                     } else if (!strcmp(token, "PAUSE")) {
@@ -167,9 +165,6 @@ bool readConfig(void) {
             n=0;
             length = getline(&line, &n, fp);
             lineNo++;
-        }
-        if ( sequence >= 0 ) {
-            printf("SEQUENCE END   %02d\n", sequenceIdx);
         }
         fclose(fp);
     }

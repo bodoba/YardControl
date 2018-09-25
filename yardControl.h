@@ -21,11 +21,10 @@
 /* ----------------------------------------------------------------------------------- *
  * A step in a sequence
  * ----------------------------------------------------------------------------------- */
-typedef enum valve_t { valveA, valveB, valveC, valveD } valve_t;
 
 typedef struct sequence_t {
-    int     offset;     // offset after sequence start this action shall be triggered
-    valve_t valve;      // valve to be switched on
+    int          offset;     // offset after sequence start this action shall be triggered
+    bushbutton_t valve;      // valve to be switched on
 } sequence_t;
 
 /* ----------------------------------------------------------------------------------- *

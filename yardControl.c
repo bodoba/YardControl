@@ -28,10 +28,10 @@
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without... ;)
  * ----------------------------------------------------------------------------------- */
-int  debug          = DEBUG;                     /* debug level                        */
-int  activeSequence = SEQUENCE;                  /* sequence to run                    */
-char *configFile    = CONFIG_FILE;               /* configuration file                 */
-sequence_t sequence[2][40];
+int  debug          = DEBUG;                  /* debug level                           */
+int  activeSequence = SEQUENCE;               /* sequence to run                       */
+char *configFile    = CONFIG_FILE;            /* configuration file                    */
+sequence_t sequence[2][40];                   /* two program sequences of max 40 steps */
 
 /* ----------------------------------------------------------------------------------- *
  * System modes
@@ -87,7 +87,11 @@ char *nextValue( char **cursor) {
 bool readConfig(void) {
     FILE *fp = NULL;
     fp = fopen(configFile, "rb");
-    int sequence = -1, step = -1, offset=-1;
+    int sequenceIdx = -1, step = -1, offset=-1;
+    
+    // start with two empty sequences
+    sequence[0][0].offset = -1;
+    sequence[1][0].offset = -1;
     
     if (fp) {
         char  *line=NULL;
@@ -109,22 +113,28 @@ bool readConfig(void) {
                     char *value = nextValue(&cursor);
                     
                     if (!strcmp(token, "SEQUENCE")) {
-                        if ( sequence >= 0 ) {
-                            printf("SEQUENCE END   %02d\n", sequence);
+                        if ( sequenceIdx >= 0 ) {
+                            printf("SEQUENCE END   %02d\n", sequenceIdx);
                         }
-                        sequence++;
-                        printf("SEQUENCE START %02d\n", sequence);
+                        sequencIdxe++;
+                        printf("SEQUENCE START %02d\n", sequenceIdx);
                         step   = 0;
                         offset = 0;
                     } else if (!strcmp(token, "VALVE")) {
                         char *valve = cursor;
-                        char *time  = nextValue(&cursor);
-                        
-                        
-                        
-                        
-                        printf( "  VALVE [%02d] %s on for %s minutes\n", step, valve, time);
-                        step++;
+                        int time  = atoi(nextValue(&cursor));
+                        int buttonIdx;
+                        if (time > 0 ) {
+                            buttonIdx = toupper(*valve) - 'A';
+                            if ( buttonIdx >= 0 || buttonIdx <= 3 ) {
+                                // Add step to sequence
+                                
+                            } else {
+                                printf ( "ERROR: Unknown valve: %s\n", valve );
+                            }                            
+                        } else {
+                            printf ( "ERROR: Wromg time: %d\n", time );
+                        }
                     }
                 }
             }
@@ -272,6 +282,7 @@ int main( int argc, char *argv[] ) {
             configFile = strdup(argv[++i]);
         }
     }
+    
     readConfig();
     
     setupIO();                              /* initialize IO ports                     */

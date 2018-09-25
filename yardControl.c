@@ -140,8 +140,8 @@ bool readConfig(void) {
                                 sequence[sequenceIdx][step].offset = offset;
                                 sequence[sequenceIdx][step].valve  = &pushButtons[buttonIdx];
                                 sequence[sequenceIdx][step].state  = false;
+                                step++;
                                 offset++;
-                                step++;                                
                             } else {
                                 printf ( "ERROR: Unknown valve: %s\n", valve );
                             }

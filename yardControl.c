@@ -31,6 +31,7 @@
 int  debug          = DEBUG;                     /* debug level                        */
 int  activeSequence = SEQUENCE;                  /* sequence to run                    */
 char *configFile    = CONFIG_FILE;               /* configuration file                 */
+sequence_t sequence[2][40];
 
 /* ----------------------------------------------------------------------------------- *
  * System modes

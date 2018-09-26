@@ -34,6 +34,7 @@ typedef struct sequence_t {
     int          offset;     // offset after sequence start this action shall be triggered
     pushbutton_t *valve;     // valve to be switched
     bool         state;      // new state of valve
+    bool         done;       // step done or still open?
 } sequence_t;
 
 /* ----------------------------------------------------------------------------------- *

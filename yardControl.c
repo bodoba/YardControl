@@ -121,9 +121,14 @@ void runSequence( pushbutton_t *button ) {
     // enable/disable sequence change
     pushButtons[4].locked = button->state;
     
-    if ( button->state ) {
+    if ( button->state && sequence[activeSequence][0].offset >=0 ) {
         // start sequence
         systemMode = SEQUENCE_MODE;
+        int step = 0;
+        while ( sequence[activeSequence][step].offset >= 0 ) {
+            sequence[activeSequence][step].done = false;
+            step++;
+        }
         sequenceStartTime = time(NULL);
     } else {
         // stop sequence

@@ -134,7 +134,6 @@ bool readConfig(void) {
                         hour=atoi(hh);
                         min =atoi(mm);
                         if((hour+min) > 0) {
-                            printf ( "TIME: %02d:%02d\n", hour, min );
                             startTime[sequenceIdx].tm_min  = min;
                             startTime[sequenceIdx].tm_hour = hour;
                         } else {

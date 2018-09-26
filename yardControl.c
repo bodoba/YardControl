@@ -208,9 +208,9 @@ void dumpSequence( int sequenceIdx ) {
     sequence_t *seq = sequence[sequenceIdx];
 
     if ( seq[0].offset >=0 ) {
-        printf("# -------------------------------------------------#\n");
-        printf("# Sequence %d                                       #\n", sequenceIdx );
-        printf("# -------------------------------------------------#\n");
+        printf("# ----------------------------------------------------------------------------------- #\n");
+        printf("# Sequence %d                                                                          #\n", sequenceIdx );
+        printf("# ----------------------------------------------------------------------------------- #\n");
         printf("SEQUENCE START\n");
         if ( startTime[sequenceIdx].tm_hour >= 0 ) {
             printf( "  START %02d:%02d\n", startTime[sequenceIdx].tm_hour, startTime[sequenceIdx].tm_min);

@@ -261,7 +261,8 @@ int main( int argc, char *argv[] ) {
                     step++;
                 }
                 if ( sequence[activeSequence][step-1].done ) {
-                    printf(" * S%02d:%02d t+%04d Last command\n");
+                    printf(" * S%02d:%02d t+%04d Last command\n",
+                           activeSequence, step, offset);
                     // simulate sequence button press
                     pushButtons[5].state=false;
                     runSequence( &pushButtons[5] );

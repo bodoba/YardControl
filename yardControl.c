@@ -213,7 +213,7 @@ void dumpSequence( int sequenceIdx ) {
         printf("# Sequence %d                                       #\n", sequenceIdx );
         printf("# -------------------------------------------------#\n");
         printf("SEQUENCE START\n");
-        if ( startTime[sequenceIdx].hour >= 0 ) {
+        if ( startTime[sequenceIdx].tm_hour >= 0 ) {
             printf( "  START %02d:%02d\n", startTime[sequenceIdx].tm_hour, startTime[sequenceIdx].tm_min);
         }
         while ( seq[step].offset >= 0 ) {

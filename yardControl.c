@@ -215,7 +215,7 @@ void dumpSequence( int sequenceIdx ) {
         if ( startTime[sequenceIdx].tm_hour >= 0 ) {
             printf( "  START %02d:%02d\n", startTime[sequenceIdx].tm_hour, startTime[sequenceIdx].tm_min);
         } else {
-            printf("#                     no start time defined, sequence will not run in automatic mode\n");
+            printf("#                     no START time defined, sequence will not run in automatic mode\n");
         }
         while ( seq[step].offset >= 0 ) {
             if ( seq[step].state ) {

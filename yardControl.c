@@ -236,7 +236,18 @@ int main( int argc, char *argv[] ) {
         if (systemMode == SEQUENCE_MODE) {
             int offset = (int)now-sequenceStartTime;
             if ( lastTime != now ) {
-                printf ("Offset: %04d\n", offset );
+                printf (" * Offset: %04d\n", offset );
+                int step = 0;
+                while ( sequence[activeSequence][step].offset >= 0 ) {
+                    if (   sequence[activeSequence][step].offset <= offset
+                        && sequence[activeSequence][step].done   == false ) {
+                        sequence[activeSequence][step].done = true;
+                        printf("* %c %s\n",
+                               sequence[activeSequence][step].valve->name,
+                               sequence[activeSequence][step].state? "ON":"OFF");
+                    }
+                    step++;
+                }
             }
         }
         

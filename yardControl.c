@@ -34,7 +34,7 @@ int  debug          = DEBUG;                  /* debug level                    
 int  activeSequence = SEQUENCE;               /* sequence to run                       */
 char *configFile    = CONFIG_FILE;            /* configuration file                    */
 sequence_t  sequence[2][MAX_STEP];            /* two program sequences of max 40 steps */
-starttime_t tartTime[2];                      /* start times for each sequence         */
+starttime_t startTime[2];                     /* start times for each sequence         */
 
 /* ----------------------------------------------------------------------------------- *
  * System modes

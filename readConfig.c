@@ -44,6 +44,7 @@ bool readConfig(void) {
     FILE *fp = NULL;
     fp = fopen(configFile, "rb");
     int sequenceIdx = -1, step = -1, offset=-1, lineNo=1;
+    bool retval = false;
     
     // start with two empty sequences
     sequence[0][0].offset = -1;
@@ -141,14 +142,11 @@ bool readConfig(void) {
             n=0;
             length = getline(&line, &n, fp);
             lineNo++;
+            retval = true;
         }
         fclose(fp);
     }
-    
-    dumpSequence( 0 );
-    dumpSequence( 1 );
-    
-    return true;
+    return retval;
 }
 
 /* ----------------------------------------------------------------------------------- *

@@ -206,7 +206,9 @@ int main( int argc, char *argv[] ) {
     }
     
     readConfig();
-    
+    dumpSequence( 0 );
+    dumpSequence( 1 );
+
     setupIO();                              /* initialize IO ports                     */
     
     for ( ;; ) {                            /* never end working                       */

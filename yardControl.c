@@ -129,10 +129,12 @@ void runSequence( pushbutton_t *button ) {
             sequence[activeSequence][step].done = false;
             step++;
         }
+        printf("** Start sequence %02d\n", activeSequence);
         sequenceStartTime = time(NULL);
     } else {
         // stop sequence
         systemMode = MANUAL_MODE;
+        printf("** Interrupt sequence %02d\n", activeSequence);
     }
 }
 

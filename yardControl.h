@@ -29,6 +29,11 @@ typedef struct sequence_t {
     bool         state;      // new state of valve
 } sequence_t;
 
+typdef struct starttime_t {
+    int tm_min;
+    int tm_hour;
+} starttime_t;
+
 #define MAX_STEP        100  // max 100 steps per sequence (50 commands)
 #define TIME_SCALE        1
 

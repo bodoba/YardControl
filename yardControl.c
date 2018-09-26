@@ -33,8 +33,8 @@
 int  debug          = DEBUG;                  /* debug level                           */
 int  activeSequence = SEQUENCE;               /* sequence to run                       */
 char *configFile    = CONFIG_FILE;            /* configuration file                    */
-sequence_t sequence[2][MAX_STEP];             /* two program sequences of max 40 steps */
-time_t     startTime[2];                      /* start times for each sequence         */
+sequence_t  sequence[2][MAX_STEP];            /* two program sequences of max 40 steps */
+starttime_t tartTime[2];                      /* start times for each sequence         */
 
 /* ----------------------------------------------------------------------------------- *
  * System modes
@@ -95,10 +95,10 @@ bool readConfig(void) {
     
     // start with two empty sequences
     sequence[0][0].offset = -1;
-    startTime[0]          = (time_t)0;
+    startTime[0].tm_hour  = -1;
     
     sequence[1][0].offset = -1;
-    startTime[1]          = (time_t)0;
+    startTime[1].tm_hour  = -1;
 
     if (fp) {
         char  *line=NULL;
@@ -135,6 +135,8 @@ bool readConfig(void) {
                         min =atoi(mm);
                         if((hour+min) > 0) {
                             printf ( "TIME: %02d:%02d\n", hour, min );
+                            startTime[sequenceIdx].tm_min  = min;
+                            startTime[sequenceIdx].tm_hour = hour;
                         } else {
                             printf ( "[%s:%04d] ERROR: TIME expected as hh:mm\n", configFile, lineNo );
                         }

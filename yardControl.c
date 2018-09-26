@@ -263,6 +263,8 @@ int main( int argc, char *argv[] ) {
                 if ( sequence[activeSequence][step-1].done ) {
                     printf("** End of sequence %02d\n", activeSequence);
                     systemMode = MANUAL_MODE;
+                    pushButtons[5].state=false;
+                    runSequence( &pushButtons[5] );
                 }
             }
         }

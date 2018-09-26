@@ -133,7 +133,7 @@ bool readConfig(void) {
                         *(value+5)='\0';
                         hour=atoi(hh);
                         min =atoi(mm);
-                        if((hour+min) > 0) {
+                        if( hour>0 && hour<24 && min>0 && min<60 ) {
                             startTime[sequenceIdx].tm_min  = min;
                             startTime[sequenceIdx].tm_hour = hour;
                         } else {

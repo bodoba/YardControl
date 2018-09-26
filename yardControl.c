@@ -25,6 +25,7 @@
 #include <syslog.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without... ;)
@@ -33,6 +34,7 @@ int  debug          = DEBUG;                  /* debug level                    
 int  activeSequence = SEQUENCE;               /* sequence to run                       */
 char *configFile    = CONFIG_FILE;            /* configuration file                    */
 sequence_t sequence[2][MAX_STEP];             /* two program sequences of max 40 steps */
+time_t     startTime[2];                      /* start times for each sequence         */
 
 /* ----------------------------------------------------------------------------------- *
  * System modes
@@ -93,8 +95,11 @@ bool readConfig(void) {
     
     // start with two empty sequences
     sequence[0][0].offset = -1;
-    sequence[1][0].offset = -1;
+    startTime[0]          = (time_t)0;
     
+    sequence[1][0].offset = -1;
+    startTime[1]          = (time_t)0;
+
     if (fp) {
         char  *line=NULL;
         char  *cursor;

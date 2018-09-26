@@ -241,7 +241,7 @@ int main( int argc, char *argv[] ) {
                     if (   sequence[activeSequence][step].offset <= offset
                         && sequence[activeSequence][step].done   == false ) {
                         sequence[activeSequence][step].done = true;
-                        printf(" * S%02d:%02d t+%04d %c %s\n", activeSequence, step, offset
+                        printf(" * S%02d:%02d t+%04d %c %s\n", activeSequence, step, offset,
                                sequence[activeSequence][step].valve->name,
                                sequence[activeSequence][step].state? "ON":"OFF");
                     }

@@ -238,7 +238,7 @@ int main( int argc, char *argv[] ) {
             if ( lastTime != now ) {
                 int step = 0;
                 while ( sequence[activeSequence][step].offset >= 0 ) {
-                    sequence_t *seqStep = sequence[activeSequence][step];
+                    sequence_t *seqStep = &sequence[activeSequence][step];
 
                     if (seqStep->offset <= offset && !seqStep->done) {
                         seqStep->done = true;

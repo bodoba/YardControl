@@ -126,14 +126,18 @@ bool readConfig(void) {
                     } else if (!strcmp(token, "TIME")) {
                         // expected format is hh:mm
                         char *hh, *mm;
+                        int hour, min;
                         hh=value;
                         mm=value+3;
                         *(value+2)='\0';
                         *(value+5)='\0';
-                        hour=atoi(hh);       min =atoi(mm);
+                        hour=atoi(hh);
+                        min =atoi(mm);
                         if((hour+min) > 0) {
                             printf ( "TIME: %02d:02d\n", hour, min );
-                        }
+                        } else {
+                            printf ( "[%s:%04d] ERROR: TIME expected as hh:mm\n", configFile, lineNo );
+                        }                            
                     } else if (!strcmp(token, "PAUSE")) {
                         int time  = atoi(value);
                         if (time > 0 ) {

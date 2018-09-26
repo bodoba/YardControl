@@ -135,6 +135,16 @@ void runSequence( pushbutton_t *button ) {
         // stop sequence
         systemMode = MANUAL_MODE;
         printf("** Interrupt sequence %02d\n", activeSequence);
+        // switch all valves off
+        int btnIndex = 0;
+        while ( pushButtons[btnIndex].btnPin >= 0 ) {
+            if (pushButtons[btnIndex].radioGroup == RG_VALVES) {
+                pushbutton_t *btnValve = &pushButtons[btnIndex];
+                btnValve->state  = false;
+                switchValve( btnValve );
+            }
+            btnIndex++;
+        }
     }
 }
 

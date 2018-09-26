@@ -214,6 +214,8 @@ void dumpSequence( int sequenceIdx ) {
         printf("SEQUENCE START\n");
         if ( startTime[sequenceIdx].tm_hour >= 0 ) {
             printf( "  START %02d:%02d\n", startTime[sequenceIdx].tm_hour, startTime[sequenceIdx].tm_min);
+        } else {
+            printf("#                     no start time defined, sequence will not run in automatic mode\n",
         }
         while ( seq[step].offset >= 0 ) {
             if ( seq[step].state ) {
@@ -233,9 +235,9 @@ void dumpSequence( int sequenceIdx ) {
             step++;
         }
     } else {
-        printf("# -------------------------------------------------#\n");
-        printf("# Sequence %d not defined                           #\n", sequenceIdx );
-        printf("# -------------------------------------------------#\n");
+        printf("# ----------------------------------------------------------------------------------- #\n");
+        printf("# Sequence %d not defined                                                             #\n", sequenceIdx );
+        printf("# ----------------------------------------------------------------------------------- #\n");
     }
 }
 

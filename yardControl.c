@@ -247,6 +247,9 @@ int main( int argc, char *argv[] ) {
                     }
                     step++;
                 }
+                if ( sequence[activeSequence][step-1].done ) {
+                    printf("** End of sequence %02d\n", activeSequence);
+                }
             }
         }
         

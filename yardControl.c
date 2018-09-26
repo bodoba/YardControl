@@ -124,13 +124,16 @@ bool readConfig(void) {
                         step   = 0;
                         offset = 0;
                     } else if (!strcmp(token, "TIME")) {
+                        // expected format is hh:mm
                         char *hh, *mm;
                         hh=value;
                         mm=value+3;
                         *(value+2)='\0';
                         *(value+5)='\0';
-                        
-
+                        hour=atoi(hh);       min =atoi(mm);
+                        if((hour+min) > 0) {
+                            printf ( "TIME: %02d:02d\n", hour, min );
+                        }
                     } else if (!strcmp(token, "PAUSE")) {
                         int time  = atoi(value);
                         if (time > 0 ) {

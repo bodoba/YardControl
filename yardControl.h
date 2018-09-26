@@ -71,4 +71,9 @@
 #define DEBUG        0                           /* no debug info by default           */
 #define SEQUENCE     0                           /* run sequence 0 by default          */
 
+/* ----------------------------------------------------------------------------------- *
+ * export some globals
+ * ----------------------------------------------------------------------------------- */
+extern pushbutton_t pushButtons[];
+
 #endif /* yardControl_h */

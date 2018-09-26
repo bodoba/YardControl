@@ -29,7 +29,7 @@ typedef struct sequence_t {
     bool         state;      // new state of valve
 } sequence_t;
 
-typdef struct starttime_t {
+typedef struct starttime_t {
     int tm_min;
     int tm_hour;
 } starttime_t;

@@ -134,7 +134,7 @@ void runSequence( pushbutton_t *button ) {
     } else {
         // stop sequence
         systemMode = MANUAL_MODE;
-        printf("** Interrupt sequence %02d\n", activeSequence);
+        printf("** Stop sequence %02d\n", activeSequence);
         // switch all valves off
         int btnIndex = 0;
         while ( pushButtons[btnIndex].btnPin >= 0 ) {
@@ -261,8 +261,8 @@ int main( int argc, char *argv[] ) {
                     step++;
                 }
                 if ( sequence[activeSequence][step-1].done ) {
-                    printf("** End of sequence %02d\n", activeSequence);
-                    systemMode = MANUAL_MODE;
+                    printf(" * S%02d:%02d t+%04d Last command\n");
+                    // simulate sequence button press
                     pushButtons[5].state=false;
                     runSequence( &pushButtons[5] );
                 }

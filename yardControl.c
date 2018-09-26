@@ -245,6 +245,8 @@ int main( int argc, char *argv[] ) {
                         printf(" * S%02d:%02d t+%04d %c %s\n",
                                activeSequence, step, offset,
                                seqStep->valve->name, seqStep->state? "ON":"OFF");
+                        seqStep->valve->state = seqStep->state;
+                        switchValve(seqStep->valve);
                     }
                     step++;
                 }

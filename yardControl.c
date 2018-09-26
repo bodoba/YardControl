@@ -124,7 +124,7 @@ void runSequence( pushbutton_t *button ) {
     if ( button->state ) {
         // start sequence
         systemMode = SEQUENCE_MODE;
-        sequenceStartTime = time();
+        sequenceStartTime = time(NULL);
     } else {
         // stop sequence
         systemMode = MANUAL_MODE;
@@ -223,7 +223,7 @@ int main( int argc, char *argv[] ) {
     time_t lastTime;
 
     for ( ;; ) {                            /* never end working                       */
-        now = time();
+        now = time(NULL);
         
         // forward sequence
         if (systemMode == SEQUENCE_MODE) {

@@ -15,11 +15,17 @@
 /*  You should have received a copy of the GNU General Public License                  */
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.              */
 /* *********************************************************************************** */
+#include "pushButton.h"
 
 #ifndef readConfig_h
 #define readConfig_h
 
-#include "pushButton.h"
+/* ----------------------------------------------------------------------------------- *
+ * Settings
+ * ----------------------------------------------------------------------------------- */
+#define MAX_STEP        100  // max 100 steps per sequence (50 commands)
+#define TIME_SCALE        1  // unit scale fpr secuence, set to 60 to get minutes
+#define CONFIG_FILE  "/etc/yardcontrol.cfg"      // read config from etc
 
 /* ----------------------------------------------------------------------------------- *
  * A step in a sequence
@@ -41,15 +47,10 @@ typedef struct starttime_t {
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without
  * ----------------------------------------------------------------------------------- */
-extern char *configFile    = CONFIG_FILE;     /* configuration file                    */
-extern sequence_t  sequence[2][MAX_STEP];     /* two program sequences of max 40 steps */
-extern starttime_t startTime[2];              /* start times for each sequence         */
+extern char *configFile                 ;     // configuration file
+extern sequence_t  sequence[2][MAX_STEP];     // two program sequences of max 40 steps
+extern starttime_t startTime[2];              // start times for each sequence
 
-/* ----------------------------------------------------------------------------------- *
- * Settings
- * ----------------------------------------------------------------------------------- */
-#define MAX_STEP        100  // max 100 steps per sequence (50 commands)
-#define TIME_SCALE        1  // unit scale fpr secuence, set to 60 to get minutes
 
 /* ----------------------------------------------------------------------------------- *
  * Prototypes

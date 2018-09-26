@@ -70,6 +70,5 @@
  * ----------------------------------------------------------------------------------- */
 #define DEBUG        0                           /* no debug info by default           */
 #define SEQUENCE     0                           /* run sequence 0 by default          */
-#define CONFIG_FILE  "/etc/yardcontrol.cfg"      /* read config from etc               */
 
 #endif /* yardControl_h */

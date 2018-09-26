@@ -31,8 +31,9 @@
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without... ;)
  * ----------------------------------------------------------------------------------- */
-int  debug          = DEBUG;                  /* debug level                           */
-int  activeSequence = SEQUENCE;               /* sequence to run                       */
+int    debug          = DEBUG;                 // debug level
+int    activeSequence = SEQUENCE;              // sequence to run
+time_t sequenceStartTime;                      // time sequence was started
 
 /* ----------------------------------------------------------------------------------- *
  * System modes
@@ -119,8 +120,15 @@ void runSequence( pushbutton_t *button ) {
     
     // enable/disable sequence change
     pushButtons[4].locked = button->state;
-
-    systemMode = button->state ? SEQUENCE_MODE:MANUAL_MODE;
+    
+    if ( button->state ) {
+        // start sequence
+        systemMode = SEQUENCE_MODE;
+        sequenceStartTime = time();
+    } else {
+        // stop sequence
+        systemMode = MANUAL_MODE;
+    }
 }
 
 /* ----------------------------------------------------------------------------------- *
@@ -211,7 +219,20 @@ int main( int argc, char *argv[] ) {
 
     setupIO();                              /* initialize IO ports                     */
     
+    time_t now;
+    time_t lastTime;
+
     for ( ;; ) {                            /* never end working                       */
+        now = time();
+        
+        // forward sequence
+        if (systemMode == SEQUENCE_MODE) {
+            int offset = (int)now-sequenceStartTime;
+            if ( lastTime != now ) {
+                printf ("Offset: %04d\n", offset );
+            }
+        }
+        
         // process bush buttons
         int btnIndex = 0;
         while ( pushButtons[btnIndex].btnPin >= 0 ) {
@@ -219,6 +240,7 @@ int main( int argc, char *argv[] ) {
             btnIndex++;
         }
         delay(50);
+        lastTime = now;
     }
     return 0;
 }

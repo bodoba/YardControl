@@ -74,5 +74,6 @@
  * export some globals
  * ----------------------------------------------------------------------------------- */
 extern pushbutton_t pushButtons[];
+extern int debug;
 
 #endif /* yardControl_h */

@@ -15,11 +15,10 @@
 /*  You should have received a copy of the GNU General Public License                  */
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.              */
 /* *********************************************************************************** */
-#ifndef yardControl_h
-#define yardControl_h
 #include "pushButton.h"
 
-
+#ifndef yardControl_h
+#define yardControl_h
 /* ----------------------------------------------------------------------------------- *
  * PCF8574 IO extender
  * ----------------------------------------------------------------------------------- */

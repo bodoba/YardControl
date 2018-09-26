@@ -240,7 +240,7 @@ int main( int argc, char *argv[] ) {
                 while ( sequence[activeSequence][step].offset >= 0 ) {
                     sequence_t seqStep = sequence[activeSequence][step];
 
-                    if (   sequence[activeSequence][step].offset <= offset
+                    if (   seqStep.offset <= offset
                         && sequence[activeSequence][step].done   == false ) {
                         sequence[activeSequence][step].done = true;
                         printf(" * S%02d:%02d t+%04d %c %s\n", activeSequence, step, offset,

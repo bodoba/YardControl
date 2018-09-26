@@ -21,6 +21,7 @@
 #include <string.h>
 
 #include "readConfig.h"
+#include "pushButton.h"
 
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without

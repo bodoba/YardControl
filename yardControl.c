@@ -134,10 +134,10 @@ bool readConfig(void) {
                         hour=atoi(hh);
                         min =atoi(mm);
                         if((hour+min) > 0) {
-                            printf ( "TIME: %02d:02d\n", hour, min );
+                            printf ( "TIME: %02d:%02d\n", hour, min );
                         } else {
                             printf ( "[%s:%04d] ERROR: TIME expected as hh:mm\n", configFile, lineNo );
-                        }                            
+                        }
                     } else if (!strcmp(token, "PAUSE")) {
                         int time  = atoi(value);
                         if (time > 0 ) {

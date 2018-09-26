@@ -16,8 +16,9 @@
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.              */
 /* *********************************************************************************** */
 #include <stdlib.h>
-#include "readConfig.h"
+#include <stdio.h>
 
+#include "readConfig.h"
 
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without

@@ -123,6 +123,14 @@ bool readConfig(void) {
                         sequenceIdx++;
                         step   = 0;
                         offset = 0;
+                    } else if (!strcmp(token, "TIME")) {
+                        char *hh, *mm;
+                        hh=value;
+                        mm=value+3;
+                        *(value+2)='\0';
+                        *(value+5)='\0';
+                        
+
                     } else if (!strcmp(token, "PAUSE")) {
                         int time  = atoi(value);
                         if (time > 0 ) {

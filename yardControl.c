@@ -289,7 +289,7 @@ int main( int argc, char *argv[] ) {
             }
         }
         
-        pollButtons();                        // poll bush buttons
+        pollButtons(pushButtons);             // poll bush buttons
 
         delay(50);                            // have a rest
     }

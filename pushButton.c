@@ -19,11 +19,11 @@
 #include <stdio.h>
 
 #include "pushButton.h"
-#include "yardControl.h"
+
 /* ----------------------------------------------------------------------------------- *
  * poll Buttons
  * ----------------------------------------------------------------------------------- */
-void pollButtons(void) {
+void pollButtons(pushbutton_t pushButtons[]) {
     int btnIndex = 0;
     while ( pushButtons[btnIndex].btnPin >= 0 ) {
         readButton(&pushButtons[btnIndex], pushButtons);

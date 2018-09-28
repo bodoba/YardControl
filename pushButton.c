@@ -15,10 +15,11 @@
 /*  You should have received a copy of the GNU General Public License                  */
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.              */
 /* *********************************************************************************** */
-#include "pushButton.h"
 #include <wiringPi.h>
 #include <stdio.h>
 
+#include "pushButton.h"
+#include "yardControl.h"
 /* ----------------------------------------------------------------------------------- *
  * poll Buttons
  * ----------------------------------------------------------------------------------- */

@@ -47,7 +47,6 @@ enum Modes { MANUAL_MODE, AUTOMATIC_MODE } systemMode;
 void setup(void);
 int  main(int rgc, char *argv[]);
 void lockValveControl(bool on);
-void pollButtons(void);
 void processSequence(void);
 
 // Bush button actions
@@ -188,23 +187,13 @@ void setLed( pushbutton_t *button ) {
     digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
 }
 
-/* ----------------------------------------------------------------------------------- *
- * poll Buttons
- * ----------------------------------------------------------------------------------- */
-void pollButtons(void) {
-    int btnIndex = 0;
-    while ( pushButtons[btnIndex].btnPin >= 0 ) {
-        readButton(&pushButtons[btnIndex], pushButtons);
-        btnIndex++;
-    }
-}
+
 
 /* ----------------------------------------------------------------------------------- *
  * process active sequence
  * ----------------------------------------------------------------------------------- */
 void processSequence() {
     static int lastStep =0;
-    
     int offset = (int)time(NULL)-sequenceStartTime;
     int step = lastStep;
 
@@ -220,7 +209,7 @@ void processSequence() {
             printf(" * S%02d:%02d t+%04d %c %s\n", activeSequence, step, offset,
                    seqStep->valve->name, seqStep->state? "ON":"OFF");
             
-            break;                                   // we're done for now
+            break;                                   // we're done here for now
         } else if (seqStep->offset > offset) {       // skip the future
             break;
         }
@@ -264,14 +253,14 @@ void setupIO ( void ) {
  * Main
  * ----------------------------------------------------------------------------------- */
 int main( int argc, char *argv[] ) {
-    openlog(NULL, LOG_PID, LOG_USER);       // use syslog to create a trace
+    openlog(NULL, LOG_PID, LOG_USER);          // use syslog to create a trace
     
     // Process command line options
     for (int i=0; i<argc; i++) {
-        if (!strcmp(argv[i], "-d")) {       // '-d' turns debug mode on
+        if (!strcmp(argv[i], "-d")) {          // '-d' turns debug mode on
             debug++;
         }
-        if (!strcmp(argv[i], "-c")) {       // '-c' specify configuration file name
+        if (!strcmp(argv[i], "-c")) {          // '-c' specify configuration file name
             configFile = strdup(argv[++i]);
         }
     }
@@ -290,19 +279,19 @@ int main( int argc, char *argv[] ) {
     
     // Main loop
     time_t lastTime = 0;
-    for ( ;; ) {                                                 // never stop working
+    for ( ;; ) {                              // never stop working
         time_t now = time(NULL);
 
-        if ( lastTime != now ) {                                 // do once a second
+        if ( lastTime != now ) {              // do once a second
             lastTime = now;
-            if (sequenceInProgress) {                            // forward sequence
+            if (sequenceInProgress) {         // forward sequence
                 processSequence();
             }
         }
         
-        pollButtons(); // poll bush buttons
+        pollButtons();                        // poll bush buttons
 
-        delay(50);
+        delay(50);                            // have a rest
     }
     return 0;
 }

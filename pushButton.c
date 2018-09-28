@@ -20,6 +20,17 @@
 #include <stdio.h>
 
 /* ----------------------------------------------------------------------------------- *
+ * poll Buttons
+ * ----------------------------------------------------------------------------------- */
+void pollButtons(void) {
+    int btnIndex = 0;
+    while ( pushButtons[btnIndex].btnPin >= 0 ) {
+        readButton(&pushButtons[btnIndex], pushButtons);
+        btnIndex++;
+    }
+}
+
+/* ----------------------------------------------------------------------------------- *
  * Process push button
  * ----------------------------------------------------------------------------------- */
 bool readButton( pushbutton_t *button, pushbutton_t *buttonList) {

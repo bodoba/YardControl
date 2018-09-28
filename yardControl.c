@@ -31,14 +31,15 @@
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without... ;)
  * ----------------------------------------------------------------------------------- */
-int    debug          = DEBUG;                 // debug level
-int    activeSequence = SEQUENCE;              // sequence to run
+int    debug              = DEBUG;             // debug level
+int    activeSequence     = SEQUENCE;          // sequence to run
+int    sequenceInProgress = false;
 time_t sequenceStartTime;                      // time sequence was started
 
 /* ----------------------------------------------------------------------------------- *
  * System modes
  * ----------------------------------------------------------------------------------- */
-enum Modes { MANUAL_MODE, SEQUENCE_MODE, AUTOMATIC_MODE } systemMode;
+enum Modes { MANUAL_MODE, AUTOMATIC_MODE } systemMode;
 
 /* ----------------------------------------------------------------------------------- *
  * Prototypes
@@ -123,7 +124,7 @@ void runSequence( pushbutton_t *button ) {
     
     if ( button->state && sequence[activeSequence][0].offset >=0 ) {
         // start sequence
-        systemMode = SEQUENCE_MODE;
+        sequenceInProgress = true;
         int step = 0;
         while ( sequence[activeSequence][step].offset >= 0 ) {
             sequence[activeSequence][step].done = false;
@@ -133,7 +134,7 @@ void runSequence( pushbutton_t *button ) {
         sequenceStartTime = time(NULL);
     } else {
         // stop sequence
-        systemMode = MANUAL_MODE;
+        sequenceInProgress = false;
         printf("** Stop sequence %02d\n", activeSequence);
         // switch all valves off
         int btnIndex = 0;
@@ -214,39 +215,40 @@ void setupIO ( void ) {
  * Main
  * ----------------------------------------------------------------------------------- */
 int main( int argc, char *argv[] ) {
-    openlog(NULL, LOG_PID, LOG_USER);       /* use syslog to create a trace            */
+    openlog(NULL, LOG_PID, LOG_USER);       // use syslog to create a trace
     
-    /* ------------------------------------------------------------------------------- */
-    /* Process command line options                                                    */
-    /* ------------------------------------------------------------------------------- */
-    
-    /* FIXME: Use getopt_long and provide some help to the user just in case...        */
+    // Process command line options
     for (int i=0; i<argc; i++) {
-        if (!strcmp(argv[i], "-d")) {       /* '-d' turns debug mode on                */
+        if (!strcmp(argv[i], "-d")) {       // '-d' turns debug mode on
             debug++;
         }
-        if (!strcmp(argv[i], "-c")) {       /* '-c' specify configuration file         */
+        if (!strcmp(argv[i], "-c")) {       // '-c' specify configuration file name
             configFile = strdup(argv[++i]);
         }
     }
     
+    // read configuration from file
     readConfig();
-    dumpSequence( 0 );
-    dumpSequence( 1 );
 
-    setupIO();                              /* initialize IO ports                     */
+    if ( debug ) {
+        // dump configuration
+        dumpSequence( 0 );
+        dumpSequence( 1 );
+    }
+
+    // Initialize IO ports
+    setupIO();
     
-    time_t now;
+    // Main loop
     time_t lastTime;
-
-    for ( ;; ) {                            /* never end working                       */
-        now = time(NULL);
-        
+    for ( ;; ) {                            // never stop working
+        time_t now = time(NULL);
+        int lastStep = 0;
         // forward sequence
-        if (systemMode == SEQUENCE_MODE) {
+        if (sequenceInProgress) {
             int offset = (int)now-sequenceStartTime;
             if ( lastTime != now ) {
-                int step = 0;
+                int step = lastStep;
                 while ( sequence[activeSequence][step].offset >= 0 ) {
                     sequence_t *seqStep = &sequence[activeSequence][step];
 
@@ -257,15 +259,18 @@ int main( int argc, char *argv[] ) {
                                seqStep->valve->name, seqStep->state? "ON":"OFF");
                         seqStep->valve->state = seqStep->state;
                         switchValve(seqStep->valve);
+                        lastStep = step;
+                        break;
                     }
                     step++;
                 }
+                // sequence end?
                 if ( sequence[activeSequence][step-1].done ) {
-                    printf(" * S%02d:%02d t+%04d Last command\n",
-                           activeSequence, step, offset);
+                    printf(" * S%02d:%02d t+%04d Last command\n", activeSequence, step, offset);
                     // simulate sequence button press
                     pushButtons[5].state=false;
                     runSequence( &pushButtons[5] );
+                    lastStep = 0;
                 }
             }
         }

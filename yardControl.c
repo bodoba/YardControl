@@ -48,6 +48,7 @@ void setup(void);
 int  main(int rgc, char *argv[]);
 void lockValveControl(bool on);
 void pollButtons(void);
+void processSequence(void):
 
 
 // Bush button actions
@@ -200,6 +201,42 @@ void pollButtons(void) {
 }
 
 /* ----------------------------------------------------------------------------------- *
+ * process active sequence
+ * ----------------------------------------------------------------------------------- */
+void processSequence() {
+    static int lastStep =0;
+    
+    int offset = (int)time(NULL)-sequenceStartTime;
+    int step = lastStep;
+
+    while ( sequence[activeSequence][step].offset >= 0 ) {
+        sequence_t *seqStep = &sequence[activeSequence][step];
+        
+        if (seqStep->offset <= offset && !seqStep->done) {
+            seqStep->done = true;                    // mark step as done
+            seqStep->valve->state = seqStep->state;  // Valve ON or OFF ?
+            switchValve(seqStep->valve);             // switch Valve
+            lastStep = step;                         // remember where we left off
+            
+            printf(" * S%02d:%02d t+%04d %c %s\n", activeSequence, step, offset,
+                   seqStep->valve->name, seqStep->state? "ON":"OFF");
+            
+            break;                                   // we're done for now
+        } else if (seqStep->offset > offset) {       // skip the future
+            break;
+        }
+        step++;
+    }
+    
+    // end of sequence reached?
+    if (sequence[activeSequence][step].offset < 0) {
+        pushButtons[5].state=false;                 // simulate sequence button press
+        runSequence( &pushButtons[5] );
+        lastStep = 0;
+    }
+}
+
+/* ----------------------------------------------------------------------------------- *
  * Initial setup
  * ----------------------------------------------------------------------------------- */
 void setupIO ( void ) {
@@ -254,40 +291,13 @@ int main( int argc, char *argv[] ) {
     
     // Main loop
     time_t lastTime = 0;
-    int lastStep = 0;
     for ( ;; ) {                                                 // never stop working
         time_t now = time(NULL);
 
         if ( lastTime != now ) {                                 // do once a second
             lastTime = now;
             if (sequenceInProgress) {                            // forward sequence
-                int offset = (int)now-sequenceStartTime;
-                int step = lastStep;
-                while ( sequence[activeSequence][step].offset >= 0 ) {
-                    sequence_t *seqStep = &sequence[activeSequence][step];
-
-                    if (seqStep->offset <= offset && !seqStep->done) {
-                        seqStep->done = true;                    // mark step as done
-                        seqStep->valve->state = seqStep->state;  // Valve ON or OFF ?
-                        switchValve(seqStep->valve);             // switch Valve
-                        lastStep = step;                         // remember where we left off
-                        
-                        printf(" * S%02d:%02d t+%04d %c %s\n", activeSequence, step, offset,
-                               seqStep->valve->name, seqStep->state? "ON":"OFF");
- 
-                        break;                                   // we're done for now
-                    } else if (seqStep->offset > offset) {       // skip the future
-                        break;
-                    }
-                    step++;
-                }
-                
-                // end of sequence reached?
-                if (sequence[activeSequence][step].offset < 0) {
-                    pushButtons[5].state=false;                 // simulate sequence button press
-                    runSequence( &pushButtons[5] );
-                    lastStep = 0;
-                }
+                processSequence();
             }
         }
         

@@ -241,9 +241,9 @@ int main( int argc, char *argv[] ) {
     
     // Main loop
     time_t lastTime = 0;
+    int lastStep = 0;
     for ( ;; ) {                            // never stop working
         time_t now = time(NULL);
-        int lastStep = 0;
         // forward sequence
         if (sequenceInProgress) {
             int offset = (int)now-sequenceStartTime;

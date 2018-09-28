@@ -47,6 +47,8 @@ enum Modes { MANUAL_MODE, AUTOMATIC_MODE } systemMode;
 void setup(void);
 int  main(int rgc, char *argv[]);
 void lockValveControl(bool on);
+void pollButtons(void);
+
 
 // Bush button actions
 void setLed( pushbutton_t *button );
@@ -187,6 +189,17 @@ void setLed( pushbutton_t *button ) {
 }
 
 /* ----------------------------------------------------------------------------------- *
+ * poll Buttons
+ * ----------------------------------------------------------------------------------- */
+void pollButtons(void) {
+    int btnIndex = 0;
+    while ( pushButtons[btnIndex].btnPin >= 0 ) {
+        readButton(&pushButtons[btnIndex], pushButtons);
+        btnIndex++;
+    }
+}
+
+/* ----------------------------------------------------------------------------------- *
  * Initial setup
  * ----------------------------------------------------------------------------------- */
 void setupIO ( void ) {
@@ -242,13 +255,13 @@ int main( int argc, char *argv[] ) {
     // Main loop
     time_t lastTime = 0;
     int lastStep = 0;
-    for ( ;; ) {                            // never stop working
+    for ( ;; ) {                                                 // never stop working
         time_t now = time(NULL);
-        // forward sequence
-        if (sequenceInProgress) {
-            int offset = (int)now-sequenceStartTime;
-            if ( lastTime != now ) {
-                lastTime = now;
+
+        if ( lastTime != now ) {                                 // do once a second
+            lastTime = now;
+            if (sequenceInProgress) {                            // forward sequence
+                int offset = (int)now-sequenceStartTime;
                 int step = lastStep;
                 while ( sequence[activeSequence][step].offset >= 0 ) {
                     sequence_t *seqStep = &sequence[activeSequence][step];
@@ -261,32 +274,26 @@ int main( int argc, char *argv[] ) {
                         
                         printf(" * S%02d:%02d t+%04d %c %s\n", activeSequence, step, offset,
                                seqStep->valve->name, seqStep->state? "ON":"OFF");
-
-                        break;
-                    } else if (seqStep->offset > offset) {
+ 
+                        break;                                   // we're done for now
+                    } else if (seqStep->offset > offset) {       // skip the future
                         break;
                     }
                     step++;
                 }
+                
                 // end of sequence reached?
                 if (sequence[activeSequence][step].offset < 0) {
-                    // simulate sequence button press
-                    pushButtons[5].state=false;
+                    pushButtons[5].state=false;                 // simulate sequence button press
                     runSequence( &pushButtons[5] );
                     lastStep = 0;
-                    printf(" * S%02d:%02d t+%04d Last command\n", activeSequence, step, offset);
                 }
             }
         }
         
-        // process bush buttons
-        int btnIndex = 0;
-        while ( pushButtons[btnIndex].btnPin >= 0 ) {
-            readButton(&pushButtons[btnIndex], pushButtons);
-            btnIndex++;
-        }
+        pollButtons(); // poll bush buttons
+
         delay(50);
-        lastTime = now;
     }
     return 0;
 }

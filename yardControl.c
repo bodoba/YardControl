@@ -240,7 +240,7 @@ int main( int argc, char *argv[] ) {
     setupIO();
     
     // Main loop
-    time_t lastTime;
+    time_t lastTime = 0;
     for ( ;; ) {                            // never stop working
         time_t now = time(NULL);
         int lastStep = 0;
@@ -248,6 +248,7 @@ int main( int argc, char *argv[] ) {
         if (sequenceInProgress) {
             int offset = (int)now-sequenceStartTime;
             if ( lastTime != now ) {
+                lastTime = now;
                 int step = lastStep;
                 while ( sequence[activeSequence][step].offset >= 0 ) {
                     sequence_t *seqStep = &sequence[activeSequence][step];

@@ -48,8 +48,7 @@ void setup(void);
 int  main(int rgc, char *argv[]);
 void lockValveControl(bool on);
 void pollButtons(void);
-void processSequence(void):
-
+void processSequence(void);
 
 // Bush button actions
 void setLed( pushbutton_t *button );

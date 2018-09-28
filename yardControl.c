@@ -265,18 +265,16 @@ int main( int argc, char *argv[] ) {
                         break;
                     } else if (seqStep->offset > offset) {
                         break;
-                    } else {
-                        printf(" - S%02d:%02d t+%04d Skipping...\n", activeSequence, step, offset );
                     }
                     step++;
                 }
-                // sequence end?
+                // end of sequence reached?
                 if (sequence[activeSequence][step].offset < 0) {
-                    printf(" * S%02d:%02d t+%04d Last command\n", activeSequence, step, offset);
                     // simulate sequence button press
                     pushButtons[5].state=false;
                     runSequence( &pushButtons[5] );
                     lastStep = 0;
+                    printf(" * S%02d:%02d t+%04d Last command\n", activeSequence, step, offset);
                 }
             }
         }

@@ -263,7 +263,7 @@ int main( int argc, char *argv[] ) {
 
                         break;
                     } else {
-                        printf(" * S%02d:%02d t+%04d Skipping...\n",a ctiveSequence, step, offset );
+                        printf(" - S%02d:%02d t+%04d Skipping...\n", activeSequence, step, offset );
                     }
                     step++;
                 }

@@ -248,7 +248,7 @@ int main( int argc, char *argv[] ) {
         if (sequenceInProgress) {
             int offset = (int)now-sequenceStartTime;
             if ( lastTime != now ) {
-                int step = 0;//lastStep;
+                int step = lastStep;
                 while ( sequence[activeSequence][step].offset >= 0 ) {
                     sequence_t *seqStep = &sequence[activeSequence][step];
 
@@ -262,6 +262,8 @@ int main( int argc, char *argv[] ) {
                                seqStep->valve->name, seqStep->state? "ON":"OFF");
 
                         break;
+                    } else {
+                        printf(" * S%02d:%02d t+%04d Skipping...\n",a ctiveSequence, step, offset );
                     }
                     step++;
                 }

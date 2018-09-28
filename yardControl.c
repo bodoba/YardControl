@@ -248,18 +248,19 @@ int main( int argc, char *argv[] ) {
         if (sequenceInProgress) {
             int offset = (int)now-sequenceStartTime;
             if ( lastTime != now ) {
-                int step = lastStep;
+                int step = 0;//lastStep;
                 while ( sequence[activeSequence][step].offset >= 0 ) {
                     sequence_t *seqStep = &sequence[activeSequence][step];
 
                     if (seqStep->offset <= offset && !seqStep->done) {
-                        seqStep->done = true;
-                        printf(" * S%02d:%02d t+%04d %c %s\n",
-                               activeSequence, step, offset,
+                        seqStep->done = true;                    // mark step as done
+                        seqStep->valve->state = seqStep->state;  // Valve ON or OFF ?
+                        switchValve(seqStep->valve);             // switch Valve
+                        lastStep = step;                         // remember where we left off
+                        
+                        printf(" * S%02d:%02d t+%04d %c %s\n", activeSequence, step, offset,
                                seqStep->valve->name, seqStep->state? "ON":"OFF");
-                        seqStep->valve->state = seqStep->state;
-                        switchValve(seqStep->valve);
-                        lastStep = step;
+
                         break;
                     }
                     step++;

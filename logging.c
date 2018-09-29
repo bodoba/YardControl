@@ -55,5 +55,5 @@ int getLogLevel( void ) {
 void writeLog( int LogLevel, const char* format, ...) {
    va_list valist;
    va_start(valist, format);
-   printf( format, valist );
+   vprintf( format, valist );
 }

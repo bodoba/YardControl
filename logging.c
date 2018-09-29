@@ -25,7 +25,7 @@
  * ----------------------------------------------------------------------------------- */
 static int  logLevel  = LOG_INFO;
 static bool useSyslog = true;
-static char logLevelText[5][] = {"FATAL", "ERROR", "WARNING", "INFO", "DEBUG"};
+static const char *logLevelText[5] = {"FATAL", "ERROR", "WARNING", "INFO", "DEBUG"};
 
 /* ----------------------------------------------------------------------------------- *
  * init logging

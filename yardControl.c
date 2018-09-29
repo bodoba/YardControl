@@ -89,8 +89,6 @@ void myPrintf( const char* format, ...) {
     printf( format, valist );
 }
 
-
-
 /* ----------------------------------------------------------------------------------- *
  * Enable/Disable manual valve control (radio group: RG_VALVES)
  * ----------------------------------------------------------------------------------- */
@@ -145,12 +143,12 @@ void runSequence( pushbutton_t *button ) {
             sequence[activeSequence][step].done = false;
             step++;
         }
-        printf("** Start sequence %02d\n", activeSequence);
+        myPrintf("** Start sequence %02d\n", activeSequence);
         sequenceStartTime = time(NULL);
     } else {
         // stop sequence
         sequenceInProgress = false;
-        printf("** Stop sequence %02d\n", activeSequence);
+        myPrintf("** Stop sequence %02d\n", activeSequence);
         // switch all valves off
         int btnIndex = 0;
         while ( pushButtons[btnIndex].btnPin >= 0 ) {

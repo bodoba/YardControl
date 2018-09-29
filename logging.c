@@ -18,6 +18,7 @@
 
 #include "logging.h"
 #include <syslog.h>
+#include <string.h>
 
 /* ----------------------------------------------------------------------------------- *
  * local data
@@ -59,7 +60,7 @@ void writeLog( int level, const char* format, ...) {
     if( level <= logLevel ) {
         char fmt[512];
         va_start(valist, format);
-        strcpy(fml, "%s ");
+        strcpy(fmt, "%s ");
         strcat(fmt, format);
         
         if ( useSyslog ) {

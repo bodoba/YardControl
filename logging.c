@@ -60,14 +60,13 @@ void writeLog( int level, const char* format, ...) {
     if( level <= logLevel ) {
         char fmt[512];
         va_start(valist, format);
-        strcpy(fmt, "%s ");
-        strcat(fmt, format);
-        
+        sprintf(fmt, "%s %s",  logLevelText[logLevel], format);
+
         if ( useSyslog ) {
 
         } else {
         
-            vprintf( fmt, logLevelText[logLevel], valist );
+            vprintf( fmt, valist );
         }
     }
 }

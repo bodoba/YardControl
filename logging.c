@@ -73,7 +73,7 @@ void writeLog( int level, const char* format, ...) {
         
         va_start(valist, format);
         sprintf(fmt, "%04d-%02d-%02d %02d:%02d:%02d [%s] %s",
-                timestamp->tm_year+1900, timestamp->tm_mon, timestamp->tm_mday,
+                timestamp->tm_year+1900, timestamp->tm_mon+1, timestamp->tm_mday,
                 timestamp->tm_hour, timestamp->tm_min, timestamp->tm_sec,
                 logLevelText[logLevel] , format);
 

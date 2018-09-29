@@ -61,7 +61,7 @@ void writeLog( int level, const char* format, ...) {
     if( level <= logLevel ) {
         char fmt[512];
         va_start(valist, format);
-        sprintf(fmt, ":%s: %s", "HALLO" , format);
+        sprintf(fmt, ":%d: %s", logLevel , format);
 //logLevelText[logLevel]
         if ( useSyslog ) {
 

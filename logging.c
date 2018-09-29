@@ -23,7 +23,7 @@
 /* ----------------------------------------------------------------------------------- *
  * local data
  * ----------------------------------------------------------------------------------- */
-static int  logLevel  = LL_INFO;
+static int  logLevel  = LOG_INFO;
 static bool useSyslog = true;
 static const char * logLevelText[] = {  "EMERGENCY",
                                         "ALERT",

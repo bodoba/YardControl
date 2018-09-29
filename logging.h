@@ -37,6 +37,6 @@ int setLogLevel( int level );
 int getLogLevel( void );
 
 void initLog( bool useSyslog );
-void writeLog( intLogLevel, const char* format, ... );
+void writeLog( int LogLevel, const char* format, ... );
 
 #endif /* logging_h */

@@ -54,8 +54,19 @@ int getLogLevel( void ) {
 /* ----------------------------------------------------------------------------------- *
  * write log entry
  * ----------------------------------------------------------------------------------- */
-void writeLog( int LogLevel, const char* format, ...) {
-   va_list valist;
-   va_start(valist, format);
-   vprintf( format, valist );
+void writeLog( int level, const char* format, ...) {
+    va_list valist;
+    if( level <= logLevel ) {
+        char *fmt[512];
+        va_start(valist, format);
+        strcpy(fml, "%s ");
+        strcat(fmt, format);
+        
+        if ( useSyslog ) {
+
+        } else {
+        
+            vprintf( fmt, logLevelText[logLevel], valist );
+        }
+    }
 }

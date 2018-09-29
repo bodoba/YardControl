@@ -68,9 +68,10 @@ void writeLog( int level, const char* format, ...) {
     va_list valist;
     if( level <= logLevel ) {
         struct tm *timestamp;
+        time_t now = time(NULL);
         char fmt[512];
         
-        timestamp = localtime(time(NULL));
+        timestamp = localtime(&now);
         
         va_start(valist, format);
         sprintf(fmt, "%04d-%02d-%02d %02d:%02d:%02d [%s] %s",

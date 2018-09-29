@@ -25,7 +25,15 @@
  * ----------------------------------------------------------------------------------- */
 static int  logLevel  = LL_INFO;
 static bool useSyslog = true;
-static const char * logLevelText[] = { "FATAL", "ERROR", "WARNING", "INFO", "DEBUG" };
+static const char * logLevelText[] = {  "EMERGENCY",
+                                        "ALERT",
+                                        "CRITICAL",
+                                        "ERROR",
+                                        "WARNING",
+                                        "NOTICE",
+                                        "INFO",
+                                        "DEBUG"
+};
 
 /* ----------------------------------------------------------------------------------- *
  * init logging
@@ -61,7 +69,7 @@ void writeLog( int level, const char* format, ...) {
     if( level <= logLevel ) {
         char fmt[512];
         va_start(valist, format);
-        sprintf(fmt, ":%d: %s", logLevel , format);
+        sprintf(fmt, ":%s: %s", logLevelText[logLevel] , format);
 //logLevelText[logLevel]
         if ( useSyslog ) {
 

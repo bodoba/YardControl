@@ -25,12 +25,17 @@
 #include <ctype.h>
 #include <stdbool.h>
 
-// log levels
-#define LL_FATAL    0
-#define LL_ERROR    1
-#define LL_WARNING  2
-#define LL_INFO     3
-#define LL_DEBUG    4
+/*
+  log levels are taken from syslog.h
+  LOG_EMERG    A panic condition was reported to all processes.
+  LOG_ALERT    A condition that should be corrected immediately.
+  LOG_CRIT     A critical condition.
+  LOG_ERR      An error message.
+  LOG_WARNING  A warning message.
+  LOG_NOTICE   A condition requiring special handling.
+  LOG_INFO     A general information message.
+  LOG_DEBUG    A message useful for debugging programs.
+ */
 
 /* ----------------------------------------------------------------------------------- *
  * Prototypes

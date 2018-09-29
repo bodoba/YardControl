@@ -135,12 +135,12 @@ void runSequence( pushbutton_t *button ) {
             sequence[activeSequence][step].done = false;
             step++;
         }
-        writeLog(LOG_INFO, "** Start sequence %02d\n", activeSequence);
+        writeLog(LL_INFO, "** Start sequence %02d\n", activeSequence);
         sequenceStartTime = time(NULL);
     } else {
         // stop sequence
         sequenceInProgress = false;
-        writeLog(LOG_INFO, "** Stop sequence %02d\n", activeSequence);
+        writeLog(LL_INFO, "** Stop sequence %02d\n", activeSequence);
         // switch all valves off
         int btnIndex = 0;
         while ( pushButtons[btnIndex].btnPin >= 0 ) {

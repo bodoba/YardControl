@@ -26,11 +26,11 @@
 #include <stdbool.h>
 
 // log levels
-#define LOG_FATAL    0
-#define LOG_ERROR    1
-#define LOG_WARNING  2
-#define LOG_INFO     3
-#define LOG_DEBUG    4
+#define LL_FATAL    0
+#define LL_ERROR    1
+#define LL_WARNING  2
+#define LL_INFO     3
+#define LL_DEBUG    4
 
 /* ----------------------------------------------------------------------------------- *
  * Prototypes

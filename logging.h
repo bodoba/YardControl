@@ -34,9 +34,9 @@
  * Prototypes
  * ----------------------------------------------------------------------------------- */
 int setLogLevel( int level );
-int getLogLevel(void) {
+int getLogLevel( void );
 
 void initLog( bool useSyslog );
-void writeLog( intLogLevel, const char* format, ...);
+void writeLog( intLogLevel, const char* format, ... );
 
 #endif /* logging_h */

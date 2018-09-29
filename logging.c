@@ -28,7 +28,9 @@ static bool useSyslog = true;
 /* ----------------------------------------------------------------------------------- *
  * init logging
  * ----------------------------------------------------------------------------------- */
-void initLog( bool useSyslog ) {
+void initLog( bool syslog ) {
+    useSyslog = syslog;
+    
     if ( useSyslog) {
         openlog(NULL, LOG_PID, LOG_USER);            // use syslog to create a trace
     }

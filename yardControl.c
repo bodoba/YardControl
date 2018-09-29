@@ -85,7 +85,7 @@ pushbutton_t pushButtons[] = {
  * ----------------------------------------------------------------------------------- */
 void myPrintf( const char* format, ...) {
     va_list valist;
-    va_start(valist, format;
+    va_start(valist, format);
     printf( format, valist );
 }
 

@@ -270,7 +270,7 @@ int main( int argc, char *argv[] ) {
         }
     }
     
-    initLog(!foregroud);
+    initLog(!foreground);
     
     // read configuration from file
     readConfig();

@@ -44,14 +44,14 @@ int setLogLevel( int level ) {
 /* ----------------------------------------------------------------------------------- *
  * get Loglevel
  * ----------------------------------------------------------------------------------- */
-int getLogLevel(void) {
+int getLogLevel( void ) {
     return logLevel;
 }
 
 /* ----------------------------------------------------------------------------------- *
  * write log entry
  * ----------------------------------------------------------------------------------- */
-void writeLog( intLogLevel, const char* format, ...) {
+void writeLog( int LogLevel, const char* format, ...) {
    va_list valist;
    va_start(valist, format);
    printf( format, valist );

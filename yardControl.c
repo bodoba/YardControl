@@ -141,7 +141,7 @@ void runSequence( pushbutton_t *button ) {
     } else {
         // stop sequence
         sequenceInProgress = false;
-        writeLog(Log_INFO, "** Stop sequence %02d\n", activeSequence);
+        writeLog(LOG_INFO, "** Stop sequence %02d\n", activeSequence);
         // switch all valves off
         int btnIndex = 0;
         while ( pushButtons[btnIndex].btnPin >= 0 ) {

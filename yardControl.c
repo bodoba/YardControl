@@ -27,6 +27,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <syslog.h>
 #include <stdarg.h>
 #include <time.h>
 
@@ -135,12 +136,12 @@ void runSequence( pushbutton_t *button ) {
             sequence[activeSequence][step].done = false;
             step++;
         }
-        writeLog(LL_INFO, "** Start sequence %02d\n", activeSequence);
+        writeLog(LOG_INFO, "** Start sequence %02d\n", activeSequence);
         sequenceStartTime = time(NULL);
     } else {
         // stop sequence
         sequenceInProgress = false;
-        writeLog(LL_INFO, "** Stop sequence %02d\n", activeSequence);
+        writeLog(LOG_INFO, "** Stop sequence %02d\n", activeSequence);
         // switch all valves off
         int btnIndex = 0;
         while ( pushButtons[btnIndex].btnPin >= 0 ) {

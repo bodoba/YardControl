@@ -23,7 +23,7 @@
 #include <stdarg.h>
 #include <time.h>
 #include <ctype.h>
-
+#include <stdbool.h>
 
 // log levels
 #define LOG_FATAL    0

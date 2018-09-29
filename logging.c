@@ -57,7 +57,7 @@ int getLogLevel( void ) {
 void writeLog( int level, const char* format, ...) {
     va_list valist;
     if( level <= logLevel ) {
-        char *fmt[512];
+        char fmt[512];
         va_start(valist, format);
         strcpy(fml, "%s ");
         strcat(fmt, format);

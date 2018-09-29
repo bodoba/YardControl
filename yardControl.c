@@ -18,6 +18,8 @@
 #include "yardControl.h"
 #include "pushButton.h"
 #include "readConfig.h"
+#include "logging.h"
+
 #include <wiringPi.h>
 #include <pcf8574.h>
 
@@ -50,7 +52,6 @@ void setup(void);
 int  main(int rgc, char *argv[]);
 void lockValveControl(bool on);
 void processSequence(void);
-void myPrintf( const char* format, ...);
 
 // Bush button actions
 void setLed( pushbutton_t *button );
@@ -80,14 +81,6 @@ pushbutton_t pushButtons[] = {
     {'0', -1, -1, false, -1, false, -1},
 };
 
-/* ----------------------------------------------------------------------------------- *
- * wrapper for printf to send to stdout or syslog
- * ----------------------------------------------------------------------------------- */
-void myPrintf( const char* format, ...) {
-    va_list valist;
-    va_start(valist, format);
-    printf( format, valist );
-}
 
 /* ----------------------------------------------------------------------------------- *
  * Enable/Disable manual valve control (radio group: RG_VALVES)
@@ -143,12 +136,12 @@ void runSequence( pushbutton_t *button ) {
             sequence[activeSequence][step].done = false;
             step++;
         }
-        myPrintf("** Start sequence %02d\n", activeSequence);
+        writeLog(LOG_INFO, "** Start sequence %02d\n", activeSequence);
         sequenceStartTime = time(NULL);
     } else {
         // stop sequence
         sequenceInProgress = false;
-        myPrintf("** Stop sequence %02d\n", activeSequence);
+        writeLog(Log_INFO, "** Stop sequence %02d\n", activeSequence);
         // switch all valves off
         int btnIndex = 0;
         while ( pushButtons[btnIndex].btnPin >= 0 ) {
@@ -216,7 +209,7 @@ void processSequence() {
             switchValve(seqStep->valve);             // switch Valve
             lastStep = step;                         // remember where we left off
             
-            printf(" * S%02d:%02d t+%04d %c %s\n", activeSequence, step, offset,
+            writeLog(LOG_INFO, " * S%02d:%02d t+%04d %c %s\n", activeSequence, step, offset,
                    seqStep->valve->name, seqStep->state? "ON":"OFF");
             
             break;                                   // we're done here for now
@@ -263,7 +256,6 @@ void setupIO ( void ) {
  * Main
  * ----------------------------------------------------------------------------------- */
 int main( int argc, char *argv[] ) {
-    openlog(NULL, LOG_PID, LOG_USER);          // use syslog to create a trace
     
     // Process command line options
     for (int i=0; i<argc; i++) {
@@ -276,8 +268,9 @@ int main( int argc, char *argv[] ) {
         if (!strcmp(argv[i], "-f")) {          // '-f' forces forground mode
             foreground=true;;
         }
-
     }
+    
+    initLog(!foregroud);
     
     // read configuration from file
     readConfig();

@@ -24,4 +24,4 @@ set (CMAKE_C_FLAGS "-std=gnu11 -Wall -lwiringPi")
 # all executables end up in bin
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
-add_executable(yardControl yardControl.c pushButton.c readConfig.c)
+add_executable(yardControl yardControl.c pushButton.c readConfig.c logging.c)

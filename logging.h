@@ -31,7 +31,7 @@
 #define LOG_WARNING  2
 #define LOG_INFO     3
 #define LOG_DEBUG    4
-char* logLevelText[5][] = {"FATAL   ", "ERROR   ", "WARNING ", "INFO    ", "DEBUG   "};
+char* logLevelText[][] = {"FATAL   ", "ERROR   ", "WARNING ", "INFO    ", "DEBUG   "};
 
 /* ----------------------------------------------------------------------------------- *
  * Prototypes

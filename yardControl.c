@@ -33,6 +33,7 @@
  * ----------------------------------------------------------------------------------- */
 int    debug              = DEBUG;             // debug level
 int    activeSequence     = SEQUENCE;          // sequence to run
+bool   foreground         = false;             // run in foreground, not as daemon
 int    sequenceInProgress = false;
 time_t sequenceStartTime;                      // time sequence was started
 
@@ -48,6 +49,7 @@ void setup(void);
 int  main(int rgc, char *argv[]);
 void lockValveControl(bool on);
 void processSequence(void);
+void myPrintf( const char* format, ...);
 
 // Bush button actions
 void setLed( pushbutton_t *button );
@@ -76,6 +78,17 @@ pushbutton_t pushButtons[] = {
     // end marker
     {'0', -1, -1, false, -1, false, -1},
 };
+
+/* ----------------------------------------------------------------------------------- *
+ * wrapper for printf to send to stdout or syslog
+ * ----------------------------------------------------------------------------------- */
+void myPrintf( const char* format, ...) {
+    va_list valist;
+    va_start(valist, format;
+    printf( format, valist );
+}
+
+
 
 /* ----------------------------------------------------------------------------------- *
  * Enable/Disable manual valve control (radio group: RG_VALVES)
@@ -187,8 +200,6 @@ void setLed( pushbutton_t *button ) {
     digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
 }
 
-
-
 /* ----------------------------------------------------------------------------------- *
  * process active sequence
  * ----------------------------------------------------------------------------------- */
@@ -263,6 +274,10 @@ int main( int argc, char *argv[] ) {
         if (!strcmp(argv[i], "-c")) {          // '-c' specify configuration file name
             configFile = strdup(argv[++i]);
         }
+        if (!strcmp(argv[i], "-f")) {          // '-f' forces forground mode
+            foreground=true;;
+        }
+
     }
     
     // read configuration from file

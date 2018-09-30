@@ -375,6 +375,7 @@ int main( int argc, char *argv[] ) {
     if (!foreground) {                           // Deamonize
         daemonize();
         writePid();
+        writeLog(LOG_INFO, "Started Yard Control");
         signal(SIGHUP,  sigendCB);               // catch hangup signal
         signal(SIGTERM, sigendCB);               // catch term signal
         signal(SIGINT,  sigendCB);               // catch interrupt signal

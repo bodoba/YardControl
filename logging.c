@@ -25,14 +25,14 @@
  * ----------------------------------------------------------------------------------- */
 static int  logLevel  = LOG_INFO;
 static bool useSyslog = true;
-static const char * logLevelText[] = {  "EMERGENCY",
-                                        "ALERT",
-                                        "CRITICAL",
-                                        "ERROR",
-                                        "WARNING",
-                                        "NOTICE",
-                                        "INFO",
-                                        "DEBUG"
+static const char * logLevelText[] = {  "emergency",
+                                        "alert",
+                                        "citical",
+                                        "error",
+                                        "warning",
+                                        "notice",
+                                        "info",
+                                        "debug"
 };
 
 /* ----------------------------------------------------------------------------------- *
@@ -70,14 +70,13 @@ void writeLog( int level, const char* format, ...) {
         time_t now = time(NULL);
         struct tm *timestamp = localtime(&now);
         char fmt[512];
-        
         va_start(valist, format);
-      
-        
+    
         if ( useSyslog ) {
+            sprintf(fmt, "<%s> %s\n", logLevelText[logLevel] , format);
             vsyslog( level, format, valist );
         } else {
-            sprintf(fmt, "%04d-%02d-%02d %02d:%02d:%02d [%s] %s\n",
+            sprintf(fmt, "%04d-%02d-%02d %02d:%02d:%02d <%s> %s\n",
                     timestamp->tm_year+1900, timestamp->tm_mon+1, timestamp->tm_mday,
                     timestamp->tm_hour, timestamp->tm_min, timestamp->tm_sec,
                     logLevelText[logLevel] , format);

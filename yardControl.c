@@ -339,14 +339,13 @@ int main( int argc, char *argv[] ) {
         dumpSequence( 1 );
     }
 
-    // Deamonize
-    if (!foreground) {
+    if (!foreground) {                           // Deamonize
+
         daemonize();
+        writePid();
     } else {
         writeLog(LOG_INFO, "Running in foreground");
     }
-    
-    
     
     // Initialize IO ports
     setupIO();

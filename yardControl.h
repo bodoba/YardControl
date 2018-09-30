@@ -69,7 +69,7 @@
  * ----------------------------------------------------------------------------------- */
 #define DEBUG        0                           /* no debug info by default           */
 #define SEQUENCE     0                           /* run sequence 0 by default          */
-#define PID_FILE     "/var/run/RPISensorClient.pid"
+#define PID_FILE     "/var/run/yardcontrol.pid"
 
 /* ----------------------------------------------------------------------------------- *
  * export some globals

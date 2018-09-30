@@ -19,6 +19,8 @@
 #include "pushButton.h"
 #include "readConfig.h"
 #include "logging.h"
+#include <fcntl.h>
+
 
 #include <wiringPi.h>
 #include <pcf8574.h>

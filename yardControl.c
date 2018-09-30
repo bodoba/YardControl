@@ -43,6 +43,7 @@ int    activeSequence     = SEQUENCE;          // sequence to run
 bool   foreground         = false;             // run in foreground, not as daemon
 int    sequenceInProgress = false;
 time_t sequenceStartTime;                      // time sequence was started
+int    pidFilehandle = 0;                      // PID file kept open for daemon
 
 /* ----------------------------------------------------------------------------------- *
  * System modes
@@ -59,6 +60,7 @@ void processSequence(void);
 void daemonize(void);
 void writePid(void);
 void sigendCB( int sigval );
+void shutdown_daemon(void);
 
 // Bush button actions
 void setLed( pushbutton_t *button );
@@ -108,6 +110,15 @@ void sigendCB(int sigval)
         default:
             syslog(LOG_WARNING, "Unhandled signal %s", strsignal(sigval));
             break;
+    }
+}
+/* ----------------------------------------------------------------------------------- *
+ * shutdwown deamon
+ * ----------------------------------------------------------------------------------- */
+void shutdown_daemon(void) {
+    if (!foreground) {
+        close(pidFilehandle)
+        unlink(PID_FILE);
     }
 }
 
@@ -315,7 +326,7 @@ void daemonize(void) {
  * Write PID file
  * ----------------------------------------------------------------------------------- */
 void writePid(void) {
-    int pidFilehandle = open(PID_FILE, O_RDWR|O_CREAT, 0600);
+    pidFilehandle = open(PID_FILE, O_RDWR|O_CREAT, 0600);
     
     if (pidFilehandle != -1 ) {                       /* Open failed               */
         if (lockf(pidFilehandle,F_TLOCK,0) != -1) {   /* Try to lock the pid file  */

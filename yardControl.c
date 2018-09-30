@@ -136,12 +136,12 @@ void runSequence( pushbutton_t *button ) {
             sequence[activeSequence][step].done = false;
             step++;
         }
-        writeLog(LOG_INFO, "** Start sequence %02d\n", activeSequence);
+        writeLog(LOG_INFO, "** Start sequence %02d", activeSequence);
         sequenceStartTime = time(NULL);
     } else {
         // stop sequence
         sequenceInProgress = false;
-        writeLog(LOG_INFO, "** Stop sequence %02d\n", activeSequence);
+        writeLog(LOG_INFO, "** Stop sequence %02d", activeSequence);
         // switch all valves off
         int btnIndex = 0;
         while ( pushButtons[btnIndex].btnPin >= 0 ) {
@@ -209,7 +209,7 @@ void processSequence() {
             switchValve(seqStep->valve);             // switch Valve
             lastStep = step;                         // remember where we left off
             
-            writeLog(LOG_INFO, " * S%02d:%02d t+%04d %c %s\n", activeSequence, step, offset,
+            writeLog(LOG_INFO, " * S%02d:%02d t+%04d %c %s", activeSequence, step, offset,
                    seqStep->valve->name, seqStep->state? "ON":"OFF");
             
             break;                                   // we're done here for now
@@ -281,6 +281,36 @@ int main( int argc, char *argv[] ) {
         dumpSequence( 1 );
     }
 
+    // Deamonize
+    if (!foreground) {
+        /* If we got a good PID, then we can exit the parent process                   */
+        pid_t pid = fork();
+        if (pid < 0) {
+            exit(EXIT_FAILURE);
+        } else  if (pid > 0) {
+            exit(EXIT_SUCCESS);
+        }
+        
+        umask(0);                           /* Change the file mode mask               */
+        pid_t sid = setsid();               /* Create a new SID for the child process  */
+        if (sid < 0) {
+            writeLog(LOG_ERR, "Could not get SID");
+            exit(EXIT_FAILURE);
+        }
+        
+        if ((chdir("/tmp")) < 0) {          /* Change the current working directory    */
+            writeLog(LOG_ERR, "Could not chage working dir to /tmp");
+            exit(EXIT_FAILURE);
+        }
+        
+        /* use /dev/null for the standard file descriptors                             */
+        int fd = open("/dev/null", O_RDWR); /* Open /dev/null as STDIN                 */
+        dup(fd);                            /* STDOUT to /dev/null                     */
+        dup(fd);                            /* STDERR to /dev/null                     */
+    } else {
+        writeLog(LOG_INFO, "Running in foreground");
+    }
+    
     // Initialize IO ports
     setupIO();
     

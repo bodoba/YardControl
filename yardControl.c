@@ -56,6 +56,9 @@ void setup(void);
 int  main(int rgc, char *argv[]);
 void lockValveControl(bool on);
 void processSequence(void);
+void daemonize(void);
+void writePid(void);
+
 
 // Bush button actions
 void setLed( pushbutton_t *button );
@@ -259,7 +262,7 @@ void setupIO ( void ) {
 /* ----------------------------------------------------------------------------------- *
  * Daemonize
  * ----------------------------------------------------------------------------------- */
-void deamonize(void) {
+void daemonize(void) {
 
     /* If we got a good PID, then we can exit the parent process                   */
     pid_t pid = fork();

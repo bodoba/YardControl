@@ -117,7 +117,7 @@ void sigendCB(int sigval)
  * ----------------------------------------------------------------------------------- */
 void shutdown_daemon(void) {
     if (!foreground) {
-        close(pidFilehandle)
+        close(pidFilehandle);
         unlink(PID_FILE);
     }
 }

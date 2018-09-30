@@ -31,7 +31,8 @@
 #include <stdarg.h>
 #include <time.h>
 #include <signal.h>
-#include <fcntl.h>
+//#include <fcntl.h>
+#include <unistd.h>
 
 
 /* ----------------------------------------------------------------------------------- *

@@ -30,6 +30,8 @@
 #include <syslog.h>
 #include <stdarg.h>
 #include <time.h>
+#include <signal.h>
+
 
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without... ;)

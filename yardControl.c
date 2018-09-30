@@ -290,7 +290,7 @@ void deamonize(void) {
  * Write PID file
  * ----------------------------------------------------------------------------------- */
 void writePid(void) {
-    pidFilehandle = open(PID_FILE, O_RDWR|O_CREAT, 0600);
+    int pidFilehandle = open(PID_FILE, O_RDWR|O_CREAT, 0600);
     
     if (pidFilehandle != -1 ) {                       /* Open failed               */
         if (lockf(pidFilehandle,F_TLOCK,0) != -1) {   /* Try to lock the pid file  */

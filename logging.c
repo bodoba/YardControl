@@ -74,7 +74,7 @@ void writeLog( int level, const char* format, ...) {
     
         if ( useSyslog ) {
             sprintf(fmt, "<%s> %s\n", logLevelText[logLevel] , format);
-            vsyslog( level, format, valist );
+            vsyslog( level, fmt, valist );
         } else {
             sprintf(fmt, "%04d-%02d-%02d %02d:%02d:%02d <%s> %s\n",
                     timestamp->tm_year+1900, timestamp->tm_mon+1, timestamp->tm_mday,

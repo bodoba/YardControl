@@ -58,7 +58,7 @@ void lockValveControl(bool on);
 void processSequence(void);
 void daemonize(void);
 void writePid(void);
-
+void sigendCB( int sigval );
 
 // Bush button actions
 void setLed( pushbutton_t *button );
@@ -88,6 +88,28 @@ pushbutton_t pushButtons[] = {
     {'0', -1, -1, false, -1, false, -1},
 };
 
+
+/* ----------------------------------------------------------------------------------- *
+ * there are many ways to die
+ * ----------------------------------------------------------------------------------- */
+void sigendCB(int sigval)
+{
+    switch(sigval)
+    {
+        case SIGHUP:
+            syslog(LOG_WARNING, "Received SIGHUP signal.");
+            break;
+        case SIGINT:
+        case SIGTERM:
+            syslog(LOG_INFO, "Daemon exiting");
+            shutdown_daemon();
+            exit(EXIT_SUCCESS);
+            break;
+        default:
+            syslog(LOG_WARNING, "Unhandled signal %s", strsignal(sigval));
+            break;
+    }
+}
 
 /* ----------------------------------------------------------------------------------- *
  * Enable/Disable manual valve control (radio group: RG_VALVES)
@@ -340,9 +362,12 @@ int main( int argc, char *argv[] ) {
     }
 
     if (!foreground) {                           // Deamonize
-
         daemonize();
         writePid();
+        signal(SIGHUP,  sigendCB);               // catch hangup signal
+        signal(SIGTERM, sigendCB);               // catch term signal
+        signal(SIGINT,  sigendCB);               // catch interrupt signal
+
     } else {
         writeLog(LOG_INFO, "Running in foreground");
     }

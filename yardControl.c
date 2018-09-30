@@ -116,6 +116,7 @@ void sigendCB(int sigval)
  * shutdwown deamon
  * ----------------------------------------------------------------------------------- */
 void shutdown_daemon(void) {
+    writeLog(LOG_INFO, "Yard Control shut down");
     if (!foreground) {
         close(pidFilehandle);
         unlink(PID_FILE);
@@ -334,11 +335,11 @@ void writePid(void) {
             sprintf(buffer,"%d\n",getpid());              /* Get and format PID    */
             write(pidFilehandle, buffer, strlen(buffer)); /* write pid to lockfile */
         } else {
-            writeLog(LOG_INFO, "Could not lock PID lock file %s, exiting", PID_FILE);
+            writeLog(LOG_CRIT, "Could not lock PID lock file %s, exiting", PID_FILE);
             exit(EXIT_FAILURE);
         }
     } else {
-        writeLog(LOG_INFO, "Could not open PID lock file %s, exiting", PID_FILE);
+        writeLog(LOG_CRIT, "Could not open PID lock file %s, exiting", PID_FILE);
         exit(EXIT_FAILURE);
     }
 }

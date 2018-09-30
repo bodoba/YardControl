@@ -73,7 +73,7 @@ void writeLog( int level, const char* format, ...) {
         va_start(valist, format);
     
         if ( useSyslog ) {
-            sprintf(fmt, "<%s> %s\n", logLevelText[logLevel] , format);
+            sprintf(fmt, "<%s> %s\n", logLevelText[logLevel], format);
             vsyslog( level, fmt, valist );
         } else {
             sprintf(fmt, "%04d-%02d-%02d %02d:%02d:%02d <%s> %s\n",

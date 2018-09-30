@@ -302,7 +302,7 @@ void writePid(void) {
             exit(EXIT_FAILURE);
         }
     } else {
-        writeLog(LOG_INFO, "Could not open PID lock file %s, exiting", PIDFILE);
+        writeLog(LOG_INFO, "Could not open PID lock file %s, exiting", PID_FILE);
         exit(EXIT_FAILURE);
     }
 }

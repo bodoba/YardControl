@@ -65,7 +65,7 @@ void shutdown_daemon(void);
 // Bush button actions
 void setLed( pushbutton_t *button );
 void switchValve( pushbutton_t *button );
-void runSequence( pushbutton_t *button );
+void startSequence( pushbutton_t *button );
 void selectSequence( pushbutton_t *button );
 void automaticMode( pushbutton_t *button );
 
@@ -82,7 +82,7 @@ pushbutton_t pushButtons[] = {
     {'D', BUTTON_D,      VALVE_D,  false, -1, false, RG_VALVES,   &switchValve},
 
     {'S', BUTTON_SELECT, LED_S1,   false, -1, false, RG_NONE,     &selectSequence},
-    {'R', BUTTON_RUN,    LED_RUN,  false, -1, false, RG_NONE,     &runSequence},
+    {'R', BUTTON_RUN,    LED_RUN,  false, -1, false, RG_NONE,     &startSequence},
 
     {'P', BUTTON_AUTO,   LED_AUTO, false, -1, false, RG_NONE,     &automaticMode},
     
@@ -161,7 +161,7 @@ void switchValve( pushbutton_t *button ) {
 /* ----------------------------------------------------------------------------------- *
  * start sequence
  * ----------------------------------------------------------------------------------- */
-void runSequence( pushbutton_t *button ) {
+void startSequence( pushbutton_t *button ) {
     setLed( button );
 
     // enable/disable manual valve control
@@ -266,6 +266,7 @@ void processSequence() {
         pushButtons[5].state=false;                 // simulate sequence button press
         runSequence( &pushButtons[5] );
         lastStep = 0;
+        seequenceInProgress = false;
     }
 }
 

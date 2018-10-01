@@ -213,15 +213,15 @@ void selectSequence( pushbutton_t *button ) {
 void automaticMode( pushbutton_t *button ) {
     setLed( button );
 
-    // enable/disable sequence change
-    pushButtons[4].locked = button->state;
-
     // enable/disable sequence start
     pushButtons[5].state  = false;
     startSequence( &pushButtons[5] );       // stop sequence in progress
     pushButtons[5].locked = button->state;
     digitalWrite (LED_RUN, HIGH);
 
+    // enable/disable sequence change
+    pushButtons[4].locked = button->state;
+    
     // enable/disable manual valve control
     lockValveControl(!button->state);
     

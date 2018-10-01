@@ -24,6 +24,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <fcntl.h>
+#include <syslog.h>
 
 #include "daemon.h"
 
@@ -32,17 +33,17 @@
  * ----------------------------------------------------------------------------------- */
 static void sigendCB( int sigval );
 static void shutdown_daemon(void);
-static void writePid(void);
+static void writePid(const char* pidFile);
 
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without... ;)
  * ----------------------------------------------------------------------------------- */
-int    pidFilehandle = 0;                      // PID file kept open for daemon
+int    pidFilehandle = 0;                      // PID file kept open for daemona
 
 /* ----------------------------------------------------------------------------------- *
  * Daemonize
  * ----------------------------------------------------------------------------------- */
-void daemonize(void) {
+void daemonize(const char *pidFile) {
     
     // If we got a good PID, then we can exit the parent process
     pid_t pid = fork();
@@ -68,7 +69,7 @@ void daemonize(void) {
     dup(fd);                                 // STDOUT to /dev/null
     dup(fd);                                 // STDERR to /dev/null
     
-    writePid();                              // write PID to file
+    writePid(piFile);                              // write PID to file
     
     signal(SIGHUP,  sigendCB);               // catch hangup signal
     signal(SIGTERM, sigendCB);               // catch term signal
@@ -78,8 +79,8 @@ void daemonize(void) {
 /* ----------------------------------------------------------------------------------- *
  * Write PID file
  * ----------------------------------------------------------------------------------- */
-void writePid(void) {
-    pidFilehandle = open(PID_FILE, O_RDWR|O_CREAT, 0600);
+void writePid(const char *pidFile) {
+    pidFilehandle = open(pidFile, O_RDWR|O_CREAT, 0600);
     
     if (pidFilehandle != -1 ) {                           // Open failed
         if (lockf(pidFilehandle,F_TLOCK,0) != -1) {       // Try to lock the pid file

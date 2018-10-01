@@ -19,7 +19,6 @@
 #ifndef daemon_h
 #define daemon_h
 
-#define PID_FILE     "/var/run/yardcontrol.pid"
-void daemonize(void);
+void daemonize(const char *pidFile);
 
 #endif /* daemon_h */

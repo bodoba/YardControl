@@ -116,7 +116,7 @@ void sigendCB(int sigval)
  * shutdwown deamon
  * ----------------------------------------------------------------------------------- */
 void shutdown_daemon(void) {
-    writeLog(LOG_INFO, "Yard Control shut down");
+    writeLog(LOG_INFO, "Yard Control shutting down");
     if (!foreground) {
         close(pidFilehandle);
         unlink(PID_FILE);
@@ -129,6 +129,7 @@ void shutdown_daemon(void) {
 void lockValveControl (bool on ) {
     int btnIndex = 0;
     if ( !on ) {
+        writeLog(LOG_INFO, "Lock manual valve control");
         // disable manual valve control
         while ( pushButtons[btnIndex].btnPin >= 0 ) {
             if (pushButtons[btnIndex].radioGroup == RG_VALVES) {
@@ -140,6 +141,7 @@ void lockValveControl (bool on ) {
             btnIndex++;
         }
     } else {
+        writeLog(LOG_INFO, "Unock manual valve control");
         // enable manual valve control
         while ( pushButtons[btnIndex].btnPin >= 0 ) {
             if (pushButtons[btnIndex].radioGroup == RG_VALVES) {
@@ -171,7 +173,7 @@ void startSequence( pushbutton_t *button ) {
     pushButtons[4].locked = button->state;
     
     if ( button->state && sequence[activeSequence][0].offset >=0 ) {
-        writeLog(LOG_INFO, "** Start sequence %02d", activeSequence);
+        writeLog(LOG_INFO, "Start sequence %02d", activeSequence);
         sequenceInProgress = true;            // start sequence
         int step = 0;
         while ( sequence[activeSequence][step].offset >= 0 ) {
@@ -180,7 +182,7 @@ void startSequence( pushbutton_t *button ) {
         }
         sequenceStartTime = time(NULL);
     } else {
-        writeLog(LOG_INFO, "** Stop sequence %02d", activeSequence);
+        writeLog(LOG_INFO, "Stop sequence %02d", activeSequence);
         sequenceInProgress = false;           // stop sequence processing
         // switch all valves off
         int btnIndex = 0;
@@ -202,6 +204,7 @@ void selectSequence( pushbutton_t *button ) {
     digitalWrite ( LED_S1, button->state ? LOW : HIGH);
     digitalWrite ( LED_S2, button->state ? HIGH : LOW);
     activeSequence = button->state ? 1:0;
+    wrtieLog(LOG_INFO,"Activated Sequence %d", button->state ? 1:0);
 }
 
 /* ----------------------------------------------------------------------------------- *
@@ -210,21 +213,22 @@ void selectSequence( pushbutton_t *button ) {
 void automaticMode( pushbutton_t *button ) {
     setLed( button );
 
-    // enable/disable manual valve control
-    lockValveControl(!button->state);
-
     // enable/disable sequence change
     pushButtons[4].locked = button->state;
 
     // enable/disable sequence start
     pushButtons[5].state  = false;
-    pushButtons[5].locked = button->state;
     startSequence( &pushButtons[5] );       // stop sequence in progress
-
+    pushButtons[5].locked = button->state;
     digitalWrite (LED_RUN, HIGH);
 
+    // enable/disable manual valve control
+    lockValveControl(!button->state);
+    
     // set system mode
     systemMode = button->state ? AUTOMATIC_MODE:MANUAL_MODE;
+
+    writeLog(LOG_INFO, "Set mode to %s", systemMode == MANUAL_MODE ? "manual" : "automatic");
 }
 
 /* ----------------------------------------------------------------------------------- *

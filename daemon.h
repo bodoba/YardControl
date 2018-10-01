@@ -1,5 +1,4 @@
 /* *********************************************************************************** */
-/*                                                                                     */
 /*  Copyright (c) 2018 by Bodo Bauer <bb@bb-zone.com>                                  */
 /*                                                                                     */
 /*  This program is free software: you can redistribute it and/or modify               */
@@ -19,6 +18,11 @@
 #ifndef daemon_h
 #define daemon_h
 
+/* ----------------------------------------------------------------------------------- *
+ * detach from the controlling terminal and run in the background as system daemons
+ *
+ * INPUT: pidFile -> filname to lock and store pid in
+ * ----------------------------------------------------------------------------------- */
 void daemonize(const char *pidFile);
 
 #endif /* daemon_h */

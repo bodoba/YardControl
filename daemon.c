@@ -1,5 +1,4 @@
 /* *********************************************************************************** */
-/*                                                                                     */
 /*  Copyright (c) 2018 by Bodo Bauer <bb@bb-zone.com>                                  */
 /*                                                                                     */
 /*  This program is free software: you can redistribute it and/or modify               */
@@ -31,18 +30,18 @@
 /* ----------------------------------------------------------------------------------- *
  * Local prototype
  * ----------------------------------------------------------------------------------- */
-static void sigendCB( int sigval );
+static void signalCB( int sigval );
 static void shutdown_daemon(void);
 static void writePid();
 
 /* ----------------------------------------------------------------------------------- *
- * Some globals we can't do without... ;)
+ * Some local globals 
  * ----------------------------------------------------------------------------------- */
-int    pidFilehandle = 0;                      // PID file kept open for daemona
-const char *pidFile = NULL;                    // Name of file to write PID to
+static int        pidFilehandle = 0;                 // PID file kept open for daemon
+static const char *pidFile = NULL;                   // Name of file to write PID to
 
 /* ----------------------------------------------------------------------------------- *
- * Daemonize
+ * detach from the controlling terminal and run in the background as system daemons
  * ----------------------------------------------------------------------------------- */
 void daemonize(const char *file) {
     pidFile = file;
@@ -73,9 +72,9 @@ void daemonize(const char *file) {
     
     writePid();                              // write PID to file
     
-    signal(SIGHUP,  sigendCB);               // catch hangup signal
-    signal(SIGTERM, sigendCB);               // catch term signal
-    signal(SIGINT,  sigendCB);               // catch interrupt signal
+    signal(SIGHUP,  signalCB);               // catch hangup signal
+    signal(SIGTERM, signalCB);               // catch term signal
+    signal(SIGINT,  signalCB);               // catch interrupt signal
 }
 
 /* ----------------------------------------------------------------------------------- *
@@ -102,7 +101,7 @@ void writePid() {
 /* ----------------------------------------------------------------------------------- *
  * there are many ways to die
  * ----------------------------------------------------------------------------------- */
-void sigendCB(int sigval)
+void signalCB(int sigval)
 {
     switch(sigval)
     {
@@ -120,6 +119,7 @@ void sigendCB(int sigval)
             break;
     }
 }
+
 /* ----------------------------------------------------------------------------------- *
  * shutdwown deamon
  * ----------------------------------------------------------------------------------- */

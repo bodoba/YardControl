@@ -15,10 +15,7 @@
 /*  You should have received a copy of the GNU General Public License                  */
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.              */
 /* *********************************************************************************** */
-#include "yardControl.h"
-#include "pushButton.h"
-#include "readConfig.h"
-#include "logging.h"
+
 #include <fcntl.h>
 #include <wiringPi.h>
 #include <pcf8574.h>
@@ -29,11 +26,12 @@
 #include <syslog.h>
 #include <stdarg.h>
 #include <time.h>
-#include <signal.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
 
+#include "yardControl.h"
+#include "pushButton.h"
+#include "readConfig.h"
+#include "logging.h"
+#include "daemon.h"
 
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without... ;)
@@ -57,10 +55,6 @@ void setup(void);
 int  main(int rgc, char *argv[]);
 void lockValveControl(bool on);
 void processSequence(void);
-void daemonize(void);
-void writePid(void);
-void sigendCB( int sigval );
-void shutdown_daemon(void);
 
 // Bush button actions
 void setLed( pushbutton_t *button );
@@ -89,39 +83,6 @@ pushbutton_t pushButtons[] = {
     // end marker
     {'0', -1, -1, false, -1, false, -1},
 };
-
-
-/* ----------------------------------------------------------------------------------- *
- * there are many ways to die
- * ----------------------------------------------------------------------------------- */
-void sigendCB(int sigval)
-{
-    switch(sigval)
-    {
-        case SIGHUP:
-            syslog(LOG_WARNING, "Received SIGHUP signal.");
-            break;
-        case SIGINT:
-        case SIGTERM:
-            syslog(LOG_INFO, "Daemon exiting");
-            shutdown_daemon();
-            exit(EXIT_SUCCESS);
-            break;
-        default:
-            syslog(LOG_WARNING, "Unhandled signal %s", strsignal(sigval));
-            break;
-    }
-}
-/* ----------------------------------------------------------------------------------- *
- * shutdwown deamon
- * ----------------------------------------------------------------------------------- */
-void shutdown_daemon(void) {
-    writeLog(LOG_INFO, "Yard Control shutting down");
-    if (!foreground) {
-        close(pidFilehandle);
-        unlink(PID_FILE);
-    }
-}
 
 /* ----------------------------------------------------------------------------------- *
  * Enable/Disable manual valve control (radio group: RG_VALVES)
@@ -302,57 +263,6 @@ void setupIO ( void ) {
 }
 
 /* ----------------------------------------------------------------------------------- *
- * Daemonize
- * ----------------------------------------------------------------------------------- */
-void daemonize(void) {
-
-    /* If we got a good PID, then we can exit the parent process                   */
-    pid_t pid = fork();
-    if (pid < 0) {
-        exit(EXIT_FAILURE);
-    } else  if (pid > 0) {
-        exit(EXIT_SUCCESS);
-    }
-    umask(0);                           /* Change the file mode mask               */
-    pid_t sid = setsid();               /* Create a new SID for the child process  */
-    if (sid < 0) {
-        writeLog(LOG_ERR, "Could not get SID");
-        exit(EXIT_FAILURE);
-    }
-    
-    if ((chdir("/tmp")) < 0) {          /* Change the current working directory    */
-        writeLog(LOG_ERR, "Could not chage working dir to /tmp");
-        exit(EXIT_FAILURE);
-    }
-    
-    /* use /dev/null for the standard file descriptors                             */
-    int fd = open("/dev/null", O_RDWR); /* Open /dev/null as STDIN                 */
-    dup(fd);                            /* STDOUT to /dev/null                     */
-    dup(fd);                            /* STDERR to /dev/null                     */
-}
-
-/* ----------------------------------------------------------------------------------- *
- * Write PID file
- * ----------------------------------------------------------------------------------- */
-void writePid(void) {
-    pidFilehandle = open(PID_FILE, O_RDWR|O_CREAT, 0600);
-    
-    if (pidFilehandle != -1 ) {                       /* Open failed               */
-        if (lockf(pidFilehandle,F_TLOCK,0) != -1) {   /* Try to lock the pid file  */
-            char buffer[10];
-            sprintf(buffer,"%d\n",getpid());              /* Get and format PID    */
-            write(pidFilehandle, buffer, strlen(buffer)); /* write pid to lockfile */
-        } else {
-            writeLog(LOG_CRIT, "Could not lock PID lock file %s, exiting", PID_FILE);
-            exit(EXIT_FAILURE);
-        }
-    } else {
-        writeLog(LOG_CRIT, "Could not open PID lock file %s, exiting", PID_FILE);
-        exit(EXIT_FAILURE);
-    }
-}
-
-/* ----------------------------------------------------------------------------------- *
  * Main
  * ----------------------------------------------------------------------------------- */
 int main( int argc, char *argv[] ) {
@@ -381,14 +291,8 @@ int main( int argc, char *argv[] ) {
         dumpSequence( 1 );
     }
 
-    if (!foreground) {                           // Deamonize
+    if (!foreground) {                           // run in background
         daemonize();
-        writePid();
-        writeLog(LOG_INFO, "Started Yard Control");
-        signal(SIGHUP,  sigendCB);               // catch hangup signal
-        signal(SIGTERM, sigendCB);               // catch term signal
-        signal(SIGINT,  sigendCB);               // catch interrupt signal
-
     } else {
         writeLog(LOG_INFO, "Running in foreground");
     }

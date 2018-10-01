@@ -39,11 +39,13 @@ static void writePid(const char* pidFile);
  * Some globals we can't do without... ;)
  * ----------------------------------------------------------------------------------- */
 int    pidFilehandle = 0;                      // PID file kept open for daemona
+const char *pidFile = NULL;                    // Name of file to write PID to
 
 /* ----------------------------------------------------------------------------------- *
  * Daemonize
  * ----------------------------------------------------------------------------------- */
-void daemonize(const char *pidFile) {
+void daemonize(const char *file) {
+    pidFile = file;
     
     // If we got a good PID, then we can exit the parent process
     pid_t pid = fork();
@@ -69,7 +71,7 @@ void daemonize(const char *pidFile) {
     dup(fd);                                 // STDOUT to /dev/null
     dup(fd);                                 // STDERR to /dev/null
     
-    writePid(pidFile);                              // write PID to file
+    writePid();                              // write PID to file
     
     signal(SIGHUP,  sigendCB);               // catch hangup signal
     signal(SIGTERM, sigendCB);               // catch term signal
@@ -79,7 +81,7 @@ void daemonize(const char *pidFile) {
 /* ----------------------------------------------------------------------------------- *
  * Write PID file
  * ----------------------------------------------------------------------------------- */
-void writePid(const char *pidFile) {
+void writePid() {
     pidFilehandle = open(pidFile, O_RDWR|O_CREAT, 0600);
     
     if (pidFilehandle != -1 ) {                           // Open failed
@@ -124,6 +126,5 @@ void sigendCB(int sigval)
 void shutdown_daemon(void) {
     syslog(LOG_INFO, "Yard Control shutting down");
     close(pidFilehandle);
-    unlink(PID_FILE);
+    unlink(pidFile);
 }
-

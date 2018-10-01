@@ -237,7 +237,7 @@ void processSequence() {
 }
 
 /* ----------------------------------------------------------------------------------- *
- * Initial setup
+ * Setup IO ports
  * ----------------------------------------------------------------------------------- */
 void setupIO ( void ) {
     // initialize wiring PI and attached IO extender
@@ -303,6 +303,8 @@ int main( int argc, char *argv[] ) {
     time_t lastTime = 0;
     for ( ;; ) {                              // never stop working
         time_t now = time(NULL);
+        struct tm timeStamp = localtime ( now );
+        
 
         if ( lastTime != now ) {              // do once a second
             lastTime = now;

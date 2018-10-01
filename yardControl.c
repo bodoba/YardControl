@@ -292,7 +292,7 @@ int main( int argc, char *argv[] ) {
     }
 
     if (!foreground) {                           // run in background
-        daemonize();
+        daemonize(PID_FILE);
     } else {
         writeLog(LOG_INFO, "Running in foreground");
     }

@@ -18,12 +18,6 @@
 
 #ifndef daemon_h
 #define daemon_h
-#include <stdlib.h>
-#include <stdio.h>
-#include <signal.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
 
 #define PID_FILE     "/var/run/yardcontrol.pid"
 void daemonize(void);

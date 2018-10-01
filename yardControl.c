@@ -126,11 +126,13 @@ void switchValve( pushbutton_t *button ) {
 void startSequence( pushbutton_t *button ) {
     setLed( button );
 
-    // enable/disable manual valve control
-    lockValveControl(!button->state);
+    if ( systemMode == MANUAL_MODE ) {
+        // enable/disable manual valve control
+        lockValveControl(!button->state);
     
-    // enable/disable sequence change
-    pushButtons[4].locked = button->state;
+        // enable/disable sequence change
+        pushButtons[4].locked = button->state;
+    }
     
     if ( button->state && sequence[activeSequence][0].offset >=0 ) {
         writeLog(LOG_INFO, "Start sequence %02d", activeSequence);
@@ -232,7 +234,6 @@ void processSequence() {
     if (sequence[activeSequence][step].offset < 0) {
         pushButtons[5].state=false;                 // simulate sequence button press
         startSequence( &pushButtons[5] );
-        lastStep = 0;
     }
 }
 
@@ -312,13 +313,8 @@ int main( int argc, char *argv[] ) {
                     && timestamp->tm_min == startTime[activeSequence].tm_min
                     && !sequenceInProgress ) {
                     writeLog( LOG_INFO, "Autostart sequence %02d", activeSequence );
-                    sequenceInProgress = true;            // start sequence
-                    int step = 0;
-                    while ( sequence[activeSequence][step].offset >= 0 ) {
-                        sequence[activeSequence][step].done = false;
-                        step++;
-                    }
-                    sequenceStartTime = time(NULL);
+                    pushButtons[5].state=true;                 // simulate sequence button press
+                    startSequence( &pushButtons[5] );
                 }
             }
             if (sequenceInProgress) {         // forward sequence

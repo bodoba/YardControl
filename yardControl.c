@@ -240,8 +240,8 @@ void setLed( pushbutton_t *button ) {
 void processSequence() {
     static int lastStep =0;
     int offset = (int)time(NULL)-sequenceStartTime;
-    if (sequence[activeSequence][step].done = false) {
-        lastStep = 0;
+    if ( !sequence[activeSequence][0].done ) {
+         lastStep = 0;
     }
     int step = lastStep;
 

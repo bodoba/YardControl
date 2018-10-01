@@ -309,7 +309,8 @@ int main( int argc, char *argv[] ) {
             if (systemMode == AUTOMATIC_MODE) {
                 struct tm *timestamp = localtime(&now);
                 if ( timestamp->tm_hour == startTime[activeSequence].tm_hour
-                    && timestamp->tm_min == startTime[activeSequence].tm_min ) {
+                    && timestamp->tm_min == startTime[activeSequence].tm_min
+                    && !sequenceInProgress ) {
                     writeLog( LOG_INFO, "Autostart sequence %02d", activeSequence );
                 }
             }

@@ -41,7 +41,6 @@ int    activeSequence     = SEQUENCE;          // sequence to run
 bool   foreground         = false;             // run in foreground, not as daemon
 int    sequenceInProgress = false;             // sequence in progress
 time_t sequenceStartTime;                      // time sequence was started
-int    pidFilehandle = 0;                      // PID file kept open for daemon
 
 /* ----------------------------------------------------------------------------------- *
  * System modes

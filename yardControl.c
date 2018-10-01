@@ -171,20 +171,17 @@ void startSequence( pushbutton_t *button ) {
     pushButtons[4].locked = button->state;
     
     if ( button->state && sequence[activeSequence][0].offset >=0 ) {
-        // start sequence
-        sequenceInProgress = true;
+        writeLog(LOG_INFO, "** Start sequence %02d", activeSequence);
+        sequenceInProgress = true;            // start sequence
         int step = 0;
         while ( sequence[activeSequence][step].offset >= 0 ) {
             sequence[activeSequence][step].done = false;
             step++;
         }
-        writeLog(LOG_INFO, "** Start sequence %02d", activeSequence);
         sequenceStartTime = time(NULL);
     } else {
-        // stop sequence
-        sequenceInProgress = false;
-        sequenceStartTime  = (time_t)0;
         writeLog(LOG_INFO, "** Stop sequence %02d", activeSequence);
+        sequenceInProgress = false;           // stop sequence processing
         // switch all valves off
         int btnIndex = 0;
         while ( pushButtons[btnIndex].btnPin >= 0 ) {
@@ -243,6 +240,9 @@ void setLed( pushbutton_t *button ) {
 void processSequence() {
     static int lastStep =0;
     int offset = (int)time(NULL)-sequenceStartTime;
+    if (sequence[activeSequence][step].done = false) {
+        lastStep = 0;
+    }
     int step = lastStep;
 
     while ( sequence[activeSequence][step].offset >= 0 ) {

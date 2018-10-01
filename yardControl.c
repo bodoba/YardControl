@@ -183,6 +183,7 @@ void startSequence( pushbutton_t *button ) {
     } else {
         // stop sequence
         sequenceInProgress = false;
+        sequenceStartTime  = (time_t)0;
         writeLog(LOG_INFO, "** Stop sequence %02d", activeSequence);
         // switch all valves off
         int btnIndex = 0;
@@ -251,7 +252,7 @@ void processSequence() {
             switchValve(seqStep->valve);             // switch Valve
             lastStep = step;                         // remember where we left off
             
-            writeLog(LOG_INFO, " * S%02d:%02d t+%04d %c %s", activeSequence, step, offset,
+            writeLog(LOG_INFO, "S%02d(%02d) t+%04d: turn valve %c %s", activeSequence, step, offset,
                    seqStep->valve->name, seqStep->state? "ON":"OFF");
             
             break;                                   // we're done here for now

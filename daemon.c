@@ -37,8 +37,8 @@ static void writePid();
 /* ----------------------------------------------------------------------------------- *
  * Some local globals 
  * ----------------------------------------------------------------------------------- */
-static int        pidFilehandle = 0;                 // PID file kept open for daemon
-static const char *pidFile = NULL;                   // Name of file to write PID to
+static int        pidFilehandle = 0;         // PID file kept open for daemon
+static const char *pidFile = NULL;           // Name of file to write PID to
 
 /* ----------------------------------------------------------------------------------- *
  * detach from the controlling terminal and run in the background as system daemons

@@ -154,6 +154,7 @@ void lockValveControl (bool on ) {
  * Switch Valve
  * ----------------------------------------------------------------------------------- */
 void switchValve( pushbutton_t *button ) {
+    writeLog ( LOG_INFO, "Turn valve %c %s", button->name, button->state? "ON":"OFF" );
     setLed( button );
 }
 

@@ -34,12 +34,12 @@ void daemonize(void) {
     umask(0);                                // Change the file mode mask
     pid_t sid = setsid();                    // Create a new SID for the child process
     if (sid < 0) {
-        writeLog(LOG_ERR, "Could not get SID");
+        syslog(LOG_ERR, "Could not get SID");
         exit(EXIT_FAILURE);
     }
     
     if ((chdir("/tmp")) < 0) {               // Change the current working directory
-        writeLog(LOG_ERR, "Could not chage working dir to /tmp");
+        syslog(LOG_ERR, "Could not chage working dir to /tmp");
         exit(EXIT_FAILURE);
     }
     
@@ -67,11 +67,11 @@ void writePid(void) {
             sprintf(buffer,"%d\n",getpid());              // Get and format PID
             write(pidFilehandle, buffer, strlen(buffer)); // write pid to lockfile
         } else {
-            writeLog(LOG_CRIT, "Could not lock PID lock file %s, exiting", PID_FILE);
+            syslog(LOG_CRIT, "Could not lock PID lock file %s, exiting", PID_FILE);
             exit(EXIT_FAILURE);
         }
     } else {
-        writeLog(LOG_CRIT, "Could not open PID lock file %s, exiting", PID_FILE);
+        syslog(LOG_CRIT, "Could not open PID lock file %s, exiting", PID_FILE);
         exit(EXIT_FAILURE);
     }
 }

@@ -255,12 +255,12 @@ void processSequence() {
         if (seqStep->offset <= offset && !seqStep->done) {
             seqStep->done = true;                    // mark step as done
             seqStep->valve->state = seqStep->state;  // Valve ON or OFF ?
+
+            writeLog(LOG_INFO, "S%02d(%02d) t+%04d: turn valve %c %s", activeSequence, step, offset,
+                     seqStep->valve->name, seqStep->state? "ON":"OFF");
+
             switchValve(seqStep->valve);             // switch Valve
             lastStep = step;                         // remember where we left off
-            
-            writeLog(LOG_INFO, "S%02d(%02d) t+%04d: turn valve %c %s", activeSequence, step, offset,
-                   seqStep->valve->name, seqStep->state? "ON":"OFF");
-            
             break;                                   // we're done here for now
         } else if (seqStep->offset > offset) {       // skip the future
             break;

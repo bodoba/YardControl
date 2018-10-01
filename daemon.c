@@ -69,7 +69,7 @@ void daemonize(const char *pidFile) {
     dup(fd);                                 // STDOUT to /dev/null
     dup(fd);                                 // STDERR to /dev/null
     
-    writePid(piFile);                              // write PID to file
+    writePid(pidFile);                              // write PID to file
     
     signal(SIGHUP,  sigendCB);               // catch hangup signal
     signal(SIGTERM, sigendCB);               // catch term signal
@@ -88,11 +88,11 @@ void writePid(const char *pidFile) {
             sprintf(buffer,"%d\n",getpid());              // Get and format PID
             write(pidFilehandle, buffer, strlen(buffer)); // write pid to lockfile
         } else {
-            syslog(LOG_CRIT, "Could not lock PID lock file %s, exiting", PID_FILE);
+            syslog(LOG_CRIT, "Could not lock PID lock file %s, exiting", pidFile);
             exit(EXIT_FAILURE);
         }
     } else {
-        syslog(LOG_CRIT, "Could not open PID lock file %s, exiting", PID_FILE);
+        syslog(LOG_CRIT, "Could not open PID lock file %s, exiting", pidFile);
         exit(EXIT_FAILURE);
     }
 }

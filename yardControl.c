@@ -304,10 +304,15 @@ int main( int argc, char *argv[] ) {
     for ( ;; ) {                              // never stop working
         time_t now = time(NULL);
 
-        struct tm *timestamp = localtime(&now);
-
         if ( lastTime != now ) {              // do once a second
             lastTime = now;
+            if (systemMode == AUTOMATIC_MODE) {
+                struct tm *timestamp = localtime(&now);
+                if ( timestamp->tm_hour == startTime[activeSequence].tm_hour
+                    && timestamp->tm_min == startTime[activeSequence].tm_min ) {
+                    writeLog( LOG_INFO, "Autostart sequence %02d", activeSequence );
+                }
+            }
             if (sequenceInProgress) {         // forward sequence
                 processSequence();
             }

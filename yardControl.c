@@ -312,6 +312,13 @@ int main( int argc, char *argv[] ) {
                     && timestamp->tm_min == startTime[activeSequence].tm_min
                     && !sequenceInProgress ) {
                     writeLog( LOG_INFO, "Autostart sequence %02d", activeSequence );
+                    sequenceInProgress = true;            // start sequence
+                    int step = 0;
+                    while ( sequence[activeSequence][step].offset >= 0 ) {
+                        sequence[activeSequence][step].done = false;
+                        step++;
+                    }
+                    sequenceStartTime = time(NULL);
                 }
             }
             if (sequenceInProgress) {         // forward sequence

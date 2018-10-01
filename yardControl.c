@@ -41,7 +41,7 @@
 int    debug              = DEBUG;             // debug level
 int    activeSequence     = SEQUENCE;          // sequence to run
 bool   foreground         = false;             // run in foreground, not as daemon
-int    sequenceInProgress = false;
+int    sequenceInProgress = false;             // sequence in progress
 time_t sequenceStartTime;                      // time sequence was started
 int    pidFilehandle = 0;                      // PID file kept open for daemon
 
@@ -264,9 +264,8 @@ void processSequence() {
     // end of sequence reached?
     if (sequence[activeSequence][step].offset < 0) {
         pushButtons[5].state=false;                 // simulate sequence button press
-        runSequence( &pushButtons[5] );
+        startSequence( &pushButtons[5] );
         lastStep = 0;
-        seequenceInProgress = false;
     }
 }
 

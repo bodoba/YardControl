@@ -204,7 +204,7 @@ void selectSequence( pushbutton_t *button ) {
     digitalWrite ( LED_S1, button->state ? LOW : HIGH);
     digitalWrite ( LED_S2, button->state ? HIGH : LOW);
     activeSequence = button->state ? 1:0;
-    wrtieLog(LOG_INFO,"Activated Sequence %d", button->state ? 1:0);
+    writeLog(LOG_INFO,"Activated Sequence %d", button->state ? 1:0);
 }
 
 /* ----------------------------------------------------------------------------------- *

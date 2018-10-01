@@ -222,6 +222,8 @@ void automaticMode( pushbutton_t *button ) {
     // enable/disable sequence start
     pushButtons[5].state  = false;
     pushButtons[5].locked = button->state;
+    startSequence( &pushButtons[5] );       // stop sequence in progress
+
     digitalWrite (LED_RUN, HIGH);
 
     // set system mode

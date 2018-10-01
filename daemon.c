@@ -33,7 +33,7 @@
  * ----------------------------------------------------------------------------------- */
 static void sigendCB( int sigval );
 static void shutdown_daemon(void);
-static void writePid(const char* pidFile);
+static void writePid();
 
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without... ;)

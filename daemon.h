@@ -18,7 +18,7 @@
 
 #ifndef daemon_h
 #define daemon_h
-
+#include <stdlib.h>
 #include <stdio.h>
 #include <signal.h>
 #include <sys/types.h>

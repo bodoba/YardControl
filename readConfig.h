@@ -51,7 +51,7 @@ typedef struct starttime_t {
  * ----------------------------------------------------------------------------------- */
 extern char *configFile                 ;     // configuration file
 extern sequence_t  sequence[2][MAX_STEP];     // two program sequences of max 40 steps
-extern starttime_t startTime[2];              // start times for each sequence
+extern starttime_t startTime[2][MAX_STARTTIMES+1];              // start times for each sequence
 
 
 /* ----------------------------------------------------------------------------------- *

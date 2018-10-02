@@ -178,19 +178,9 @@ void dumpSequence( int sequenceIdx ) {
     
     if ( seq[0].offset >=0 ) {
         printf("# ----------------------------------------------------------------------------------- #\n");
-        printf("# Sequence %d                                                                          #\n", sequenceIdx );
-        printf("# ----------------------------------------------------------------------------------- #\n");
         printf("SEQUENCE %d\n", sequenceIdx);
+        printf("# ----------------------------------------------------------------------------------- #\n");
         
-        int timeIdx=0;
-        while(startTime[sequenceIdx][timeIdx].tm_hour >= 0 ) {
-            if ( startTime[sequenceIdx][timeIdx].tm_hour >= 0 ) {
-                printf( "  TIME %02d:%02d %d\n", startTime[sequenceIdx][timeIdx].tm_hour,
-                                                 startTime[sequenceIdx][timeIdx].tm_min,
-                                                 sequenceIdx);
-            }
-            timeIdx++;
-        }
         while ( seq[step].offset >= 0 ) {
             if ( seq[step].state ) {
                 if ( seq[step].offset > (lastOFF+1) ) {
@@ -213,4 +203,15 @@ void dumpSequence( int sequenceIdx ) {
         printf("# Sequence %d not defined                                                             #\n", sequenceIdx );
         printf("# ----------------------------------------------------------------------------------- #\n");
     }
+
+    int timeIdx=0;
+    while(startTime[sequenceIdx][timeIdx].tm_hour >= 0 ) {
+        if ( startTime[sequenceIdx][timeIdx].tm_hour >= 0 ) {
+            printf( "  TIME %02d:%02d %d\n", startTime[sequenceIdx][timeIdx].tm_hour,
+                   startTime[sequenceIdx][timeIdx].tm_min,
+                   sequenceIdx);
+        }
+        timeIdx++;
+    }
+
 }

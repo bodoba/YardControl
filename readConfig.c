@@ -50,7 +50,7 @@ bool readConfig(void) {
     // start with two empty sequences
     for ( int sequenceIdx=0; sequenceIdx <=1; sequenceIdx++ ) {
         sequence[sequenceIdx][0].offset = -1;
-        for (int timeIdx=0; timeIdx<=MAX_STARTTIMES; timeIdx++) {
+        for (timeIdx=0; timeIdx<=MAX_STARTTIMES; timeIdx++) {
             startTime[sequenceIdx][timeIdx].tm_hour  = -1;
         }
     }

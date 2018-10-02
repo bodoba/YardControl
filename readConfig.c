@@ -179,7 +179,7 @@ void dumpSequence( int sequenceIdx ) {
                 printf( "  START %02d:%02d\n", startTime[sequenceIdx][timeIdx].tm_hour,
                                                startTime[sequenceIdx][timeIdx].tm_min);
             }
-            timeidx++;
+            timeIdx++;
         }
         while ( seq[step].offset >= 0 ) {
             if ( seq[step].state ) {

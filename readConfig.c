@@ -76,31 +76,40 @@ bool readConfig(void) {
                     char *value = nextValue(&cursor);
                     
                     if (!strcmp(token, "SEQUENCE")) {
-                        sequenceIdx++;
-                        timeIdx = 0;
-                        step    = 0;
-                        offset  = 0;
+                        sequenceIdx = atoi (value);
+                        if ( sequenceIdx == 0 || sequenceIdx == 1 ) {
+                            timeIdx = 0;
+                            step    = 0;
+                            offset  = 0;
+                        } else {
+                            sequenceIdx = -1;
+                            writeLog( LOG_ERR, "[%s:%04d] ERROR: Wrong sequence number '%s' must be 0 or 1\n",
+                                     configFile, lineNo, value );
+                        }
                     } else if (!strcmp(token, "TIME")) {
-                        // expected format is hh:mm
-                        char *hh, *mm;
-                        int hour, min;
+                        // expected format is "TIME hh:mm s
+                        char *hh, *mm, *seq;
+                        int hour, min, idx;
                         hh=value;
                         mm=value+3;
+                        seq=value+6;
                         *(value+2)='\0';
                         *(value+5)='\0';
-                        hour=atoi(hh);
-                        min =atoi(mm);
-                        if( hour>=0 && hour<24 && min>=0 && min<60 ) {
+                        *(value+7)='\0';
+                        hour = atoi(hh);
+                        min  = atoi(mm);
+                        idx  = atoi(seq);
+                        if( hour>=0 && hour<24 && min>=0 && min<60 && (idx==0 || idx ==1) {
                             if ( timeIdx < MAX_STARTTIMES ) {
-                                startTime[sequenceIdx][timeIdx].tm_min  = min;
-                                startTime[sequenceIdx][timeIdx].tm_hour = hour;
+                                startTime[idx][timeIdx].tm_min  = min;
+                                startTime[idx][timeIdx].tm_hour = hour;
                                 timeIdx++;
                             } else {
                                 writeLog( LOG_ERR, "[%s:%04d] ERROR: Maximum TIME statements of %02d exceeded\n",
                                          configFile, lineNo, MAX_STARTTIMES );
                             }
                         } else {
-                            writeLog( LOG_ERR, "[%s:%04d] ERROR: TIME expected as hh:mm\n", configFile, lineNo );
+                            writeLog( LOG_ERR, "[%s:%04d] ERROR: TIME expected as hh:mm s\n", configFile, lineNo );
                         }
                     } else if (!strcmp(token, "PAUSE")) {
                         int time  = atoi(value);
@@ -176,7 +185,7 @@ void dumpSequence( int sequenceIdx ) {
         int timeIdx=0;
         while(startTime[sequenceIdx][timeIdx].tm_hour >= 0 ) {
             if ( startTime[sequenceIdx][timeIdx].tm_hour >= 0 ) {
-                printf( "  START %02d:%02d\n", startTime[sequenceIdx][timeIdx].tm_hour,
+                printf( "  TIME %02d:%02d\n", startTime[sequenceIdx][timeIdx].tm_hour,
                                                startTime[sequenceIdx][timeIdx].tm_min);
             }
             timeIdx++;

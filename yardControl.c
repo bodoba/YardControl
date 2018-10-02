@@ -310,7 +310,7 @@ int main( int argc, char *argv[] ) {
             if (systemMode == AUTOMATIC_MODE) {
                 struct tm *timestamp = localtime(&now);
                 int timeIdx=0;
-                whiles(tartTime[activeSequence][timeIdx].tm_hour >= 0 ) {
+                while(startTime[activeSequence][timeIdx].tm_hour >= 0 ) {
                     if ( timestamp->tm_hour == startTime[activeSequence][timeIdx].tm_hour
                         && timestamp->tm_min == startTime[activeSequence][timeIdx].tm_min
                         && !sequenceInProgress ) {

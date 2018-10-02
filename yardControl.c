@@ -293,7 +293,7 @@ int main( int argc, char *argv[] ) {
         // dump configuration
         dumpSequence( 0 );
         dumpSequence( 1 );
-        exit 1;
+        exit(1);
     }
 
     if (!foreground) {                           // run in background

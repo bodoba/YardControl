@@ -77,7 +77,7 @@ bool readConfig(void) {
                     
                     if (!strcmp(token, "SEQUENCE")) {
                         sequenceIdx = atoi (value);
-                        if ( sequenceIdx == 0 || sequenceIdx == 1 ) {
+                        if ( *value == '0' || *value == '1' ) {
                             timeIdx = 0;
                             step    = 0;
                             offset  = 0;
@@ -99,7 +99,7 @@ bool readConfig(void) {
                         hour = atoi(hh);
                         min  = atoi(mm);
                         idx  = atoi(seq);
-                        if( hour>=0 && hour<24 && min>=0 && min<60 && (idx==0||idx ==1)) {
+                        if( hour>=0 && hour<24 && min>=0 && min<60 && (*seq=='0'||*seq=='1')) {
                             if ( timeIdx < MAX_STARTTIMES ) {
                                 startTime[idx][timeIdx].tm_min  = min;
                                 startTime[idx][timeIdx].tm_hour = hour;
@@ -185,8 +185,9 @@ void dumpSequence( int sequenceIdx ) {
         int timeIdx=0;
         while(startTime[sequenceIdx][timeIdx].tm_hour >= 0 ) {
             if ( startTime[sequenceIdx][timeIdx].tm_hour >= 0 ) {
-                printf( "  TIME %02d:%02d\n", startTime[sequenceIdx][timeIdx].tm_hour,
-                                               startTime[sequenceIdx][timeIdx].tm_min);
+                printf( "  TIME %02d:%02d %d\n", startTime[sequenceIdx][timeIdx].tm_hour,
+                                                 startTime[sequenceIdx][timeIdx].tm_min,
+                                                 sequenceIdx);
             }
             timeIdx++;
         }

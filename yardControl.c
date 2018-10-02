@@ -309,12 +309,16 @@ int main( int argc, char *argv[] ) {
             lastTime = now;
             if (systemMode == AUTOMATIC_MODE) {
                 struct tm *timestamp = localtime(&now);
-                if ( timestamp->tm_hour == startTime[activeSequence].tm_hour
-                    && timestamp->tm_min == startTime[activeSequence].tm_min
-                    && !sequenceInProgress ) {
-                    writeLog( LOG_INFO, "Autostart sequence %02d", activeSequence );
-                    pushButtons[5].state=true;              // simulate sequence button press
-                    startSequence( &pushButtons[5] );
+                int timeIdx=0;
+                whiles(tartTime[activeSequence][timeIdx].tm_hour >= 0 ) {
+                    if ( timestamp->tm_hour == startTime[activeSequence][timeIdx].tm_hour
+                        && timestamp->tm_min == startTime[activeSequence][timeIdx].tm_min
+                        && !sequenceInProgress ) {
+                        writeLog( LOG_INFO, "Autostart sequence %02d", activeSequence );
+                        pushButtons[5].state=true;              // simulate sequence button press
+                        startSequence( &pushButtons[5] );
+                    }
+                    timeIdx++;
                 }
             }
             if (sequenceInProgress) {         // forward sequence

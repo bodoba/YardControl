@@ -174,7 +174,7 @@ void dumpSequence( int sequenceIdx ) {
         printf("SEQUENCE START\n");
         
         int timeIdx=0;
-        while(startTime[activeSequence][timeIdx].tm_hour >= 0 ) {
+        while(startTime[sequenceIdx][timeIdx].tm_hour >= 0 ) {
             if ( startTime[sequenceIdx][timeIdx].tm_hour >= 0 ) {
                 printf( "  START %02d:%02d\n", startTime[sequenceIdx][timeIdx].tm_hour,
                                                startTime[sequenceIdx][timeIdx].tm_min);

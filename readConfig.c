@@ -44,15 +44,16 @@ char *nextValue( char **cursor) {
 bool readConfig(void) {
     FILE *fp = NULL;
     fp = fopen(configFile, "rb");
-    int sequenceIdx, timeIdx, step = -1, offset=-1, lineNo=1;
+    int sequenceIdx, timeIdx[2], step = -1, offset=-1, lineNo=1;
     bool retval = false;
     
     // start with two empty sequences
     for ( int sequenceIdx=0; sequenceIdx <=1; sequenceIdx++ ) {
         sequence[sequenceIdx][0].offset = -1;
-        for (timeIdx=0; timeIdx<=MAX_STARTTIMES; timeIdx++) {
-            startTime[sequenceIdx][timeIdx].tm_hour  = -1;
+        for (int idx=0; idx<=MAX_STARTTIMES; idx++) {
+            startTime[sequenceIdx][idx].tm_hour  = -1;
         }
+        timeIdx[idx]=0;
     }
     // inititalize counter;
     sequenceIdx = -1;
@@ -100,10 +101,10 @@ bool readConfig(void) {
                         min  = atoi(mm);
                         idx  = atoi(seq);
                         if( hour>=0 && hour<24 && min>=0 && min<60 && (*seq=='0'||*seq=='1')) {
-                            if ( timeIdx < MAX_STARTTIMES ) {
-                                startTime[idx][timeIdx].tm_min  = min;
-                                startTime[idx][timeIdx].tm_hour = hour;
-                                timeIdx++;
+                            if ( timeIdx[idx] < MAX_STARTTIMES ) {
+                                startTime[idx][timeIdx[idx]].tm_min  = min;
+                                startTime[idx][timeIdx[idx]].tm_hour = hour;
+                                timeIdx[idx]++;
                             } else {
                                 writeLog( LOG_ERR, "[%s:%04d] ERROR: Maximum TIME statements of %02d exceeded\n",
                                          configFile, lineNo, MAX_STARTTIMES );

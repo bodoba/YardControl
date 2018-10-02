@@ -180,7 +180,7 @@ void dumpSequence( int sequenceIdx ) {
         printf("# ----------------------------------------------------------------------------------- #\n");
         printf("# Sequence %d                                                                          #\n", sequenceIdx );
         printf("# ----------------------------------------------------------------------------------- #\n");
-        printf("SEQUENCE START\n");
+        printf("SEQUENCE %d\n", sequenceIdx);
         
         int timeIdx=0;
         while(startTime[sequenceIdx][timeIdx].tm_hour >= 0 ) {

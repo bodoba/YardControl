@@ -53,7 +53,7 @@ bool readConfig(void) {
         for (int idx=0; idx<=MAX_STARTTIMES; idx++) {
             startTime[sequenceIdx][idx].tm_hour  = -1;
         }
-        timeIdx[idx]=0;
+        timeIdx[sequenceIdx]=0;
     }
     // inititalize counter;
     sequenceIdx = -1;

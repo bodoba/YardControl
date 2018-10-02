@@ -79,7 +79,6 @@ bool readConfig(void) {
                     if (!strcmp(token, "SEQUENCE")) {
                         sequenceIdx = atoi (value);
                         if ( *value == '0' || *value == '1' ) {
-                            timeIdx = 0;
                             step    = 0;
                             offset  = 0;
                         } else {

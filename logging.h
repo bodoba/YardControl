@@ -24,6 +24,7 @@
 #include <time.h>
 #include <ctype.h>
 #include <stdbool.h>
+#include <syslog.h>
 
 /*
   log levels are taken from syslog.h

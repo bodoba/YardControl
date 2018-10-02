@@ -22,13 +22,14 @@
 
 #include "yardControl.h"
 #include "readConfig.h"
+#include "logging.h"
 
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without
  * ----------------------------------------------------------------------------------- */
 char *configFile    = CONFIG_FILE;            /* configuration file                    */
 sequence_t  sequence[2][MAX_STEP];            /* two program sequences of max 40 steps */
-starttime_t startTime[2];                     /* start times for each sequence         */
+starttime_t startTime[2][MAX_STARTTIMES+1];   /* 10 start times for each sequence      */
 
 /* ----------------------------------------------------------------------------------- *
 * Read config file
@@ -43,16 +44,18 @@ char *nextValue( char **cursor) {
 bool readConfig(void) {
     FILE *fp = NULL;
     fp = fopen(configFile, "rb");
-    int sequenceIdx = -1, step = -1, offset=-1, lineNo=1;
+    int sequenceIdx, timeIdx, step = -1, offset=-1, lineNo=1;
     bool retval = false;
     
     // start with two empty sequences
-    sequence[0][0].offset = -1;
-    startTime[0].tm_hour  = -1;
-    
-    sequence[1][0].offset = -1;
-    startTime[1].tm_hour  = -1;
-    
+    for ( int sequenceIdx=0; sequenceIdx <=1; sequenceIdx++ ) {
+        sequence[sequenceIdx][0].offset = -1;
+        for (int timeIdx=0; timeIdx<=MAX_STARTTIMES; timeIdx++) {
+            startTime[sequenceIdx][timeIdx].tm_hour  = -1;
+        }
+    }
+    // inititalize counter;
+    sequenceIdx = -1;
     if (fp) {
         char  *line=NULL;
         char  *cursor;
@@ -74,8 +77,9 @@ bool readConfig(void) {
                     
                     if (!strcmp(token, "SEQUENCE")) {
                         sequenceIdx++;
-                        step   = 0;
-                        offset = 0;
+                        timeIdx = 0;
+                        step    = 0;
+                        offset  = 0;
                     } else if (!strcmp(token, "TIME")) {
                         // expected format is hh:mm
                         char *hh, *mm;
@@ -87,17 +91,23 @@ bool readConfig(void) {
                         hour=atoi(hh);
                         min =atoi(mm);
                         if( hour>=0 && hour<24 && min>=0 && min<60 ) {
-                            startTime[sequenceIdx].tm_min  = min;
-                            startTime[sequenceIdx].tm_hour = hour;
+                            if ( timeIdx < MAX_STARTTIMES ) {
+                                startTime[sequenceIdx][timeIdx].tm_min  = min;
+                                startTime[sequenceIdx][timeIdx].tm_hour = hour;
+                                timeIdx++;
+                            } else {
+                                writeLog( LOG_ERR, "[%s:%04d] ERROR: Maximum TIME statements of %02d exceeded\n",
+                                         configFile, lineNo, MAX_STARTTIMES );
+                            }
                         } else {
-                            printf ( "[%s:%04d] ERROR: TIME expected as hh:mm\n", configFile, lineNo );
+                            writeLog( LOG_ERR, "[%s:%04d] ERROR: TIME expected as hh:mm\n", configFile, lineNo );
                         }
                     } else if (!strcmp(token, "PAUSE")) {
                         int time  = atoi(value);
                         if (time > 0 ) {
                             offset+=(time*TIME_SCALE-1);
                         } else {
-                            printf ( "[%s:%04d] ERROR: Wromg time in DELAY: %d\n", configFile, lineNo, time );
+                            writeLog( LOG_ERR, "[%s:%04d] ERROR: Wromg time in DELAY: %d\n", configFile, lineNo, time );
                         }
                     } else if (!strcmp(token, "VALVE")) {
                         char *valve = cursor;
@@ -125,16 +135,16 @@ bool readConfig(void) {
                                 sequence[sequenceIdx][step].offset = -1;
                             } else {
                                 if ( step >= (MAX_STEP-2) ) {
-                                    printf ( "[%s:%04d] ERROR: Sequence too long, ignoring line \n", configFile, lineNo );
+                                    writeLog( LOG_ERR, "[%s:%04d] ERROR: Sequence too long, ignoring line \n", configFile, lineNo );
                                 } else {
-                                    printf ( "[%s:%04d] ERROR: Unknown VALVE: %s\n", configFile, lineNo, valve );
+                                    writeLog( LOG_ERR, "[%s:%04d] ERROR: Unknown VALVE: %s\n", configFile, lineNo, valve );
                                 }
                             }
                         } else {
-                            printf ( "[%s:%04d] ERROR: Wromg time in VALVE: %d\n", configFile, lineNo, time );
+                            writeLog( LOG_ERR, "[%s:%04d] ERROR: Wromg time in VALVE: %d\n", configFile, lineNo, time );
                         }
                     } else {
-                        printf ( "[%s:%04d] WARNING: Skipping unknown command: %s\n", configFile, lineNo, token );
+                        writeLog( LOG_ERR, "[%s:%04d] WARNING: Skipping unknown command: %s\n", configFile, lineNo, token );
                     }
                 }
             }

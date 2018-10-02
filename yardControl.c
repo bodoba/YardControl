@@ -302,10 +302,10 @@ int main( int argc, char *argv[] ) {
     
     // Main loop
     time_t lastTime = 0;
-    for ( ;; ) {                              // never stop working
+    for ( ;; ) {                                 // never stop working
         time_t now = time(NULL);
 
-        if ( lastTime != now ) {              // do once a second
+        if ( lastTime != now ) {                 // only work do once a second
             lastTime = now;
             if (systemMode == AUTOMATIC_MODE) {
                 struct tm *timestamp = localtime(&now);
@@ -313,7 +313,7 @@ int main( int argc, char *argv[] ) {
                     && timestamp->tm_min == startTime[activeSequence].tm_min
                     && !sequenceInProgress ) {
                     writeLog( LOG_INFO, "Autostart sequence %02d", activeSequence );
-                    pushButtons[5].state=true;                 // simulate sequence button press
+                    pushButtons[5].state=true;              // simulate sequence button press
                     startSequence( &pushButtons[5] );
                 }
             }

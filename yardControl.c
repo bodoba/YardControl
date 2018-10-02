@@ -266,6 +266,7 @@ void setupIO ( void ) {
  * Main
  * ----------------------------------------------------------------------------------- */
 int main( int argc, char *argv[] ) {
+    bool dumpConfig = false;
     
     // Process command line options
     for (int i=0; i<argc; i++) {
@@ -276,7 +277,10 @@ int main( int argc, char *argv[] ) {
             configFile = strdup(argv[++i]);
         }
         if (!strcmp(argv[i], "-f")) {          // '-f' forces forground mode
-            foreground=true;;
+            foreground=true;
+        }
+        if (!strcmp(argv[i], "-n")) {          // '-n' dont start read config and dump result
+            dumpConfig=true;
         }
     }
     
@@ -285,10 +289,11 @@ int main( int argc, char *argv[] ) {
     // read configuration from file
     readConfig();
 
-    if ( debug ) {
+    if ( dumpConfig ) {
         // dump configuration
         dumpSequence( 0 );
         dumpSequence( 1 );
+        exit 1;
     }
 
     if (!foreground) {                           // run in background

@@ -99,7 +99,7 @@ bool readConfig(void) {
                         hour = atoi(hh);
                         min  = atoi(mm);
                         idx  = atoi(seq);
-                        if( hour>=0 && hour<24 && min>=0 && min<60 && (idx==0 || idx ==1) {
+                        if( hour>=0 && hour<24 && min>=0 && min<60 && (idx==0||idx ==1)) {
                             if ( timeIdx < MAX_STARTTIMES ) {
                                 startTime[idx][timeIdx].tm_min  = min;
                                 startTime[idx][timeIdx].tm_hour = hour;

@@ -200,8 +200,8 @@ void automaticMode( pushbutton_t *button ) {
 void setLed( pushbutton_t *button ) {
     char *msgBuffer[512];
     digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
-    sprintf(msgBuffer,"{\"LED\":\"%s\",\"state\":\"%s\"}",button->name,button->state ? "off" : "on");
-    mqttPublish(mqttBroker.prefix,msgBuffer);
+    sprintf(msgBuffer,"{\"LED\":\"%s\",\"state\":\"%s\"}", button->name, button->state ? "off" : "on");
+    mqttPublish("TEST", msgBuffer);
 }
 
 /* ----------------------------------------------------------------------------------- *

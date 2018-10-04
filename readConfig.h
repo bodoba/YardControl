@@ -45,7 +45,7 @@ typedef struct connection_t {
     char *address;
     int  port;
     int  keepalive;
-    char *prefix
+    char *prefix;
 } connection_t;
 
 /* ----------------------------------------------------------------------------------- *

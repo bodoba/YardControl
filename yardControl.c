@@ -198,7 +198,10 @@ void automaticMode( pushbutton_t *button ) {
  * Set LED of push button
  * ----------------------------------------------------------------------------------- */
 void setLed( pushbutton_t *button ) {
+    char *msgBuffer[512];
     digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
+    sprintf(msgBuffer,"{\"LED\":\"%s\",\"state\":\"%s\"}",button->name,button->state ? "off" : "on");
+    mqttPublish(mqttBroker.prefix,msgBuffer);
 }
 
 /* ----------------------------------------------------------------------------------- *
@@ -304,6 +307,7 @@ int main( int argc, char *argv[] ) {
             writeLog(LOG_INFO, "Connected MQTT boker at %s:%d", mqttBroker.address, mqttBroker.port);
         }
     }
+    
     if (!foreground) {                           // run in background
         daemonize(PID_FILE);
     } else {

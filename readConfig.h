@@ -58,10 +58,10 @@ typedef struct starttime_t {
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without
  * ----------------------------------------------------------------------------------- */
-extern char *configFile                 ;     // configuration file
-extern sequence_t  sequence[2][MAX_STEP];     // two program sequences of max 40 steps
-extern starttime_t startTime[2][MAX_STARTTIMES+1];              // start times for each sequence
-
+extern char *configFile;                            // configuration file
+extern sequence_t  sequence[2][MAX_STEP];           // two program sequences of max 40 steps
+extern starttime_t startTime[2][MAX_STARTTIMES+1];  // start times for each sequence
+extern connection_t mqttBroker;                     // address:port of MQTT broker
 
 /* ----------------------------------------------------------------------------------- *
  * Prototypes

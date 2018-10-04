@@ -30,7 +30,7 @@
 char *configFile    = CONFIG_FILE;            // configuration file
 sequence_t  sequence[2][MAX_STEP];            // two program sequences of max 40 steps
 starttime_t startTime[2][MAX_STARTTIMES+1];   // 10 start times for each sequence
-connection_t mqttConnection;                  // mqtt broker settings
+connection_t mqttBroker;                      // mqtt broker settings
 
 /* ----------------------------------------------------------------------------------- *
  * Read config file
@@ -117,7 +117,7 @@ bool readConfig(void) {
                             writeLog( LOG_ERR, "[%s:%04d] ERROR: TIME expected as hh:mm s\n", configFile, lineNo );
                         }
                     } else if (!strcmp(token, "MQTTBROKER")) {
-                        qttConnection.address = strdup(value);
+                        mqttBroker.address = strdup(value);
                     } else if (!strcmp(token, "MQTTPORT")) {
                         mqttBroker.port = atoi(value);
                     } else if (!strcmp(token, "MQTTKEEPALIVE")) {

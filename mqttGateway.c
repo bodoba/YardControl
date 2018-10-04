@@ -20,6 +20,7 @@
 #include <string.h>
 
 #include "mqttGateway.h"
+#include "logging.h"
 
 /* ----------------------------------------------------------------------------------- *
  * Handle to broker
@@ -38,17 +39,17 @@ bool mqtt_init( const char* broker, int port, int keepalive) {
     if(mosq){
         err = mosquitto_connect(mosq, broker, port, keepalive);
         if( err != MOSQ_ERR_SUCCESS ) {
-            fprintf(stderr, "Error: mosquitto_connect [%s]\n", mosquitto_strerror(err));
+            writeLog(LOG_ERR, "Error: mosquitto_connect [%s]\n", mosquitto_strerror(err));
             success = false;
         }
     } else {
-        fprintf(stderr, "Error: Out of memory.\n");
+        writeLog(LOG_ERR, "Error: Out of memory.\n");
         success = false;
     }
     
     err = mosquitto_loop_start(mosq);
     if( err != MOSQ_ERR_SUCCESS ) {
-        fprintf(stderr, "Error: mosquitto_connect [%s]\n", mosquitto_strerror(err));
+        writeLog(LOG_ERR, "Error: mosquitto_connect [%s]\n", mosquitto_strerror(err));
         success = false;
     }
     return success;

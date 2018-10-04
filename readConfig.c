@@ -27,13 +27,14 @@
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without
  * ----------------------------------------------------------------------------------- */
-char *configFile    = CONFIG_FILE;            /* configuration file                    */
-sequence_t  sequence[2][MAX_STEP];            /* two program sequences of max 40 steps */
-starttime_t startTime[2][MAX_STARTTIMES+1];   /* 10 start times for each sequence      */
+char *configFile    = CONFIG_FILE;            // configuration file
+sequence_t  sequence[2][MAX_STEP];            // two program sequences of max 40 steps
+starttime_t startTime[2][MAX_STARTTIMES+1];   // 10 start times for each sequence
+connection_t mqttConnection;                  // mqtt broker settings
 
 /* ----------------------------------------------------------------------------------- *
-* Read config file
-* ----------------------------------------------------------------------------------- */
+ * Read config file
+ * ----------------------------------------------------------------------------------- */
 char *nextValue( char **cursor) {
     while (**cursor && **cursor != ' ') (*cursor)++;                   /*   skip token */
     **cursor = '\0'; (*cursor)++;                                      /* end of token */
@@ -55,6 +56,10 @@ bool readConfig(void) {
         }
         timeIdx[sequenceIdx]=0;
     }
+    mqttBroker.address   = NULL;
+    mqttBroker.port      = 1833;
+    mqttBroker.keepalive = 60;
+
     // inititalize counter;
     sequenceIdx = -1;
     if (fp) {
@@ -111,6 +116,12 @@ bool readConfig(void) {
                         } else {
                             writeLog( LOG_ERR, "[%s:%04d] ERROR: TIME expected as hh:mm s\n", configFile, lineNo );
                         }
+                    } else if (!strcmp(token, "MQTTBROKER")) {
+                        qttConnection.address = strdup(value);
+                    } else if (!strcmp(token, "MQTTPORT")) {
+                        mqttBroker.port = atoi(value);
+                    } else if (!strcmp(token, "MQTTKEEPALIVE")) {
+                        mqttBroker.keepalive = atoi(value);
                     } else if (!strcmp(token, "PAUSE")) {
                         int time  = atoi(value);
                         if (time > 0 ) {

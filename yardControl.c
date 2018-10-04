@@ -32,6 +32,7 @@
 #include "readConfig.h"
 #include "logging.h"
 #include "daemon.h"
+#include "mqttGateway.h"
 
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without... ;)
@@ -284,6 +285,7 @@ int main( int argc, char *argv[] ) {
         }
     }
     
+    // initialize logging channel
     initLog(!foreground);
     
     // read configuration from file
@@ -296,6 +298,12 @@ int main( int argc, char *argv[] ) {
         exit(1);
     }
 
+    // initialize MQTT connection to broker
+    if (mqttBroker.address) {
+        if (mqtt_init(mqttBroker.address, mqttBroker.port, mqttBroker.keepalive)) {
+            writeLog(LOG_INFO, "Connected MQTT boker at %s:%d", mqttBroker.address, mqttBroker.port);
+        }
+    }
     if (!foreground) {                           // run in background
         daemonize(PID_FILE);
     } else {

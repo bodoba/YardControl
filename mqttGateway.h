@@ -15,10 +15,13 @@
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.              */
 /* *********************************************************************************** */
 
-
 #ifndef mqttGateway_h
 #define mqttGateway_h
 
 #include <stdio.h>
+
+bool mqtt_init(const char* broker, int port, int keepalive);
+void mqtt_end(void );
+bool mqtt_publish (const char *topic, const char *message);
 
 #endif /* mqttGateway_h */

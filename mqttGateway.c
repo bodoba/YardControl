@@ -30,7 +30,7 @@ static struct mosquitto *mosq = NULL;
 /* ----------------------------------------------------------------------------------- *
  * Connect to MQTT broker
  * ----------------------------------------------------------------------------------- */
-bool mqtt_init( const char* broker, int port, int keepalive) {
+bool mqttInit( const char* broker, int port, int keepalive) {
     bool success = true;
     int err;
     
@@ -58,7 +58,7 @@ bool mqtt_init( const char* broker, int port, int keepalive) {
 /* ----------------------------------------------------------------------------------- *
  * End MQTT broker connection
  * ----------------------------------------------------------------------------------- */
-void mqtt_end( void ) {
+void mqttEnd( void ) {
     mosquitto_loop_stop(mosq, true);
     mosquitto_destroy(mosq);
     mosquitto_lib_cleanup();
@@ -68,7 +68,7 @@ void mqtt_end( void ) {
 /* ----------------------------------------------------------------------------------- *
  * Publish MQTT message
  * ----------------------------------------------------------------------------------- */
-bool mqtt_publish ( const char *topic, const char *message ) {
+bool mqttPublish ( const char *topic, const char *message ) {
     bool success = true;
     int  err;
     

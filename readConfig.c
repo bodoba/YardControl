@@ -122,6 +122,8 @@ bool readConfig(void) {
                         mqttBroker.port = atoi(value);
                     } else if (!strcmp(token, "MQTTKEEPALIVE")) {
                         mqttBroker.keepalive = atoi(value);
+                    } else if (!strcmp(token, "MQTTPREFIX")) {
+                        mqttBroker.prefix = strdup(value);
                     } else if (!strcmp(token, "PAUSE")) {
                         int time  = atoi(value);
                         if (time > 0 ) {

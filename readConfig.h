@@ -43,8 +43,9 @@ typedef struct sequence_t {
  * ----------------------------------------------------------------------------------- */
 typedef struct connection_t {
     char *address;
-    int port;
-    int keepalive;
+    int  port;
+    int  keepalive;
+    char *prefix
 } connection_t;
 
 /* ----------------------------------------------------------------------------------- *

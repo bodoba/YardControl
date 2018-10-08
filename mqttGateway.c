@@ -57,6 +57,7 @@ bool mqttInit( const char* broker, int port, int keepalive, mqttIncoming_t *subs
         int idx = 0;
         while (subscriptionList[idx].topic) {
             writeLog(LOG_INFO, "Supscribe to MQTT topic: %s", subscriptionList[idx].topic);
+            mosquitto_subscribe( mosq, NULL, subscriptionList[idx].topic, 0);
             idx++;
         }
     }

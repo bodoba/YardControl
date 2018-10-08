@@ -64,7 +64,7 @@ void selectSequence( pushbutton_t *button );
 void automaticMode( pushbutton_t *button );
 
 // MQTT Callbacks
-void switchValveCB( void *button );
+void switchValveCB(char *payload, void *button );
 
 /* ----------------------------------------------------------------------------------- *
  * Definition of the pushbuttons
@@ -86,13 +86,6 @@ pushbutton_t pushButtons[] = {
     // end marker
     {'0', -1, -1, false, -1, false, -1},
 };
-
-/* ----------------------------------------------------------------------------------- *
- * Switch Valve with MQTT command
- * ----------------------------------------------------------------------------------- */
-void switchValveCB( void *button ) {
-    
-}
 
 /* ----------------------------------------------------------------------------------- *
  * Enable/Disable manual valve control (radio group: RG_VALVES)
@@ -133,6 +126,13 @@ void switchValve( pushbutton_t *button ) {
     sprintf(message, "{\"state\":\"%s\"}", button->state ? "ON" : "OFF");
     sprintf(topic,   "%s/valve_%c", mqttBroker.prefix, button->name);
     mqttPublish(topic, message);
+}
+
+/* ----------------------------------------------------------------------------------- *
+ * Switch Valve with MQTT command
+ * ----------------------------------------------------------------------------------- */
+void switchValveCB(char *payload, void *button ) {
+    
 }
 
 /* ----------------------------------------------------------------------------------- *

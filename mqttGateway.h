@@ -24,9 +24,9 @@
  * handler for incoming MQTT messages
  * ----------------------------------------------------------------------------------- */
 typedef struct mqttIncoming_t {
-    const char* topic;           // MQTT topic to subscribe to
-    void  (*handler)(void*);     // callback function to call if message is received
-    void  *ptr;                  // argument to callback function
+    const char* topic;               // MQTT topic to subscribe to
+    void  (*handler)(char*, void*);  // callback function to call if message is received
+    void  *ptr;                      // argument to callback function
 } mqttIncoming_t;
 
 /* ----------------------------------------------------------------------------------- *

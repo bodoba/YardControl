@@ -63,6 +63,10 @@ void startSequence( pushbutton_t *button );
 void selectSequence( pushbutton_t *button );
 void automaticMode( pushbutton_t *button );
 
+// MQTT Callbacks
+
+
+
 /* ----------------------------------------------------------------------------------- *
  * Definition of the pushbuttons
  * ----------------------------------------------------------------------------------- */
@@ -305,7 +309,11 @@ int main( int argc, char *argv[] ) {
     // initialize MQTT connection to broker
     if (mqttBroker.address) {
         mqttIncoming_t subscriptions[] = {
-            {"YardControl/valve_A", &switchValve, (void*)&pushButtons[0]},
+            {"YardControl/valve_A", &switchValveCB, (void*)&pushButtons[0]},
+            {"YardControl/valve_B", &switchValveCB, (void*)&pushButtons[0]},
+            {"YardControl/valve_C", &switchValveCB, (void*)&pushButtons[0]},
+            {"YardControl/valve_D", &switchValveCB, (void*)&pushButtons[0]},
+
             {NULL, NULL, NULL},
         };
         

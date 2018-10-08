@@ -304,8 +304,8 @@ int main( int argc, char *argv[] ) {
 
     // initialize MQTT connection to broker
     if (mqttBroker.address) {
-        if (mqttInit(mqttBroker.address, mqttBroker.port, mqttBroker.keepalive)) {
-            writeLog(LOG_INFO, "Connected MQTT boker at %s:%d", mqttBroker.address, mqttBroker.port, NULL);
+        if (mqttInit(mqttBroker.address, mqttBroker.port, mqttBroker.keepalive, NULL)) {
+            writeLog(LOG_INFO, "Connected MQTT boker at %s:%d", mqttBroker.address, mqttBroker.port);
 
         }
     }

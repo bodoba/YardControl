@@ -26,11 +26,11 @@
  * Handle to broker
  * ----------------------------------------------------------------------------------- */
 static struct mosquitto *mosq = NULL;
-
+static        mqttIncoming_t *subscriptionList;
 /* ----------------------------------------------------------------------------------- *
  * Connect to MQTT broker
  * ----------------------------------------------------------------------------------- */
-bool mqttInit( const char* broker, int port, int keepalive) {
+bool mqttInit( const char* broker, int port, int keepalive, mqttIncoming_t *subscriptions) {
     bool success = true;
     int err;
     

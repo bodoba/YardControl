@@ -20,7 +20,19 @@
 
 #include <stdio.h>
 
-bool mqttInit(const char* broker, int port, int keepalive);
+/* ----------------------------------------------------------------------------------- *
+ * handler for incoming MQTT messages
+ * ----------------------------------------------------------------------------------- */
+typedef struct mqttIncoming_t {
+    const char* topic;           // MQTT topic to subscribe to
+    void  (*handler)(void*);     // callback function to call if message is received
+    void  *ptr;                  // argument to callback function
+} mqttIncoming_t;
+
+/* ----------------------------------------------------------------------------------- *
+ * Exported functions
+ * ----------------------------------------------------------------------------------- */
+bool mqttInit(const char* broker, int port, int keepalive, mqttIncoming_t *subscriptions);
 void mqttEnd(void );
 bool mqttPublish (const char *topic, const char *message);
 

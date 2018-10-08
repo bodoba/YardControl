@@ -121,7 +121,6 @@ void switchValve( pushbutton_t *button ) {
     writeLog ( LOG_INFO, "Turn valve %c %s", button->name, button->state? "ON":"OFF" );
     setLed( button );
     sprintf(message, "{\"state\":\"%s\"}", button->state ? "ON" : "OFF");
-    //sprintf(message, "%d", button->state ? 1 : 0);
     sprintf(topic,   "%s/valve_%c", mqttBroker.prefix, button->name);
     mqttPublish(topic, message);
 }
@@ -306,7 +305,8 @@ int main( int argc, char *argv[] ) {
     // initialize MQTT connection to broker
     if (mqttBroker.address) {
         if (mqttInit(mqttBroker.address, mqttBroker.port, mqttBroker.keepalive)) {
-            writeLog(LOG_INFO, "Connected MQTT boker at %s:%d", mqttBroker.address, mqttBroker.port);
+            writeLog(LOG_INFO, "Connected MQTT boker at %s:%d", mqttBroker.address, mqttBroker.port, NULL);
+
         }
     }
     

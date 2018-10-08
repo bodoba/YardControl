@@ -27,6 +27,7 @@
  * ----------------------------------------------------------------------------------- */
 static struct mosquitto *mosq = NULL;
 static        mqttIncoming_t *subscriptionList = NULL;
+
 /* ----------------------------------------------------------------------------------- *
  * Connect to MQTT broker
  * ----------------------------------------------------------------------------------- */
@@ -53,6 +54,11 @@ bool mqttInit( const char* broker, int port, int keepalive, mqttIncoming_t *subs
         success = false;
     } else {
         subscriptionList = subscriptions;
+        idx = 0;
+        while (subscriptionList[idx].topic) {
+            writeLog(LOG_INFO, "Supscribo to MQTT topic: %s", subscriptionList[idx].topic);
+            idx++;
+        }
     }
     return success;
 }

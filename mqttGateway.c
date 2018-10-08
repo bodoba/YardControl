@@ -26,7 +26,7 @@
  * Handle to broker
  * ----------------------------------------------------------------------------------- */
 static struct mosquitto *mosq = NULL;
-static        mqttIncoming_t *subscriptionList;
+static        mqttIncoming_t *subscriptionList = NULL;
 /* ----------------------------------------------------------------------------------- *
  * Connect to MQTT broker
  * ----------------------------------------------------------------------------------- */
@@ -51,6 +51,8 @@ bool mqttInit( const char* broker, int port, int keepalive, mqttIncoming_t *subs
     if( err != MOSQ_ERR_SUCCESS ) {
         writeLog(LOG_ERR, "Error: mosquitto_connect [%s]\n", mosquitto_strerror(err));
         success = false;
+    } else {
+        subscriptionList = subscriptions;
     }
     return success;
 }

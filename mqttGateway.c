@@ -28,12 +28,12 @@
 static struct mosquitto *mosq = NULL;
 static        mqttIncoming_t *subscriptionList = NULL;
 
-
-mosquitto_message_callback_set(
-                               struct     mosquitto     *    mosq,
-                               void         (*on_message)(struct mosquitto *, void *, const struct mosquitto_message *)
-                               )
-
+/* ----------------------------------------------------------------------------------- *
+ * Dispatch incoming messages
+ * ----------------------------------------------------------------------------------- */
+void dispatchMessage(struct mosquitto *mos, void *userData, const struct mosquitto_message *message) {
+    writeLog(LOG_INFO, "Received MQTT message");
+}
 
 /* ----------------------------------------------------------------------------------- *
  * Connect to MQTT broker
@@ -60,6 +60,7 @@ bool mqttInit( const char* broker, int port, int keepalive, mqttIncoming_t *subs
         writeLog(LOG_ERR, "Error: mosquitto_connect [%s]\n", mosquitto_strerror(err));
         success = false;
     } else {
+        mosquitto_message_callback_set(mosq, &dispatchMessage);
         subscriptionList = subscriptions;
         int idx = 0;
         while (subscriptionList[idx].topic) {

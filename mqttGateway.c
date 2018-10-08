@@ -28,6 +28,13 @@
 static struct mosquitto *mosq = NULL;
 static        mqttIncoming_t *subscriptionList = NULL;
 
+
+mosquitto_message_callback_set(
+                               struct     mosquitto     *    mosq,
+                               void         (*on_message)(struct mosquitto *, void *, const struct mosquitto_message *)
+                               )
+
+
 /* ----------------------------------------------------------------------------------- *
  * Connect to MQTT broker
  * ----------------------------------------------------------------------------------- */

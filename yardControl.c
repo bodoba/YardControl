@@ -137,11 +137,11 @@ void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) 
     if (!strncmp(payload, "{\"state\":\"ON\"}", payloadlen)){
         writeLog(LOG_INFO, "Valve %c ON", button->name);
         button->state = true;
-        switchValve(button);
+        setLed(button);
     } else if (!strncmp(payload, "{\"state\":\"OFF\"}", payloadlen)){
         writeLog(LOG_INFO, "Valve %c OFF", button->name);
         button->state = false;
-        switchValve(button);
+        setLed(button);
     } else {
         writeLog(LOG_ERR, "Unknown message: %s", payload);
     }

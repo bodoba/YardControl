@@ -155,15 +155,15 @@ void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) 
             if ( button->state && button->radioGroup > 0 ) {
                 int btnIndex = 0;
                 // clear state of active members in radio group
-                while ( buttonList[btnIndex].btnPin >= 0 ) {
-                    if ( buttonList[btnIndex].radioGroup == button->radioGroup   // same radio group
-                        && buttonList[btnIndex].btnPin != button->btnPin         // not myself
-                        && buttonList[btnIndex].state ) {                        // active
+                while ( pushButtons[btnIndex].btnPin >= 0 ) {
+                    if ( pushButtons[btnIndex].radioGroup == button->radioGroup   // same radio group
+                        && pushButtons[btnIndex].btnPin != button->btnPin         // not myself
+                        && pushButtons[btnIndex].state ) {                        // active
                         // clear state
-                        buttonList[btnIndex].state = false;
+                        pushButtons[btnIndex].state = false;
                         // trigger callback function
-                        if ( buttonList[btnIndex].callback != NULL ) {
-                            (*buttonList[btnIndex].callback)(&buttonList[btnIndex]);
+                        if ( pushButtons[btnIndex].callback != NULL ) {
+                            (*pushButtons[btnIndex].callback)(&pushButtons[btnIndex]);
                         }
                     }
                     btnIndex++;

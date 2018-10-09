@@ -327,10 +327,10 @@ int main( int argc, char *argv[] ) {
     // initialize MQTT connection to broker
     if (mqttBroker.address) {
         mqttIncoming_t subscriptions[] = {
-            {"/YardControl/valve_A", &switchValveCB, (void*)&pushButtons[0]},
-            {"/YardControl/valve_B", &switchValveCB, (void*)&pushButtons[1]},
-            {"/YardControl/valve_C", &switchValveCB, (void*)&pushButtons[2]},
-            {"/YardControl/valve_D", &switchValveCB, (void*)&pushButtons[3]},
+            {"/YardControl/Command/valve_A", &switchValveCB, (void*)&pushButtons[0]},
+            {"/YardControl/Command/valve_B", &switchValveCB, (void*)&pushButtons[1]},
+            {"/YardControl/Command/valve_C", &switchValveCB, (void*)&pushButtons[2]},
+            {"/YardControl/Command/valve_D", &switchValveCB, (void*)&pushButtons[3]},
             {NULL, NULL, NULL},
         };
         

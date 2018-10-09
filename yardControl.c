@@ -125,7 +125,7 @@ void switchValve( pushbutton_t *button ) {
     setLed( button );
     sprintf(message, "{\"state\":\"%s\"}", button->state ? "ON" : "OFF");
     sprintf(topic,   "%s/Valve_%c", mqttBroker.prefix, button->name);
-//    mqttPublish(topic, message);
+    mqttPublish(topic, message);
 }
 
 /* ----------------------------------------------------------------------------------- *
@@ -376,7 +376,7 @@ int main( int argc, char *argv[] ) {
         }
         
         pollButtons(pushButtons);             // poll bush buttons
-        mqttLoop();                           // process MQTT traffic
+//        mqttLoop();                           // process MQTT traffic
         delay(50);                            // have a rest
     }
     return 0;

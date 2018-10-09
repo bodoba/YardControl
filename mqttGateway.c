@@ -39,10 +39,10 @@ void dispatchMessage(struct mosquitto *mos, void *userData, const struct mosquit
     while (subscriptionList[idx].topic) {
         if(!strcmp(message->topic, subscriptionList[idx].topic)) {
             writeLog(LOG_INFO, "Received MQQT Message %s", subscriptionList[idx].topic);
-            *(subscriptionList[idx].handler)(message->payload,
-                                             message->payloadlen,
-                                             message->topic,
-                                             subscriptionList[idx].user_data);
+            (subscriptionList[idx].handler)(message->payload,
+                                            message->payloadlen,
+                                            message->topic,
+                                            subscriptionList[idx].user_data);
             break;
         }
         idx++;

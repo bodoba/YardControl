@@ -123,7 +123,7 @@ void switchValve( pushbutton_t *button ) {
     char topic[strlen(mqttBroker.prefix)+12], message[32];
     writeLog ( LOG_INFO, "Turn valve %c %s", button->name, button->state? "ON":"OFF" );
     setLed( button );
-    sprintf(message, "{\"State\":\"%s\"}", button->state ? "ON" : "OFF");
+    sprintf(message, "{\"state\":\"%s\"}", button->state ? "ON" : "OFF");
     sprintf(topic,   "%s/Valve_%c", mqttBroker.prefix, button->name);
     mqttPublish(topic, message);
 }

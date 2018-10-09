@@ -64,7 +64,7 @@ void selectSequence(pushbutton_t *button);
 void automaticMode(pushbutton_t *button);
 
 // MQTT interface
-void switchValveCB(char *payload, int payloadlen, char *topic, void *button);
+void pressButtonCB(char *payload, int payloadlen, char *topic, void *button);
 void publishStatus(pushbutton_t *button);
 
 /* ----------------------------------------------------------------------------------- *
@@ -138,7 +138,7 @@ void switchValve( pushbutton_t *button ) {
 /* ----------------------------------------------------------------------------------- *
  * Switch Valve with MQTT command
  * ----------------------------------------------------------------------------------- */
-void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) {
+void pressButtonCB(char *payload, int payloadlen, char *topic, void *user_data) {
     pushbutton_t *button = (pushbutton_t*)user_data;
     writeLog(LOG_INFO, "Received MQTT message: %s: %s", topic, payload);
     if (button->locked) {             // Do not allow changes of locked buttons over MQTT
@@ -154,11 +154,12 @@ void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) 
             writeLog(LOG_ERR, "Unknown message: %s", payload);
         }
         if (button->state != oldState) {
+            // if a radio group has been defined clear state of all buttons in this group
+            processRadioGroup( button, pushButtons);
+            // call button action
             if (button->callback) {
                 (button->callback)(button);
             }
-            // if a radio group has been defined clear state of all buttons in this group
-            processRadioGroup( button, pushButtons);
         }
     }
 }
@@ -167,7 +168,7 @@ void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) 
  * start sequence
  * ----------------------------------------------------------------------------------- */
 void startSequence( pushbutton_t *button ) {
-    setLed( button );
+    setLed(button);
     publishStatus(button);
 
     if ( systemMode == MANUAL_MODE ) {
@@ -350,6 +351,9 @@ int main( int argc, char *argv[] ) {
             {"/YardControl/Command/Valve_B", &switchValveCB, (void*)&pushButtons[1]},
             {"/YardControl/Command/Valve_C", &switchValveCB, (void*)&pushButtons[2]},
             {"/YardControl/Command/Valve_D", &switchValveCB, (void*)&pushButtons[3]},
+            {"/YardControl/Command/Valve_S", &switchValveCB, (void*)&pushButtons[4]},
+            {"/YardControl/Command/Valve_R", &switchValveCB, (void*)&pushButtons[5]},
+            {"/YardControl/Command/Valve_P", &switchValveCB, (void*)&pushButtons[6]},
             {NULL, NULL, NULL},
         };
         

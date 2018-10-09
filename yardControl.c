@@ -70,7 +70,7 @@ void switchValveCB(char *payload, int payloadlen, char *topic, void *button);
  * Definition of the pushbuttons
  * ----------------------------------------------------------------------------------- */
 pushbutton_t pushButtons[] = {
-    // Button Pin, Led Pin, state, last reading, locked, radio group
+    // name, Button Pin, Led Pin, state, last reading, locked, radio group
     
     // Manual valves control, only one shall be active
     {'A', BUTTON_A,      VALVE_A,  false, -1, false, RG_VALVES,   &switchValve},
@@ -131,8 +131,16 @@ void switchValve( pushbutton_t *button ) {
 /* ----------------------------------------------------------------------------------- *
  * Switch Valve with MQTT command
  * ----------------------------------------------------------------------------------- */
-void switchValveCB(char *payload, int payloadlen, char *topic, void *button) {
+void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) {
+    pushbutton_t *button = (pushbutton_t*)user_data;
     writeLog(LOG_INFO, "Received MQTT message: %s: %s", topic, payload);
+    if (!strncmp(payload, "{\"state\":\"ON\"}", payloadlen)){
+        witeLog(LOG_INFO, "Valve %c ON", button->name);
+    } else if (!strncmp(payload, "{\"state\":\"Off\"}", payloadlen)){
+        witeLog(LOG_INFO, "Valve %c OFF", button->name);
+    } else {
+        writeLog(LOG_ERR, "Unknown message: %s", payload);
+    }
 }
 
 /* ----------------------------------------------------------------------------------- *

@@ -17,17 +17,22 @@
 
 #ifndef mqttGateway_h
 #define mqttGateway_h
-
 #include <stdio.h>
 
 /* ----------------------------------------------------------------------------------- *
  * handler for incoming MQTT messages
  * ----------------------------------------------------------------------------------- */
+/*
+ * Callback prototype:
+ *   void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data);
+ */
 typedef struct mqttIncoming_t {
-    const char* topic;               // MQTT topic to subscribe to
-    void  (*handler)(char*, void*);  // callback function to call if message is received
-    void  *ptr;                      // argument to callback function
+    const char* topic;                           // MQTT topic to subscribe to
+    void  (*handler)(char*, int, char*, void*);  // callback function
+    void  *user_data;                            // user defined argument to callback
 } mqttIncoming_t;
+
+
 
 /* ----------------------------------------------------------------------------------- *
  * Exported functions

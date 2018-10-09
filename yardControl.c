@@ -64,7 +64,7 @@ void selectSequence( pushbutton_t *button );
 void automaticMode( pushbutton_t *button );
 
 // MQTT Callbacks
-void switchValveCB(char *payload, void *button );
+void switchValveCB(char *payload, int payloadlen, char *topic, void *button);
 
 /* ----------------------------------------------------------------------------------- *
  * Definition of the pushbuttons
@@ -131,7 +131,7 @@ void switchValve( pushbutton_t *button ) {
 /* ----------------------------------------------------------------------------------- *
  * Switch Valve with MQTT command
  * ----------------------------------------------------------------------------------- */
-void switchValveCB(char *payload, void *button ) {
+void switchValveCB(char *payload, int payloadlen, char *topic, void *button) {
     
 }
 

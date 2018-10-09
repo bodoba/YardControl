@@ -135,7 +135,7 @@ void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) 
     char outTopic[strlen(mqttBroker.prefix)+12], message[32];
     pushbutton_t *button = (pushbutton_t*)user_data;
     writeLog(LOG_INFO, "Received MQTT message: %s: %s", topic, payload);
-    if (button-locked) {
+    if (button->locked) {
         writeLog(LOG_INFO, "Button %c locked!", button->name);
         sprintf(message, "{\"state\":\"%s\"}", button->state ? "ON" : "OFF");
         sprintf(outTopic,   "%s/Valve_%c", mqttBroker.prefix, button->name);

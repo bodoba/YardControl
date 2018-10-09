@@ -376,7 +376,7 @@ int main( int argc, char *argv[] ) {
         }
         
         pollButtons(pushButtons);             // poll bush buttons
-
+        mqttLoop();                           // process MQTT traffic
         delay(50);                            // have a rest
     }
     return 0;

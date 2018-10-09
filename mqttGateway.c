@@ -66,11 +66,11 @@ bool mqttInit( const char* broker, int port, int keepalive, mqttIncoming_t *subs
         success = false;
     }
     
-    err = mosquitto_loop_start(mosq);
-    if( err != MOSQ_ERR_SUCCESS ) {
-        writeLog(LOG_ERR, "Error: mosquitto_connect [%s]\n", mosquitto_strerror(err));
-        success = false;
-    } else {
+//    err = mosquitto_loop_start(mosq);
+//    if( err != MOSQ_ERR_SUCCESS ) {
+//        writeLog(LOG_ERR, "Error: mosquitto_connect [%s]\n", mosquitto_strerror(err));
+//        success = false;
+//    } else {
         mosquitto_message_callback_set(mosq, &dispatchMessage);
         subscriptionList = subscriptions;
         int idx = 0;
@@ -79,7 +79,8 @@ bool mqttInit( const char* broker, int port, int keepalive, mqttIncoming_t *subs
             mosquitto_subscribe( mosq, NULL, subscriptionList[idx].topic, 0);
             idx++;
         }
-    }
+//    }
+    mqttLoop();
     return success;
 }
 
@@ -87,10 +88,17 @@ bool mqttInit( const char* broker, int port, int keepalive, mqttIncoming_t *subs
  * End MQTT broker connection
  * ----------------------------------------------------------------------------------- */
 void mqttEnd( void ) {
-    mosquitto_loop_stop(mosq, true);
+//    mosquitto_loop_stop(mosq, true);
     mosquitto_destroy(mosq);
     mosquitto_lib_cleanup();
     mosq = NULL;
+}
+
+/* ----------------------------------------------------------------------------------- *
+ * MQTT client main loop
+ * ----------------------------------------------------------------------------------- */
+void mqttLoop( void ) {
+    mosquitto_loop(mosq, 0, 1);
 }
 
 /* ----------------------------------------------------------------------------------- *

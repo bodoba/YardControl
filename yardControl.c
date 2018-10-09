@@ -136,8 +136,12 @@ void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) 
     writeLog(LOG_INFO, "Received MQTT message: %s: %s", topic, payload);
     if (!strncmp(payload, "{\"state\":\"ON\"}", payloadlen)){
         writeLog(LOG_INFO, "Valve %c ON", button->name);
+        button->state = true;
+        switchValve(button);
     } else if (!strncmp(payload, "{\"state\":\"OFF\"}", payloadlen)){
         writeLog(LOG_INFO, "Valve %c OFF", button->name);
+        button->state = false;
+        switchValve(button);
     } else {
         writeLog(LOG_ERR, "Unknown message: %s", payload);
     }

@@ -33,6 +33,14 @@ static        mqttIncoming_t *subscriptionList = NULL;
  * ----------------------------------------------------------------------------------- */
 void dispatchMessage(struct mosquitto *mos, void *userData, const struct mosquitto_message *message) {
     writeLog(LOG_INFO, "Received MQTT message: %s: %s", message->topic, (char*)message->payload);
+    int idx = 0;
+    while (subscriptionList[idx].topic) {
+        if(strcmp(message->topic, subscriptionList[idx].topic)) {
+            writeLog(LOG_INFO, "Received MQQT Message %s", subscriptionList[idx].topic);
+            break;
+        }
+        idx++;
+    }
 }
 
 /* ----------------------------------------------------------------------------------- *

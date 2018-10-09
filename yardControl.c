@@ -319,7 +319,6 @@ int main( int argc, char *argv[] ) {
             {"/YardControl/valve_B", &switchValveCB, (void*)&pushButtons[0]},
             {"/YardControl/valve_C", &switchValveCB, (void*)&pushButtons[0]},
             {"/YardControl/valve_D", &switchValveCB, (void*)&pushButtons[0]},
-
             {NULL, NULL, NULL},
         };
         

@@ -32,7 +32,7 @@ static        mqttIncoming_t *subscriptionList = NULL;
  * Dispatch incoming messages
  * ----------------------------------------------------------------------------------- */
 void dispatchMessage(struct mosquitto *mos, void *userData, const struct mosquitto_message *message) {
-    writeLog(LOG_INFO, "Received MQTT message");
+    writeLog(LOG_INFO, "Received MQTT message: %s: %s", message->topic, (char*)message->payload);
 }
 
 /* ----------------------------------------------------------------------------------- *

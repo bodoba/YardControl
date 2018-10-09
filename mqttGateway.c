@@ -87,7 +87,7 @@ bool mqttInit( const char* broker, int port, int keepalive, mqttIncoming_t *subs
  * End MQTT broker connection
  * ----------------------------------------------------------------------------------- */
 void mqttEnd( void ) {
-//    mosquitto_loop_stop(mosq, true);
+    mosquitto_loop_stop(mosq, true);
     mosquitto_destroy(mosq);
     mosquitto_lib_cleanup();
     mosq = NULL;

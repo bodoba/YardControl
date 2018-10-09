@@ -57,14 +57,15 @@ void lockValveControl(bool on);
 void processSequence(void);
 
 // Bush button actions
-void setLed( pushbutton_t *button );
-void switchValve( pushbutton_t *button );
-void startSequence( pushbutton_t *button );
-void selectSequence( pushbutton_t *button );
-void automaticMode( pushbutton_t *button );
+void setLed(pushbutton_t *button);
+void switchValve(pushbutton_t *button);
+void startSequence(pushbutton_t *button);
+void selectSequence(pushbutton_t *button);
+void automaticMode(pushbutton_t *button);
 
-// MQTT Callbacks
+// MQTT interface
 void switchValveCB(char *payload, int payloadlen, char *topic, void *button);
+void publishStatus(pushbutton_t *button);
 
 /* ----------------------------------------------------------------------------------- *
  * Definition of the pushbuttons
@@ -115,17 +116,23 @@ void lockValveControl (bool on ) {
         }
     }
 }
+/* ----------------------------------------------------------------------------------- *
+ * Switch Valve
+ * ----------------------------------------------------------------------------------- */
+void publishStatus(pushbutton_t *button) {
+    char topic[strlen(mqttBroker.prefix)+12], message[32];
+    sprintf(message, "{\"state\":\"%s\"}", button->state ? "ON" : "OFF");
+    sprintf(topic,   "%s/Valve_%c", mqttBroker.prefix, button->name);
+    mqttPublish(topic, message);
+}
 
 /* ----------------------------------------------------------------------------------- *
  * Switch Valve
  * ----------------------------------------------------------------------------------- */
 void switchValve( pushbutton_t *button ) {
-    char topic[strlen(mqttBroker.prefix)+12], message[32];
     writeLog ( LOG_INFO, "Turn valve %c %s", button->name, button->state? "ON":"OFF" );
     setLed( button );
-    sprintf(message, "{\"state\":\"%s\"}", button->state ? "ON" : "OFF");
-    sprintf(topic,   "%s/Valve_%c", mqttBroker.prefix, button->name);
-    mqttPublish(topic, message);
+    publishStatus(button);
 }
 
 /* ----------------------------------------------------------------------------------- *
@@ -360,6 +367,13 @@ int main( int argc, char *argv[] ) {
     
     // Initialize IO ports
     setupIO();
+    
+    // publish Status of all buttons
+    int btnIndex = 0;
+    while ( pushButtons[btnIndex].btnPin >= 0 ) {
+        publishStatus(&pushButtons[btnIndex]);
+        btnIndex++;
+    }
     
     // Main loop
     time_t lastTime = 0;

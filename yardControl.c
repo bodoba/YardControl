@@ -136,7 +136,7 @@ void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) 
     writeLog(LOG_INFO, "Received MQTT message: %s: %s", topic, payload);
     if (!strncmp(payload, "{\"state\":\"ON\"}", payloadlen)){
         writeLog(LOG_INFO, "Valve %c ON", button->name);
-    } else if (!strncmp(payload, "{\"state\":\"Off\"}", payloadlen)){
+    } else if (!strncmp(payload, "{\"state\":\"OFF\"}", payloadlen)){
         writeLog(LOG_INFO, "Valve %c OFF", button->name);
     } else {
         writeLog(LOG_ERR, "Unknown message: %s", payload);
@@ -324,9 +324,9 @@ int main( int argc, char *argv[] ) {
     if (mqttBroker.address) {
         mqttIncoming_t subscriptions[] = {
             {"/YardControl/valve_A", &switchValveCB, (void*)&pushButtons[0]},
-            {"/YardControl/valve_B", &switchValveCB, (void*)&pushButtons[0]},
-            {"/YardControl/valve_C", &switchValveCB, (void*)&pushButtons[0]},
-            {"/YardControl/valve_D", &switchValveCB, (void*)&pushButtons[0]},
+            {"/YardControl/valve_B", &switchValveCB, (void*)&pushButtons[1]},
+            {"/YardControl/valve_C", &switchValveCB, (void*)&pushButtons[2]},
+            {"/YardControl/valve_D", &switchValveCB, (void*)&pushButtons[3]},
             {NULL, NULL, NULL},
         };
         

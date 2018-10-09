@@ -132,7 +132,7 @@ void switchValve( pushbutton_t *button ) {
  * Switch Valve with MQTT command
  * ----------------------------------------------------------------------------------- */
 void switchValveCB(char *payload, int payloadlen, char *topic, void *button) {
-    
+    writeLog(LOG_INFO, "Received MQTT message: %s: %s", topic, payload);
 }
 
 /* ----------------------------------------------------------------------------------- *

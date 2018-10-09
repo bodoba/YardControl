@@ -32,13 +32,10 @@ static        mqttIncoming_t *subscriptionList = NULL;
  * Dispatch incoming messages
  * ----------------------------------------------------------------------------------- */
 void dispatchMessage(struct mosquitto *mos, void *userData, const struct mosquitto_message *message) {
-    writeLog(LOG_INFO, "Received MQTT message: %s: %s", message->topic, (char*)message->payload);
-    
     // identify callback functiion by matching topic
     int idx = 0;
     while (subscriptionList[idx].topic) {
         if(!strcmp(message->topic, subscriptionList[idx].topic)) {
-            writeLog(LOG_INFO, "Received MQQT Message %s", subscriptionList[idx].topic);
             (subscriptionList[idx].handler)(message->payload,
                                             message->payloadlen,
                                             message->topic,

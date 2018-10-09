@@ -150,25 +150,11 @@ void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) 
             writeLog(LOG_ERR, "Unknown message: %s", payload);
         }
         if (button->state != oldState) {
-            (button->callback)(button);
-            // if a radio group has been defined clear state of all buttons in this group
-            if ( button->state && button->radioGroup > 0 ) {
-                int btnIndex = 0;
-                // clear state of active members in radio group
-                while ( pushButtons[btnIndex].btnPin >= 0 ) {
-                    if ( pushButtons[btnIndex].radioGroup == button->radioGroup   // same radio group
-                        && pushButtons[btnIndex].btnPin != button->btnPin         // not myself
-                        && pushButtons[btnIndex].state ) {                        // active
-                        // clear state
-                        pushButtons[btnIndex].state = false;
-                        // trigger callback function
-                        if ( pushButtons[btnIndex].callback != NULL ) {
-                            (*pushButtons[btnIndex].callback)(&pushButtons[btnIndex]);
-                        }
-                    }
-                    btnIndex++;
-                }
+            if (button->callback) {
+                (button->callback)(button);
             }
+            // if a radio group has been defined clear state of all buttons in this group
+            processRadioGroup( button, pushButtons);
         }
     }
 }

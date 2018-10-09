@@ -347,13 +347,13 @@ int main( int argc, char *argv[] ) {
     // initialize MQTT connection to broker
     if (mqttBroker.address) {
         mqttIncoming_t subscriptions[] = {
-            {"/YardControl/Command/Valve_A", &switchValveCB, (void*)&pushButtons[0]},
-            {"/YardControl/Command/Valve_B", &switchValveCB, (void*)&pushButtons[1]},
-            {"/YardControl/Command/Valve_C", &switchValveCB, (void*)&pushButtons[2]},
-            {"/YardControl/Command/Valve_D", &switchValveCB, (void*)&pushButtons[3]},
-            {"/YardControl/Command/Valve_S", &switchValveCB, (void*)&pushButtons[4]},
-            {"/YardControl/Command/Valve_R", &switchValveCB, (void*)&pushButtons[5]},
-            {"/YardControl/Command/Valve_P", &switchValveCB, (void*)&pushButtons[6]},
+            {"/YardControl/Command/Valve_A", &pressButtonCB, (void*)&pushButtons[0]},
+            {"/YardControl/Command/Valve_B", &pressButtonCB, (void*)&pushButtons[1]},
+            {"/YardControl/Command/Valve_C", &pressButtonCB, (void*)&pushButtons[2]},
+            {"/YardControl/Command/Valve_D", &pressButtonCB, (void*)&pushButtons[3]},
+            {"/YardControl/Command/Valve_S", &pressButtonCB, (void*)&pushButtons[4]},
+            {"/YardControl/Command/Valve_R", &pressButtonCB, (void*)&pushButtons[5]},
+            {"/YardControl/Command/Valve_P", &pressButtonCB, (void*)&pushButtons[6]},
             {NULL, NULL, NULL},
         };
         

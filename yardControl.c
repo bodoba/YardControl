@@ -123,8 +123,8 @@ void switchValve( pushbutton_t *button ) {
     char topic[strlen(mqttBroker.prefix)+12], message[32];
     writeLog ( LOG_INFO, "Turn valve %c %s", button->name, button->state? "ON":"OFF" );
     setLed( button );
-    sprintf(message, "{\"state\":\"%s\"}", button->state ? "ON" : "OFF");
-    sprintf(topic,   "%s/valve_%c", mqttBroker.prefix, button->name);
+    sprintf(message, "{\"State\":\"%s\"}", button->state ? "ON" : "OFF");
+    sprintf(topic,   "%s/Valve_%c", mqttBroker.prefix, button->name);
     mqttPublish(topic, message);
 }
 
@@ -327,10 +327,10 @@ int main( int argc, char *argv[] ) {
     // initialize MQTT connection to broker
     if (mqttBroker.address) {
         mqttIncoming_t subscriptions[] = {
-            {"/YardControl/Command/valve_A", &switchValveCB, (void*)&pushButtons[0]},
-            {"/YardControl/Command/valve_B", &switchValveCB, (void*)&pushButtons[1]},
-            {"/YardControl/Command/valve_C", &switchValveCB, (void*)&pushButtons[2]},
-            {"/YardControl/Command/valve_D", &switchValveCB, (void*)&pushButtons[3]},
+            {"/YardControl/Command/Valve_A", &switchValveCB, (void*)&pushButtons[0]},
+            {"/YardControl/Command/Valve_B", &switchValveCB, (void*)&pushButtons[1]},
+            {"/YardControl/Command/Valve_C", &switchValveCB, (void*)&pushButtons[2]},
+            {"/YardControl/Command/Valve_D", &switchValveCB, (void*)&pushButtons[3]},
             {NULL, NULL, NULL},
         };
         

@@ -39,5 +39,6 @@ typedef struct pushbutton_t {
  * ----------------------------------------------------------------------------------- */
 bool readButton(pushbutton_t *button, pushbutton_t *buttonList);  // read single button
 void pollButtons(pushbutton_t pushButtons[]);                     // poll all buttons
+void processRadioGroup(pushbutton_t *button, pushbutton_t *buttonList);
 
 #endif /* pushButton_h */

@@ -32,6 +32,30 @@ void pollButtons(pushbutton_t pushButtons[]) {
 }
 
 /* ----------------------------------------------------------------------------------- *
+ * Process radio groups of the given button
+ * ----------------------------------------------------------------------------------- */
+void processRadioGroup(pushbutton_t *button, pushbutton_t *buttonList) {
+    // if a radio group has been defined clear state of all buttons in this group
+    if ( button->state && button->radioGroup > 0 ) {
+        int btnIndex = 0;
+        // clear state of active members in radio group
+        while ( buttonList[btnIndex].btnPin >= 0 ) {
+            if ( buttonList[btnIndex].radioGroup == button->radioGroup   // same radio group
+                && buttonList[btnIndex].btnPin != button->btnPin         // not myself
+                && buttonList[btnIndex].state ) {                        // active
+                // clear state
+                buttonList[btnIndex].state = false;
+                // trigger callback function
+                if ( buttonList[btnIndex].callback != NULL ) {
+                    (*buttonList[btnIndex].callback)(&buttonList[btnIndex]);
+                }
+            }
+            btnIndex++;
+        }
+    }
+}
+
+/* ----------------------------------------------------------------------------------- *
  * Process push button
  * ----------------------------------------------------------------------------------- */
 bool readButton( pushbutton_t *button, pushbutton_t *buttonList) {
@@ -48,23 +72,7 @@ bool readButton( pushbutton_t *button, pushbutton_t *buttonList) {
                 button->state = button->state ? false : true;
                 
                 // if a radio group has been defined clear state of all buttons in this group
-                if ( button->state && button->radioGroup > 0 ) {
-                    int btnIndex = 0;
-                    // clear state of active members in radio group
-                    while ( buttonList[btnIndex].btnPin >= 0 ) {
-                        if ( buttonList[btnIndex].radioGroup == button->radioGroup   // same radio group
-                            && buttonList[btnIndex].btnPin != button->btnPin         // not myself
-                            && buttonList[btnIndex].state ) {                        // active
-                            // clear state
-                            buttonList[btnIndex].state = false;
-                            // trigger callback function
-                            if ( buttonList[btnIndex].callback != NULL ) {
-                                (*buttonList[btnIndex].callback)(&buttonList[btnIndex]);
-                            }
-                        }
-                        btnIndex++;
-                    }
-                }
+                processRadioGroup( button, buttonList);
                 
                 // trigger callback function
                 if ( button->callback != NULL ) {

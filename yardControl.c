@@ -135,22 +135,40 @@ void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) 
     char outTopic[strlen(mqttBroker.prefix)+12], message[32];
     pushbutton_t *button = (pushbutton_t*)user_data;
     writeLog(LOG_INFO, "Received MQTT message: %s: %s", topic, payload);
-    if (button->locked) {
+    if (button->locked) {             // Do not allow changes of locked buttons over MQTT
         writeLog(LOG_INFO, "Button %c locked!", button->name);
         sprintf(message, "{\"state\":\"%s\"}", button->state ? "ON" : "OFF");
         sprintf(outTopic,   "%s/Valve_%c", mqttBroker.prefix, button->name);
         mqttPublish(outTopic, message);
     } else {
+        bool oldState = button->state;
         if (!strncmp(payload, "{\"state\":\"ON\"}", payloadlen)){
-            writeLog(LOG_INFO, "Valve %c ON", button->name);
             button->state = true;
-            switchValve(button);
         } else if (!strncmp(payload, "{\"state\":\"OFF\"}", payloadlen)){
-            writeLog(LOG_INFO, "Valve %c OFF", button->name);
             button->state = false;
-            switchValve(button);
         } else {
             writeLog(LOG_ERR, "Unknown message: %s", payload);
+        }
+        if (button->state != oldState) {
+            (button->callback)(button);
+            // if a radio group has been defined clear state of all buttons in this group
+            if ( button->state && button->radioGroup > 0 ) {
+                int btnIndex = 0;
+                // clear state of active members in radio group
+                while ( buttonList[btnIndex].btnPin >= 0 ) {
+                    if ( buttonList[btnIndex].radioGroup == button->radioGroup   // same radio group
+                        && buttonList[btnIndex].btnPin != button->btnPin         // not myself
+                        && buttonList[btnIndex].state ) {                        // active
+                        // clear state
+                        buttonList[btnIndex].state = false;
+                        // trigger callback function
+                        if ( buttonList[btnIndex].callback != NULL ) {
+                            (*buttonList[btnIndex].callback)(&buttonList[btnIndex]);
+                        }
+                    }
+                    btnIndex++;
+                }
+            }
         }
     }
 }

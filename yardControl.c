@@ -135,9 +135,9 @@ void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) 
     pushbutton_t *button = (pushbutton_t*)user_data;
     writeLog(LOG_INFO, "Received MQTT message: %s: %s", topic, payload);
     if (!strncmp(payload, "{\"state\":\"ON\"}", payloadlen)){
-        witeLog(LOG_INFO, "Valve %c ON", button->name);
+        writeLog(LOG_INFO, "Valve %c ON", button->name);
     } else if (!strncmp(payload, "{\"state\":\"Off\"}", payloadlen)){
-        witeLog(LOG_INFO, "Valve %c OFF", button->name);
+        writeLog(LOG_INFO, "Valve %c OFF", button->name);
     } else {
         writeLog(LOG_ERR, "Unknown message: %s", payload);
     }

@@ -117,7 +117,7 @@ void lockValveControl (bool on ) {
     }
 }
 /* ----------------------------------------------------------------------------------- *
- * Switch Valve
+ * Publish button status
  * ----------------------------------------------------------------------------------- */
 void publishStatus(pushbutton_t *button) {
     char topic[strlen(mqttBroker.prefix)+12], message[32];
@@ -139,14 +139,11 @@ void switchValve( pushbutton_t *button ) {
  * Switch Valve with MQTT command
  * ----------------------------------------------------------------------------------- */
 void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) {
-    char outTopic[strlen(mqttBroker.prefix)+12], message[32];
     pushbutton_t *button = (pushbutton_t*)user_data;
     writeLog(LOG_INFO, "Received MQTT message: %s: %s", topic, payload);
     if (button->locked) {             // Do not allow changes of locked buttons over MQTT
         writeLog(LOG_INFO, "Button %c locked!", button->name);
-        sprintf(message, "{\"state\":\"%s\"}", button->state ? "ON" : "OFF");
-        sprintf(outTopic,   "%s/Valve_%c", mqttBroker.prefix, button->name);
-        mqttPublish(outTopic, message);
+        publishStatus(button);
     } else {
         bool oldState = button->state;
         if (!strncmp(payload, "{\"state\":\"ON\"}", payloadlen)){
@@ -171,6 +168,7 @@ void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) 
  * ----------------------------------------------------------------------------------- */
 void startSequence( pushbutton_t *button ) {
     setLed( button );
+    publishStatus(button);
 
     if ( systemMode == MANUAL_MODE ) {
         // enable/disable manual valve control
@@ -212,6 +210,7 @@ void selectSequence( pushbutton_t *button ) {
     digitalWrite ( LED_S1, button->state ? LOW : HIGH);
     digitalWrite ( LED_S2, button->state ? HIGH : LOW);
     activeSequence = button->state ? 1:0;
+    publishStatus(button);
     writeLog(LOG_INFO,"Activated Sequence %d", button->state ? 1:0);
 }
 
@@ -220,6 +219,7 @@ void selectSequence( pushbutton_t *button ) {
  * ----------------------------------------------------------------------------------- */
 void automaticMode( pushbutton_t *button ) {
     setLed( button );
+    publishStatus(button);
 
     // enable/disable sequence start
     pushButtons[5].state  = false;

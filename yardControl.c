@@ -132,18 +132,26 @@ void switchValve( pushbutton_t *button ) {
  * Switch Valve with MQTT command
  * ----------------------------------------------------------------------------------- */
 void switchValveCB(char *payload, int payloadlen, char *topic, void *user_data) {
+    char topic[strlen(mqttBroker.prefix)+12], message[32];
     pushbutton_t *button = (pushbutton_t*)user_data;
     writeLog(LOG_INFO, "Received MQTT message: %s: %s", topic, payload);
-    if (!strncmp(payload, "{\"state\":\"ON\"}", payloadlen)){
-        writeLog(LOG_INFO, "Valve %c ON", button->name);
-        button->state = true;
-        switchValve(button);
-    } else if (!strncmp(payload, "{\"state\":\"OFF\"}", payloadlen)){
-        writeLog(LOG_INFO, "Valve %c OFF", button->name);
-        button->state = false;
-        switchValve(button);
+    if (button-locked) {
+        writeLog(LOG_WARN, "Button %c locked!", button->name);
+        sprintf(message, "{\"state\":\"%s\"}", button->state ? "ON" : "OFF");
+        sprintf(topic,   "%s/Valve_%c", mqttBroker.prefix, button->name);
+        mqttPublish(topic, message);
     } else {
-        writeLog(LOG_ERR, "Unknown message: %s", payload);
+        if (!strncmp(payload, "{\"state\":\"ON\"}", payloadlen)){
+            writeLog(LOG_INFO, "Valve %c ON", button->name);
+            button->state = true;
+            switchValve(button);
+        } else if (!strncmp(payload, "{\"state\":\"OFF\"}", payloadlen)){
+            writeLog(LOG_INFO, "Valve %c OFF", button->name);
+            button->state = false;
+            switchValve(button);
+        } else {
+            writeLog(LOG_ERR, "Unknown message: %s", payload);
+        }
     }
 }
 
@@ -376,7 +384,6 @@ int main( int argc, char *argv[] ) {
         }
         
         pollButtons(pushButtons);             // poll bush buttons
-//        mqttLoop();                           // process MQTT traffic
         delay(50);                            // have a rest
     }
     return 0;

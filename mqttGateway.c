@@ -80,7 +80,6 @@ bool mqttInit( const char* broker, int port, int keepalive, mqttIncoming_t *subs
             idx++;
         }
     }
-//    mqttLoop();
     return success;
 }
 
@@ -92,13 +91,6 @@ void mqttEnd( void ) {
     mosquitto_destroy(mosq);
     mosquitto_lib_cleanup();
     mosq = NULL;
-}
-
-/* ----------------------------------------------------------------------------------- *
- * MQTT client main loop
- * ----------------------------------------------------------------------------------- */
-void mqttLoop( void ) {
-    mosquitto_loop(mosq, 0, 1);
 }
 
 /* ----------------------------------------------------------------------------------- *
@@ -114,7 +106,6 @@ bool mqttPublish ( const char *topic, const char *message ) {
             fprintf(stderr, "Error: mosquitto_publish failed [%s]\n", mosquitto_strerror(err));
             success = false;
         }
-        //mosquitto_loop(mosq, 0, 1);
     } else {
         fprintf(stderr, "Error: mosq == NULL, Init failed?\n");
         success = false;

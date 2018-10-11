@@ -42,7 +42,7 @@ static void mqttLog(struct mosquitto *mosq, void *user_data, int logLevel, const
  * Proxy to redirect mosquitto log messages to writeLog
  * ----------------------------------------------------------------------------------- */
 void mqttLog(struct mosquitto *mosq, void *user_data, int logLevel, const char *logMessage) {
-  //    writeLog(LOG_INFO, logMessage);
+      writeLog(LOG_INFO, logMessage);
 }
 
 /* ----------------------------------------------------------------------------------- *

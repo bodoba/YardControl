@@ -404,7 +404,7 @@ int main( int argc, char *argv[] ) {
             struct tm *timestamp = localtime(&now);
             if (timestamp->tm_min == 5 && timestamp->tm_hour != lastHouseKeeping) {
                 // do housekeeping every hour
-                lastHouseKeeping =t imestamp->tm_hour;
+                lastHouseKeeping = timestamp->tm_hour;
                 houseKeeping();
             }
     

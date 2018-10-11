@@ -310,7 +310,7 @@ void setupIO ( void ) {
 }
 
 /* ----------------------------------------------------------------------------------- *
- * Thongs that need to be done regulary
+ * Things that need to be done regulary
  * ----------------------------------------------------------------------------------- */
 void houseKeeping(void) {
     // publish Status of all buttons
@@ -398,8 +398,12 @@ int main( int argc, char *argv[] ) {
 
         if ( lastTime != now ) {                 // only work do once a second
             lastTime = now;
+            struct tm *timestamp = localtime(&now);
+            if (timestamp->tm_min == 0) {         // do housekeeping every hour
+                houseKeeping();
+            }
+    
             if (systemMode == AUTOMATIC_MODE) {
-                struct tm *timestamp = localtime(&now);
                 int timeIdx=0;
                 while(startTime[activeSequence][timeIdx].tm_hour >= 0 ) {
                     if ( timestamp->tm_hour == startTime[activeSequence][timeIdx].tm_hour

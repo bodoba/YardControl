@@ -313,6 +313,8 @@ void setupIO ( void ) {
  * Things that need to be done regulary
  * ----------------------------------------------------------------------------------- */
 void houseKeeping(void) {
+    writeLog(LOG_INFO, "Do housekeeping");
+
     // publish Status of all buttons
     int btnIndex = 0;
     while ( pushButtons[btnIndex].btnPin >= 0 ) {
@@ -393,13 +395,16 @@ int main( int argc, char *argv[] ) {
     
     // Main loop
     time_t lastTime = 0;
+    int    lastHouseKeeping = 0;
     for ( ;; ) {                                 // never stop working
         time_t now = time(NULL);
 
         if ( lastTime != now ) {                 // only work do once a second
             lastTime = now;
             struct tm *timestamp = localtime(&now);
-            if (timestamp->tm_min == 0) {         // do housekeeping every hour
+            if (timestamp->tm_min == 5 && timestamp->tm_hour != lastHouseKeeping) {
+                // do housekeeping every hour
+                lastHouseKeeping =t imestamp->tm_hour;
                 houseKeeping();
             }
     

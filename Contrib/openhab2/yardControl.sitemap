@@ -1,4 +1,4 @@
-sitemap yardControl label="Unser Garten" {
+sitemap yardControl label="Bewässerung" {
     Frame label="Ventilstatus" {
       Switch item=yardControl_ValveA label="A" 
       Switch item=yardControl_ValveB label="B"

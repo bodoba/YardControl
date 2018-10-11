@@ -17,10 +17,14 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.              #
 # *********************************************************************************** #
 
+# build on remote machine
 build_host=piyard
 build_dir=yardControl
+
+# git repository to get source from
 git_repo=192.168.100.26:git/yardControl
 
+# commit and push source locally, retrieve it remptely and build it
 git commit . -m "update";\
 git push $git_repo &&\
 ssh -x $build_host "(cd $build_dir && git pull && cmake . && make )"

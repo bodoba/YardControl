@@ -26,7 +26,24 @@
  * Handle to broker
  * ----------------------------------------------------------------------------------- */
 static struct mosquitto *mosq = NULL;
+
+/* ----------------------------------------------------------------------------------- *
+ * List of topics to subscribe to along with handlers to call on reception
+ * ----------------------------------------------------------------------------------- */
 static        mqttIncoming_t *subscriptionList = NULL;
+
+/* ----------------------------------------------------------------------------------- *
+ * Local prototypes
+ * ----------------------------------------------------------------------------------- */
+static void mqttLog(struct mosquitto *, void *user_data, int logLevel, const char *logMessage);
+
+
+/* ----------------------------------------------------------------------------------- *
+ * Proxy to redirect mosquitto log messages to writeLog
+ * ----------------------------------------------------------------------------------- */
+void mqttLog(struct mosquitto *, void *user_data, int logLevel, const char *logMessage) {
+    writeLog(LOG_INFO, logMessage);
+}
 
 /* ----------------------------------------------------------------------------------- *
  * Dispatch incoming messages
@@ -71,6 +88,8 @@ bool mqttInit( const char* broker, int port, int keepalive, mqttIncoming_t *subs
         writeLog(LOG_ERR, "Error: mosquitto_connect [%s]\n", mosquitto_strerror(err));
         success = false;
     } else {
+        mosquitto_log_callback_set(mosq, &mqttLog);
+
         mosquitto_message_callback_set(mosq, &dispatchMessage);
         subscriptionList = subscriptions;
         int idx = 0;

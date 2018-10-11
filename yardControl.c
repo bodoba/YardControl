@@ -310,6 +310,18 @@ void setupIO ( void ) {
 }
 
 /* ----------------------------------------------------------------------------------- *
+ * Thongs that need to be done regulary
+ * ----------------------------------------------------------------------------------- */
+void houseKeeping(void) {
+    // publish Status of all buttons
+    int btnIndex = 0;
+    while ( pushButtons[btnIndex].btnPin >= 0 ) {
+        publishStatus(&pushButtons[btnIndex]);
+        btnIndex++;
+    }
+}
+
+/* ----------------------------------------------------------------------------------- *
  * Main
  * ----------------------------------------------------------------------------------- */
 int main( int argc, char *argv[] ) {

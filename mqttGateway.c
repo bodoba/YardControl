@@ -35,13 +35,13 @@ static        mqttIncoming_t *subscriptionList = NULL;
 /* ----------------------------------------------------------------------------------- *
  * Local prototypes
  * ----------------------------------------------------------------------------------- */
-static void mqttLog(struct mosquitto *, void *user_data, int logLevel, const char *logMessage);
+static void mqttLog(struct mosquitto *mosq, void *user_data, int logLevel, const char *logMessage);
 
 
 /* ----------------------------------------------------------------------------------- *
  * Proxy to redirect mosquitto log messages to writeLog
  * ----------------------------------------------------------------------------------- */
-void mqttLog(struct mosquitto *, void *user_data, int logLevel, const char *logMessage) {
+void mqttLog(struct mosquitto *mosq, void *user_data, int logLevel, const char *logMessage) {
     writeLog(LOG_INFO, logMessage);
 }
 

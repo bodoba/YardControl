@@ -31,6 +31,6 @@ add_executable(yardControl yardControl.c pushButton.c readConfig.c logging.c dae
 
 target_link_libraries(yardControl "${LIB_MQTT}")
 
+set(CMAKE_INSTALL_PREFIX /)
 INSTALL(PROGRAMS bin/yardControl DESTINATION usr/sbin)
-
 add_subdirectory(Contrib)

@@ -30,3 +30,7 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 add_executable(yardControl yardControl.c pushButton.c readConfig.c logging.c daemon.c mqttGateway.c)
 
 target_link_libraries(yardControl "${LIB_MQTT}")
+
+INSTALL(PROGRAMS bin/yardControl DESTINATION usr/sbin)
+
+add_subdirectory(Contrib)

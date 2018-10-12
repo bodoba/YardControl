@@ -106,7 +106,7 @@ void lockValveControl (bool on ) {
             btnIndex++;
         }
     } else {
-        writeLog(LOG_INFO, "Unock manual valve control");
+        writeLog(LOG_INFO, "Unlock manual valve control");
         // enable manual valve control
         while ( pushButtons[btnIndex].btnPin >= 0 ) {
             if (pushButtons[btnIndex].radioGroup == RG_VALVES) {
@@ -140,9 +140,9 @@ void switchValve( pushbutton_t *button ) {
  * ----------------------------------------------------------------------------------- */
 void pressButtonCB(char *payload, int payloadlen, char *topic, void *user_data) {
     pushbutton_t *button = (pushbutton_t*)user_data;
-    writeLog(LOG_INFO, "Received MQTT message: %s: %s", topic, payload);
+    // writeLog(LOG_INFO, "Received MQTT message: %s: %s", topic, payload);
     if (button->locked) {             // Do not allow changes of locked buttons over MQTT
-        writeLog(LOG_INFO, "Button %c locked!", button->name);
+        // writeLog(LOG_INFO, "Button %c locked!", button->name);
         publishStatus(button);
     } else {
         bool oldState = button->state;
@@ -151,7 +151,7 @@ void pressButtonCB(char *payload, int payloadlen, char *topic, void *user_data) 
         } else if (!strncmp(payload, "{\"state\":\"OFF\"}", payloadlen)){
             button->state = false;
         } else {
-            writeLog(LOG_ERR, "Unknown message: %s", payload);
+            writeLog(LOG_ERR, "Received unknown MQTT message: %s", payload);
         }
         if (button->state != oldState) {
             // if a radio group has been defined clear state of all buttons in this group

@@ -95,7 +95,7 @@ bool mqttInit( const char* broker, int port, int keepalive, mqttIncoming_t *subs
         subscriptionList = subscriptions;
         int idx = 0;
         while (subscriptionList[idx].topic) {
-            writeLog(LOG_INFO, "Supscribe to MQTT topic: %s", subscriptionList[idx].topic);
+            // writeLog(LOG_INFO, "Supscribe to MQTT topic: %s", subscriptionList[idx].topic);
             mosquitto_subscribe( mosq, NULL, subscriptionList[idx].topic, 0);
             idx++;
         }
@@ -123,11 +123,11 @@ bool mqttPublish ( const char *topic, const char *message ) {
     if ( mosq ) {
         err = mosquitto_publish( mosq, NULL, topic, strlen(message), message, 0, false);
         if ( err != MOSQ_ERR_SUCCESS) {
-            fprintf(stderr, "Error: mosquitto_publish failed [%s]\n", mosquitto_strerror(err));
+            writeLog(LOG_ERR, "Error: mosquitto_publish failed [%s]\n", mosquitto_strerror(err));
             success = false;
         }
     } else {
-        fprintf(stderr, "Error: mosq == NULL, Init failed?\n");
+        writeLog(LOG_ERR, "Error: mosq == NULL, Init failed?\n");
         success = false;
     }
     return success;

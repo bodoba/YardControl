@@ -88,7 +88,7 @@ bool readConfig(void) {
                             offset  = 0;
                         } else {
                             sequenceIdx = -1;
-                            writeLog( LOG_ERR, "[%s:%04d] ERROR: Wrong sequence number '%s' must be 0 or 1\n",
+                            writeLog( LOG_ERR, "[%s:%04d] ERROR: Wrong sequence number '%s' must be 0 or 1",
                                      configFile, lineNo, value );
                         }
                     } else if (!strcmp(token, "TIME")) {
@@ -114,7 +114,7 @@ bool readConfig(void) {
                                          configFile, lineNo, MAX_STARTTIMES );
                             }
                         } else {
-                            writeLog( LOG_ERR, "[%s:%04d] ERROR: TIME expected as hh:mm s\n", configFile, lineNo );
+                            writeLog( LOG_ERR, "[%s:%04d] ERROR: TIME expected as hh:mm s", configFile, lineNo );
                         }
                     } else if (!strcmp(token, "MQTTBROKER")) {
                         mqttBroker.address = strdup(value);
@@ -129,7 +129,7 @@ bool readConfig(void) {
                         if (time > 0 ) {
                             offset+=(time*TIME_SCALE-1);
                         } else {
-                            writeLog( LOG_ERR, "[%s:%04d] ERROR: Wromg time in DELAY: %d\n", configFile, lineNo, time );
+                            writeLog( LOG_ERR, "[%s:%04d] ERROR: Wromg time in DELAY: %d", configFile, lineNo, time );
                         }
                     } else if (!strcmp(token, "VALVE")) {
                         char *valve = cursor;
@@ -157,16 +157,16 @@ bool readConfig(void) {
                                 sequence[sequenceIdx][step].offset = -1;
                             } else {
                                 if ( step >= (MAX_STEP-2) ) {
-                                    writeLog( LOG_ERR, "[%s:%04d] ERROR: Sequence too long, ignoring line \n", configFile, lineNo );
+                                    writeLog( LOG_ERR, "[%s:%04d] ERROR: Sequence too long, ignoring line", configFile, lineNo );
                                 } else {
-                                    writeLog( LOG_ERR, "[%s:%04d] ERROR: Unknown VALVE: %s\n", configFile, lineNo, valve );
+                                    writeLog( LOG_ERR, "[%s:%04d] ERROR: Unknown VALVE: %s", configFile, lineNo, valve );
                                 }
                             }
                         } else {
-                            writeLog( LOG_ERR, "[%s:%04d] ERROR: Wromg time in VALVE: %d\n", configFile, lineNo, time );
+                            writeLog( LOG_ERR, "[%s:%04d] ERROR: Wromg time in VALVE: %d", configFile, lineNo, time );
                         }
                     } else {
-                        writeLog( LOG_ERR, "[%s:%04d] WARNING: Skipping unknown command: %s\n", configFile, lineNo, token );
+                        writeLog( LOG_ERR, "[%s:%04d] WARNING: Skipping unknown command: %s", configFile, lineNo, token );
                     }
                 }
             }

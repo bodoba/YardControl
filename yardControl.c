@@ -351,6 +351,12 @@ int main( int argc, char *argv[] ) {
     // read configuration from file
     readConfig();
 
+    if (!foreground) {                           // run in background
+        daemonize(PID_FILE);
+    } else {
+        writeLog(LOG_INFO, "Running in foreground");
+    }
+    
     if ( dumpConfig ) {
         // dump configuration
         dumpSequence( 0 );
@@ -375,12 +381,6 @@ int main( int argc, char *argv[] ) {
             writeLog(LOG_INFO, "Connected MQTT boker at %s:%d", mqttBroker.address, mqttBroker.port);
 
         }
-    }
-    
-    if (!foreground) {                           // run in background
-        daemonize(PID_FILE);
-    } else {
-        writeLog(LOG_INFO, "Running in foreground");
     }
     
     // Initialize IO ports

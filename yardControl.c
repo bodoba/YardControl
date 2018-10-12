@@ -265,8 +265,8 @@ void processSequence() {
             seqStep->done = true;                    // mark step as done
             seqStep->valve->state = seqStep->state;  // Valve ON or OFF ?
 
-            writeLog(LOG_INFO, "S%02d(%02d) t+%04d: turn valve %c %s", activeSequence, step, offset,
-                     seqStep->valve->name, seqStep->state? "ON":"OFF");
+            //writeLog(LOG_INFO, "S%02d(%02d) t+%04d: turn valve %c %s", activeSequence, step, offset,
+            //         seqStep->valve->name, seqStep->state? "ON":"OFF");
 
             switchValve(seqStep->valve);             // switch Valve
             lastStep = step;                         // remember where we left off
@@ -402,8 +402,8 @@ int main( int argc, char *argv[] ) {
         if ( lastTime != now ) {                 // only work do once a second
             lastTime = now;
             struct tm *timestamp = localtime(&now);
-            if (timestamp->tm_min == 5 && timestamp->tm_hour != lastHouseKeeping) {
-                // do housekeeping every hour
+            if ((timestamp->tm_min % 5 == 0) && timestamp->tm_hour != lastHouseKeeping) {
+                // do housekeeping every 5 minutes
                 lastHouseKeeping = timestamp->tm_hour;
                 houseKeeping();
             }

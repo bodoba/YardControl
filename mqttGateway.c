@@ -37,12 +37,13 @@ static        mqttIncoming_t *subscriptionList = NULL;
  * ----------------------------------------------------------------------------------- */
 static void mqttLog(struct mosquitto *mosq, void *user_data, int logLevel, const char *logMessage);
 
-
 /* ----------------------------------------------------------------------------------- *
  * Proxy to redirect mosquitto log messages to writeLog
  * ----------------------------------------------------------------------------------- */
 void mqttLog(struct mosquitto *mosq, void *user_data, int logLevel, const char *logMessage) {
-      writeLog(LOG_INFO, logMessage);
+#ifdef MQTT_DEBUG
+    writeLog(LOG_INFO, logMessage);
+#endif
 }
 
 /* ----------------------------------------------------------------------------------- *

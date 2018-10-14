@@ -17,6 +17,8 @@
 # *********************************************************************************** #
 include(CheckIncludeFile)
 cmake_minimum_required(VERSION 3.6)
+add_subdirectory(icons)
+
 INSTALL(FILES yardControl.items   DESTINATION etc/openhab2/items)
 INSTALL(FILES yardControl.map     DESTINATION etc/openhab2/transform)
 INSTALL(FILES yardControl.sitemap DESTINATION etc/openhab2/sitemaps)

@@ -1,13 +1,13 @@
 sitemap yardControl label="Bewässerung" {
-    Frame label="Ventilstatus" {
+    Frame label="Manuelle Steuerung" {
       Switch item=yardControl_ValveA label="A" 
       Switch item=yardControl_ValveB label="B"
       Switch item=yardControl_ValveC label="C"
       Switch item=yardControl_ValveD label="D"
     }
 
-    Frame label="Steuerung" {
-      Switch item=yardControl_SequenceSelect label="Programm Auswahl"
+    Frame label="Automatic" {
+      Switch item=yardControl_SequenceSelect label="Programm Auswahl" mappings=[ON="1", OFF="0"]
       Switch item=yardControl_SequenceRun    label="Programm Starten"
       Switch item=yardControl_Automatic      label="Timer Modus"
     }

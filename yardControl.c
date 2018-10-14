@@ -51,10 +51,10 @@ enum Modes { MANUAL_MODE, AUTOMATIC_MODE } systemMode;
 /* ----------------------------------------------------------------------------------- *
  * Prototypes
  * ----------------------------------------------------------------------------------- */
-void setup(void);
 int  main(int rgc, char *argv[]);
 void lockValveControl(bool on);
 void processSequence(void);
+void setup(void);
 
 // Bush button actions
 void setLed(pushbutton_t *button);
@@ -295,7 +295,7 @@ void setupIO ( void ) {
 
     // setup pin modes for buttons
     int btnIndex = 0;    
-    while ( pushButtons[btnIndex].btnPin >= 0 ) {
+    while (pushButtons[btnIndex].btnPin >= 0 ) {
         pinMode(pushButtons[btnIndex].btnPin, INPUT);
         pinMode(pushButtons[btnIndex].ledPin, OUTPUT);
         digitalWrite(pushButtons[btnIndex].ledPin,
@@ -303,8 +303,8 @@ void setupIO ( void ) {
         btnIndex++;
     }
 
-    digitalWrite ( LED_S1, HIGH);
-    digitalWrite ( LED_S2, LOW);
+    digitalWrite (LED_S1, HIGH);
+    digitalWrite (LED_S2, LOW);
     
     systemMode = MANUAL_MODE;
 }

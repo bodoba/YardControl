@@ -18,7 +18,7 @@
 # *********************************************************************************** #
 
 # build on remote machine
-build_host=piyard
+build_host=piyard0
 build_dir=yardControl
 
 # git repository to get source from

@@ -30,8 +30,8 @@
  * ----------------------------------------------------------------------------------- */
 #define VALVE_A       PINBASE_0+11  // control valve A
 #define VALVE_B       PINBASE_0+10  // control valve B
-#define VALVE_C       PINBASE_0+09  // control valve C
-#define VALVE_D       PINBASE_0+08 // control valve D
+#define VALVE_C       PINBASE_0+9  // control valve C
+#define VALVE_D       PINBASE_0+8 // control valve D
 
 /* ----------------------------------------------------------------------------------- *
  * Output pins for control LEDs

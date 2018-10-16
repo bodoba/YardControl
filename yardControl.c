@@ -303,6 +303,9 @@ void setupIO ( void ) {
         btnIndex++;
     }
 
+    pinMode(LED_S0, OUTPUT);
+    pinMode(LED_S1, OUTPUT);
+
     digitalWrite (LED_S0, HIGH);
     digitalWrite (LED_S1, LOW);
     

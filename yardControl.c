@@ -299,7 +299,7 @@ void setupIO ( void ) {
         pinMode(pushButtons[btnIndex].btnPin, INPUT);
         pinMode(pushButtons[btnIndex].ledPin, OUTPUT);
         digitalWrite(pushButtons[btnIndex].ledPin,
-                     pushButtons[btnIndex].state ? LOW : HIGH);
+                     pushButtons[btnIndex].state ? HIGH : LOW);
         btnIndex++;
     }
 

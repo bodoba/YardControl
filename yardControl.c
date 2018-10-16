@@ -26,7 +26,7 @@
 #include <time.h>
 
 #include <wiringPi.h>
-#include <mpc23016.h>
+#include <mcp23016.h>
 
 #include "yardControl.h"
 #include "pushButton.h"
@@ -291,7 +291,7 @@ void processSequence() {
 void setupIO ( void ) {
     // initialize wiring PI and attached IO extender
     wiringPiSetup () ;
-    mpc23016Setup (PINBASE_0, ADDR_IOEXT_0);
+    mcp23016Setup (PINBASE_0, ADDR_IOEXT_0);
 
     // setup pin modes for buttons
     int btnIndex = 0;    

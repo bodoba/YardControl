@@ -80,7 +80,7 @@ pushbutton_t pushButtons[] = {
     {'C', BUTTON_C,      VALVE_C,  false, -1, false, RG_VALVES,   &switchValve},
     {'D', BUTTON_D,      VALVE_D,  false, -1, false, RG_VALVES,   &switchValve},
 
-    {'S', BUTTON_SELECT, LED_S1,   false, -1, false, RG_NONE,     &selectSequence},
+    {'S', BUTTON_SELECT, LED_S0,   false, -1, false, RG_NONE,     &selectSequence},
     {'R', BUTTON_RUN,    LED_RUN,  false, -1, false, RG_NONE,     &startSequence},
 
     {'P', BUTTON_AUTO,   LED_AUTO, false, -1, false, RG_NONE,     &automaticMode},
@@ -209,8 +209,8 @@ void startSequence( pushbutton_t *button ) {
  * Select sequence to run
  * ----------------------------------------------------------------------------------- */
 void selectSequence( pushbutton_t *button ) {
-    digitalWrite ( LED_S1, button->state ? LOW : HIGH);
-    digitalWrite ( LED_S2, button->state ? HIGH : LOW);
+    digitalWrite ( LED_S0, button->state ? LOW : HIGH);
+    digitalWrite ( LED_S1, button->state ? HIGH : LOW);
     activeSequence = button->state ? 1:0;
     publishStatus(button);
     writeLog(LOG_INFO,"Activated Sequence %d", button->state ? 1:0);

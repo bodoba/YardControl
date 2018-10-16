@@ -36,10 +36,10 @@
 /* ----------------------------------------------------------------------------------- *
  * Output pins for control LEDs
  * ----------------------------------------------------------------------------------- */
-#define LED_S2        PINBASE_0+12  // sequence 2 selected
-#define LED_AUTO      PINBASE_0+13 // automatic mode enabled
-#define LED_S1        PINBASE_0+14 // sequence 1 selected
-#define LED_RUN       PINBASE_0+15 // selected sequence is running
+#define LED_S1        PINBASE_0+12 // sequence 1 selected
+#define LED_S2        PINBASE_0+13 // sequence 2 selected
+#define LED_RUN       PINBASE_0+14 // selected sequence is running
+#define LED_AUTO      PINBASE_0+15 // automatic mode enabled
 
 /* ----------------------------------------------------------------------------------- *
  * input pins for push buttons

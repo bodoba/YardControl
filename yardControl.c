@@ -303,8 +303,8 @@ void setupIO ( void ) {
         btnIndex++;
     }
 
-    digitalWrite (LED_S1, HIGH);
-    digitalWrite (LED_S2, LOW);
+    digitalWrite (LED_S0, HIGH);
+    digitalWrite (LED_S1, LOW);
     
     systemMode = MANUAL_MODE;
 }

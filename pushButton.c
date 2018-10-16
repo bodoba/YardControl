@@ -25,10 +25,10 @@
  * ----------------------------------------------------------------------------------- */
 void pollButtons(pushbutton_t pushButtons[]) {
     int btnIndex = 0;
-    while ( pushButtons[btnIndex].btnPin >= 0 ) {
-        readButton(&pushButtons[btnIndex], pushButtons);
-        btnIndex++;
-    }
+//    while ( pushButtons[btnIndex].btnPin >= 0 ) {
+//        readButton(&pushButtons[btnIndex], pushButtons);
+//        btnIndex++;
+//   }
 }
 
 /* ----------------------------------------------------------------------------------- *

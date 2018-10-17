@@ -80,9 +80,13 @@ pushbutton_t pushButtons[] = {
     {'C', BUTTON_C,      VALVE_C,  false, -1, false, RG_VALVES,   &switchValve},
     {'D', BUTTON_D,      VALVE_D,  false, -1, false, RG_VALVES,   &switchValve},
 
+    // select active program sequence
     {'S', BUTTON_SELECT, LED_S0,   false, -1, false, RG_NONE,     &selectSequence},
+
+    // run active program sequence
     {'R', BUTTON_RUN,    LED_RUN,  false, -1, false, RG_NONE,     &startSequence},
 
+    // toggle timer mode
     {'P', BUTTON_AUTO,   LED_AUTO, false, -1, false, RG_NONE,     &automaticMode},
     
     // end marker
@@ -117,6 +121,7 @@ void lockValveControl (bool on ) {
         }
     }
 }
+
 /* ----------------------------------------------------------------------------------- *
  * Publish button status
  * ----------------------------------------------------------------------------------- */
@@ -132,6 +137,7 @@ void publishStatus(pushbutton_t *button) {
  * ----------------------------------------------------------------------------------- */
 void switchValve( pushbutton_t *button ) {
     writeLog ( LOG_INFO, "Turn valve %c %s", button->name, button->state? "ON":"OFF" );
+    // led is conntected to valve
     setLed( button );
     publishStatus(button);
 }
@@ -217,7 +223,7 @@ void selectSequence( pushbutton_t *button ) {
 }
 
 /* ----------------------------------------------------------------------------------- *
- * run in automatic mode
+ * run in timer mode
  * ----------------------------------------------------------------------------------- */
 void automaticMode( pushbutton_t *button ) {
     setLed( button );

@@ -6,9 +6,9 @@ sitemap yardControl label="Bewässerung" {
       Switch item=yardControl_ValveD label="D"
     }
 
-    Frame label="Automatic" {
-      Switch item=yardControl_SequenceSelect label="Programm Auswahl" mappings=[ON="1", OFF="0"]
-      Switch item=yardControl_SequenceRun    label="Programm Starten"
+    Frame label="Automatische Steuerung" {
+      Switch item=yardControl_SequenceSelect label="Programm Auswahl" mappings=[ON="P1", OFF="P0"]
+      Switch item=yardControl_SequenceRun    label="Programm Start"
       Switch item=yardControl_Automatic      label="Timer Modus"
     }
 }

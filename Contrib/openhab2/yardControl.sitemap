@@ -1,9 +1,9 @@
 sitemap yardControl label="Bewässerung" {
     Frame label="Manuelle Steuerung" {
-      Switch item=yardControl_ValveA label="A" 
-      Switch item=yardControl_ValveB label="B"
-      Switch item=yardControl_ValveC label="C"
-      Switch item=yardControl_ValveD label="D"
+      Switch item=yardControl_ValveA label="Ventil A"
+      Switch item=yardControl_ValveB label="Ventil B"
+      Switch item=yardControl_ValveC label="Ventil C"
+      Switch item=yardControl_ValveD label="Ventil D"
     }
 
     Frame label="Automatische Steuerung" {

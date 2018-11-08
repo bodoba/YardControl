@@ -251,7 +251,7 @@ void automaticMode( pushbutton_t *button ) {
  * Set LED of push button
  * ----------------------------------------------------------------------------------- */
 void setLed( pushbutton_t *button ) {
-    digitalWrite ( button->ledPin, button->state ? LOW : HIGH);
+    digitalWrite ( button->ledPin, button->state ? HIGH : LOW);
 }
 
 /* ----------------------------------------------------------------------------------- *
@@ -306,7 +306,7 @@ void setupIO ( void ) {
         pullUpDnControl (pushButtons[btnIndex].btnPin, PUD_UP) ;
         pinMode(pushButtons[btnIndex].ledPin, OUTPUT);
         digitalWrite(pushButtons[btnIndex].ledPin,
-                     pushButtons[btnIndex].state ? LOW : HIGH );
+                     pushButtons[btnIndex].state ? HIGH : LOW );
         btnIndex++;
     }
 

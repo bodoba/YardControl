@@ -26,7 +26,7 @@
 #include <time.h>
 
 #include <wiringPi.h>
-#include <mcp23016.h>
+#include <mcp23017.h>
 
 #include "yardControl.h"
 #include "pushButton.h"
@@ -303,6 +303,7 @@ void setupIO ( void ) {
     int btnIndex = 0;    
     while (pushButtons[btnIndex].btnPin >= 0 ) {
         pinMode(pushButtons[btnIndex].btnPin, INPUT);
+        pullUpDnControl (pushButtons[btnIndex].btnPin, PUD_UP) ;
         pinMode(pushButtons[btnIndex].ledPin, OUTPUT);
         digitalWrite(pushButtons[btnIndex].ledPin,
                      pushButtons[btnIndex].state ? LOW : HIGH );

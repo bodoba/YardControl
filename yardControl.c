@@ -297,7 +297,7 @@ void processSequence() {
 void setupIO ( void ) {
     // initialize wiring PI and attached IO extender
     wiringPiSetup () ;
-    mcp23016Setup (PINBASE_0, ADDR_IOEXT_0);
+    mcp23017Setup (PINBASE_0, ADDR_IOEXT_0);
 
     // setup pin modes for buttons
     int btnIndex = 0;    

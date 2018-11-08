@@ -36,10 +36,10 @@
 /* ----------------------------------------------------------------------------------- *
  * Output pins for control LEDs
  * ----------------------------------------------------------------------------------- */
-#define LED_AUTO      PINBASE_0+7 // automatic mode enabled
-#define LED_RUN       PINBASE_0+6 // selected sequence is running
-#define LED_S0        PINBASE_0+5 // sequence 0 selected
 #define LED_S1        PINBASE_0+4 // sequence 1 selected
+#define LED_S0        PINBASE_0+5 // sequence 0 selected
+#define LED_RUN       PINBASE_0+6 // selected sequence is running
+#define LED_AUTO      PINBASE_0+7 // automatic mode enabled
 
 /* ----------------------------------------------------------------------------------- *
  * input pins for push buttons
@@ -49,10 +49,10 @@
 #define BUTTON_C      PINBASE_0+10  // switch valve C
 #define BUTTON_D      PINBASE_0+11  // switch valve D
 
-#define NC_1_4        PINBASE_0+12  // not connected
+#define BUTTON_RUN    PINBASE_0+12  // run selected sequence
 #define BUTTON_AUTO   PINBASE_0+13 // toggle automatic mode
 #define BUTTON_SELECT PINBASE_0+14  // select between sequence 1 and 2
-#define BUTTON_RUN    PINBASE_0+15  // run selected sequence
+#define NC_1_7        PINBASE_0+15  // not connected
 
 /* ----------------------------------------------------------------------------------- *
  * radio groups for bush buttons

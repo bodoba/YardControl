@@ -38,8 +38,8 @@
  * ----------------------------------------------------------------------------------- */
 #define LED_S1        PINBASE_0+4 // sequence 1 selected
 #define LED_S0        PINBASE_0+5 // sequence 0 selected
-#define LED_RUN       PINBASE_0+6 // selected sequence is running
-#define LED_AUTO      PINBASE_0+7 // automatic mode enabled
+#define LED_RUN       PINBASE_0+7 // selected sequence is running
+#define LED_AUTO      PINBASE_0+6 // automatic mode enabled
 
 /* ----------------------------------------------------------------------------------- *
  * input pins for push buttons

@@ -233,7 +233,7 @@ void automaticMode( pushbutton_t *button ) {
     pushButtons[5].state  = false;
     startSequence( &pushButtons[5] );       // stop sequence in progress
     pushButtons[5].locked = button->state;
-    digitalWrite (LED_RUN, HIGH);
+    digitalWrite (LED_RUN, LOW);
 
     // enable/disable sequence change
     pushButtons[4].locked = button->state;

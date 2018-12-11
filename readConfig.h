@@ -24,7 +24,7 @@
  * Settings
  * ----------------------------------------------------------------------------------- */
 #define MAX_STEP        100  // max 100 steps per sequence (50 commands)
-#define TIME_SCALE        1  // unit scale fpr secuence, set to 60 to get minutes
+#define TIME_SCALE       60  // unit scale fpr secuence, set to 60 to get minutes
 #define MAX_STARTTIMES   10  // allow for 10 different starttimes
 #define CONFIG_FILE  "/etc/yardControl.cfg"      // read config from etc
 

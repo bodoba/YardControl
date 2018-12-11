@@ -1,0 +1,53 @@
+#!/bin/sh
+# Start/stop the yardControl daemon
+#
+### BEGIN INIT INFO
+# Provides:          yardControl
+# Required-Start:    $remote_fs $syslog $time
+# Required-Stop:     $remote_fs $syslog $time
+# Should-Start:      $network $named slapd autofs ypbind nscd nslcd winbind
+# Should-Stop:       $network $named slapd autofs ypbind nscd nslcd winbind
+# Default-Start:     2 3 4 5
+# Default-Stop:
+# Short-Description: Automated irrigation control
+# Description:       Automated irrigation control
+### END INIT INFO
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+DESC="yardControl"
+NAME=yardControl
+DAEMON=/usr/sbin/yardControl
+PIDFILE=/var/run/yardcontrol.pid
+CONFIGFILE=/etc/yardControl.cfg
+SCRIPTNAME=/etc/init.d/"$NAME"
+
+test -f $DAEMON || exit 0
+
+. /lib/lsb/init-functions
+
+case "$1" in
+start)  log_daemon_msg "Starting irrigation control" "yardControl"
+        start_daemon -p $PIDFILE $DAEMON $EXTRA_OPTS
+        log_end_msg $?
+        ;;
+
+stop)   log_daemon_msg "Stopping irrigation control" "yardControl"
+        killproc -p $PIDFILE $DAEMON
+        RETVAL=$?
+        [ $RETVAL -eq 0 ] && [ -e "$PIDFILE" ] && rm -f $PIDFILE
+        log_end_msg $RETVAL
+        ;;
+
+restart) log_daemon_msg "Restarting irrigation control" "yardControl"
+         $0 stop
+         $0 start
+         ;;
+
+status)  status_of_proc -p $PIDFILE $DAEMON $NAME && exit 0 || exit $?
+         ;;
+
+*)      log_action_msg "Usage: /etc/init.d/cron {start|stop|status|restart}"
+        exit 2
+        ;;
+esac
+exit 0

@@ -19,5 +19,6 @@ include(CheckIncludeFile)
 cmake_minimum_required(VERSION 3.6)
 
 INSTALL(FILES yardControl.cfg DESTINATION etc)
+INSTALL(FILES yardcontrol     DESTINATION etc/init.d)
 
 add_subdirectory(openhab2)

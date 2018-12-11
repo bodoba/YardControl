@@ -29,5 +29,4 @@ INSTALL(
   DESTINATION etc/init.d
 )
 
-
 add_subdirectory(openhab2)

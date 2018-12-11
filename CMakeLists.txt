@@ -21,7 +21,6 @@ cmake_minimum_required(VERSION 3.6)
 project (yardControl)
 set (CMAKE_C_FLAGS "-std=gnu11 -Wall -lwiringPi")
 
-
 find_library(LIB_MQTT mosquitto)
 
 # all executables end up in bin

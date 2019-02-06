@@ -18,7 +18,7 @@
 # *********************************************************************************** #
 
 # build on remote machine
-build_host=192.168.100.196
+build_host=192.168.100.201
 build_dir=yardControl
 
 # git repository to get source from

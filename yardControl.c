@@ -153,9 +153,9 @@ void pressButtonCB(char *payload, int payloadlen, char *topic, void *user_data) 
         publishStatus(button);
     } else {
         bool oldState = button->state;
-        if (!strncmp(payload, "{\"state\":\"ON\"}", payloadlen)){
+        if (!strncmp(payload, "{\"state\":\"ON\"}", payloadlen) || !strncmp(payload, "{\"state\":\"1\"}", payloadlen)){
             button->state = true;
-        } else if (!strncmp(payload, "{\"state\":\"OFF\"}", payloadlen)){
+        } else if (!strncmp(payload, "{\"state\":\"OFF\"}", payloadlen) || !strncmp(payload, "{\"state\":\"0\"}", payloadlen)){
             button->state = false;
         } else {
             writeLog(LOG_ERR, "Received unknown MQTT message: %s", payload);

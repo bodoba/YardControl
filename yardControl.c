@@ -396,6 +396,7 @@ int main( int argc, char *argv[] ) {
     setupIO();
     
     if (systemMode == AUTOMATIC_MODE) {
+        writeLog(LOG_INFO, "Starting up in automatic mode");
         pushButtons[BUTTON_IDX_TIMER].state = true;
         automaticMode( &pushButtons[BUTTON_IDX_TIMER] );
     }

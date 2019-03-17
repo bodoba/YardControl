@@ -127,9 +127,9 @@ bool readConfig(void) {
                         mqttBroker.prefix = strdup(value);
                     } else if (!strcmp(token, "TIMER")) {
                         if (!strcmp(value, "ON")) {
-                            systemMode=1;
+                            systemMode = AUTOMATIC_MODE;
                         } else {
-                            systemMode=0;
+                            systemMode = MANUAL_MODE;
                         }
                     } else if (!strcmp(token, "PAUSE")) {
                         int time  = atoi(value);

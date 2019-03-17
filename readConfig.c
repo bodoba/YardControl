@@ -125,7 +125,7 @@ bool readConfig(void) {
                         mqttBroker.keepalive = atoi(value);
                     } else if (!strcmp(token, "MQTTPREFIX")) {
                         mqttBroker.prefix = strdup(value);
-                    } else if (!strcmp(token, "TIMER")) {
+                    } else if (!strcmp(token, "AUTOMATIC")) {
                         if (!strcmp(value, "ON")) {
                             systemMode = AUTOMATIC_MODE;
                         } else {

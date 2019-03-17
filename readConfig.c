@@ -82,6 +82,8 @@ bool readConfig(void) {
                     char *token = cursor;
                     char *value = nextValue(&cursor);
                     
+                    writeLog(LOG_DEBUG, "IN: %s %s", token, value);
+                    
                     if (!strcmp(token, "SEQUENCE")) {
                         sequenceIdx = atoi (value);
                         if ( *value == '0' || *value == '1' ) {

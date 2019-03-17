@@ -28,29 +28,29 @@
 /* ----------------------------------------------------------------------------------- *
  * output pins for valve control
  * ----------------------------------------------------------------------------------- */
-#define VALVE_A       PINBASE_0+0 // control valve A
-#define VALVE_B       PINBASE_0+1 // control valve B
-#define VALVE_C       PINBASE_0+2  // control valve C
-#define VALVE_D       PINBASE_0+3  // control valve D
+#define VALVE_A       PINBASE_0+0   // control valve A
+#define VALVE_B       PINBASE_0+1   // control valve B
+#define VALVE_C       PINBASE_0+2   // control valve C
+#define VALVE_D       PINBASE_0+3   // control valve D
 
 /* ----------------------------------------------------------------------------------- *
  * Output pins for control LEDs
  * ----------------------------------------------------------------------------------- */
-#define LED_S1        PINBASE_0+4 // sequence 1 selected
-#define LED_S0        PINBASE_0+5 // sequence 0 selected
-#define LED_RUN       PINBASE_0+7 // selected sequence is running
-#define LED_AUTO      PINBASE_0+6 // automatic mode enabled
+#define LED_S1        PINBASE_0+4   // sequence 1 selected
+#define LED_S0        PINBASE_0+5   // sequence 0 selected
+#define LED_RUN       PINBASE_0+7   // selected sequence is running
+#define LED_AUTO      PINBASE_0+6   // automatic mode enabled
 
 /* ----------------------------------------------------------------------------------- *
  * input pins for push buttons
  * ----------------------------------------------------------------------------------- */
-#define BUTTON_A      PINBASE_0+8  // switch valve A
+#define BUTTON_A      PINBASE_0+8   // switch valve A
 #define BUTTON_B      PINBASE_0+9   // switch valve B
 #define BUTTON_C      PINBASE_0+10  // switch valve C
 #define BUTTON_D      PINBASE_0+11  // switch valve D
 
 #define BUTTON_RUN    PINBASE_0+12  // run selected sequence
-#define BUTTON_AUTO   PINBASE_0+13 // toggle automatic mode
+#define BUTTON_AUTO   PINBASE_0+13  // toggle automatic mode
 #define BUTTON_SELECT PINBASE_0+14  // select between sequence 1 and 2
 #define NC_1_7        PINBASE_0+15  // not connected
 

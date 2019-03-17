@@ -88,6 +88,7 @@ pushbutton_t pushButtons[] = {
     // end marker
     {'0', -1, -1, false, -1, false, -1},
 };
+#define TIMER_BUTTON  6
 
 /* ----------------------------------------------------------------------------------- *
  * Enable/Disable manual valve control (radio group: RG_VALVES)
@@ -391,6 +392,11 @@ int main( int argc, char *argv[] ) {
     
     // Initialize IO ports
     setupIO();
+    
+    if (systemMode == AUTOMATIC_MODE) {
+        pushButtons[TIMER_BUTTON].state = true;
+        automaticMode( pushButtonuttons[TIMER_BUTTON] )
+    }
     
     // publish Status of all buttons
     int btnIndex = 0;

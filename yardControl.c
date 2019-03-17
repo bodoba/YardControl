@@ -88,7 +88,9 @@ pushbutton_t pushButtons[] = {
     // end marker
     {'0', -1, -1, false, -1, false, -1},
 };
-#define TIMER_BUTTON  6
+#define BUTTON_SELECT 4
+#define BUTTON_RUN    5
+#define BUTTON_TIMER  6
 
 /* ----------------------------------------------------------------------------------- *
  * Enable/Disable manual valve control (radio group: RG_VALVES)
@@ -227,13 +229,13 @@ void automaticMode( pushbutton_t *button ) {
     publishStatus(button);
 
     // enable/disable sequence start
-    pushButtons[5].state  = false;
-    startSequence( &pushButtons[5] );       // stop sequence in progress
-    pushButtons[5].locked = button->state;
+    pushButtons[BUTTON_RUN].state  = false;
+    startSequence( &pushButtons[BUTTON_RUN] );       // stop sequence in progress
+    pushButtons[BUTTON_RUN].locked = button->state;
     digitalWrite (LED_RUN, LOW);
 
     // enable/disable sequence change
-    pushButtons[4].locked = button->state;
+    pushButtons[BUTTON_SELECT].locked = button->state;
     
     // enable/disable manual valve control
     lockValveControl(!button->state);
@@ -394,8 +396,8 @@ int main( int argc, char *argv[] ) {
     setupIO();
     
     if (systemMode == AUTOMATIC_MODE) {
-        pushButtons[TIMER_BUTTON].state = true;
-        automaticMode( pushButtons[TIMER_BUTTON] )
+        pushButtons[BUTTON_TIMER].state = true;
+        automaticMode( &pushButtons[BUTTON_TIMER] );
     }
     
     // publish Status of all buttons

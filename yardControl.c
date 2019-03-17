@@ -47,7 +47,7 @@ time_t sequenceStartTime;                      // time sequence was started
 /* ----------------------------------------------------------------------------------- *
  * System modes
  * ----------------------------------------------------------------------------------- */
-enum Modes { MANUAL_MODE, AUTOMATIC_MODE } systemMode;
+enum Modes { MANUAL_MODE=0, AUTOMATIC_MODE=1 } systemMode;
 
 /* ----------------------------------------------------------------------------------- *
  * Prototypes

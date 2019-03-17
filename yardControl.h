@@ -72,7 +72,9 @@
 /* ----------------------------------------------------------------------------------- *
  * export some globals
  * ----------------------------------------------------------------------------------- */
+extern enum systemMode;
 extern pushbutton_t pushButtons[];
 extern int debug;
+
 
 #endif /* yardControl_h */

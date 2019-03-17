@@ -51,7 +51,10 @@ void initLog( bool syslog ) {
  * ----------------------------------------------------------------------------------- */
 int setLogLevel( int level ) {
     logLevel = level;
-    writeLog(LOG_ERR, "Set log level to %s", logLevelText[level]);
+    if (logLevel > LOG_DEBUG ) {
+        logLevel = LOG_DEBUG;
+    }
+    writeLog(LOG_NOTICE, "Set log level to %s", logLevelText[level]);
     return logLevel;
 }
     

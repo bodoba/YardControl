@@ -43,11 +43,7 @@ int    activeSequence     = SEQUENCE;          // sequence to run
 bool   foreground         = false;             // run in foreground, not as daemon
 int    sequenceInProgress = false;             // sequence in progress
 time_t sequenceStartTime;                      // time sequence was started
-
-/* ----------------------------------------------------------------------------------- *
- * System modes
- * ----------------------------------------------------------------------------------- */
-enum Modes { MANUAL_MODE=0, AUTOMATIC_MODE=1 } systemMode;
+int    systemMode         = MANUAL_MODE;       // System modes
 
 /* ----------------------------------------------------------------------------------- *
  * Prototypes

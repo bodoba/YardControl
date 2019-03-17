@@ -67,7 +67,7 @@ bool readConfig(void) {
         char  *cursor;
         size_t n=0;
         size_t length = getline(&line, &n, fp);
-        systemMode=0;  // default to manual mode
+        systemMode = MANUAL_MODE;                            // default to manual mode
         
         while ( length != -1) {
             if ( length > 1 ) {                              /* skip empty lines       */

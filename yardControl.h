@@ -70,11 +70,16 @@
 #define PID_FILE     "/var/run/yardcontrol.pid"
 
 /* ----------------------------------------------------------------------------------- *
+ * System modes
+ * ----------------------------------------------------------------------------------- */
+#define MANUAL_MODE    0
+#define AUTOMATIC_MODE 1
+
+/* ----------------------------------------------------------------------------------- *
  * export some globals
  * ----------------------------------------------------------------------------------- */
-extern enum systemMode;
+extern int systemMode;
 extern pushbutton_t pushButtons[];
 extern int debug;
-
 
 #endif /* yardControl_h */

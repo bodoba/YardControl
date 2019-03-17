@@ -395,7 +395,7 @@ int main( int argc, char *argv[] ) {
     
     if (systemMode == AUTOMATIC_MODE) {
         pushButtons[TIMER_BUTTON].state = true;
-        automaticMode( pushButtonuttons[TIMER_BUTTON] )
+        automaticMode( pushButtons[TIMER_BUTTON] )
     }
     
     // publish Status of all buttons

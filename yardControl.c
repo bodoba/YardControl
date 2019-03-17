@@ -355,7 +355,6 @@ int main( int argc, char *argv[] ) {
     // initialize logging channel
     initLog(!foreground);
     setLogLevel(LOG_ERR+debug);
-    writeLog(LOG_ERR, "Log level set to %d", LOG_ERR+debug);
     
     // read configuration from file
     readConfig();

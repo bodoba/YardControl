@@ -314,8 +314,6 @@ void setupIO ( void ) {
 
     digitalWrite (LED_S0, HIGH);
     digitalWrite (LED_S1, LOW);
-    
-    systemMode = MANUAL_MODE;
 }
 
 /* ----------------------------------------------------------------------------------- *
@@ -356,12 +354,8 @@ int main( int argc, char *argv[] ) {
     
     // initialize logging channel
     initLog(!foreground);
-    if ( debug ) {
-        setLogLevel(LOG_DEBUG);
-    } else {
-        setLogLevel(LOG_INFO);
-    }
-    
+    setLogLevel(LOG_ERR+debug);
+    writeLog(LOR_ERR, "Log level set to %d", LOG_ERR+debug);
     
     // read configuration from file
     readConfig();
@@ -394,7 +388,6 @@ int main( int argc, char *argv[] ) {
         
         if (mqttInit(mqttBroker.address, mqttBroker.port, mqttBroker.keepalive, subscriptions)) {
             writeLog(LOG_INFO, "Connected MQTT boker at %s:%d", mqttBroker.address, mqttBroker.port);
-
         }
     }
     

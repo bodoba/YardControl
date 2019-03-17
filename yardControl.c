@@ -356,6 +356,12 @@ int main( int argc, char *argv[] ) {
     
     // initialize logging channel
     initLog(!foreground);
+    if ( debug ) {
+        setLogLevel(LOG_DEBUG);
+    } else {
+        setLogLevel(LOG_INFO);
+    }
+    
     
     // read configuration from file
     readConfig();

@@ -126,6 +126,7 @@ bool readConfig(void) {
                     } else if (!strcmp(token, "MQTTPREFIX")) {
                         mqttBroker.prefix = strdup(value);
                     } else if (!strcmp(token, "AUTOMATIC")) {
+                        writeLog(LOG_DEBUG, "AUTOMATIC %s", value);
                         if (!strcmp(value, "ON")) {
                             systemMode = AUTOMATIC_MODE;
                         } else {

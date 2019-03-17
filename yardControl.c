@@ -354,7 +354,7 @@ int main( int argc, char *argv[] ) {
     
     // initialize logging channel
     initLog(!foreground);
-    setLogLevel(LOG_ERR+debug);
+    setLogLevel(LOG_NOTICE+debug);
     
     // read configuration from file
     readConfig();
@@ -362,7 +362,7 @@ int main( int argc, char *argv[] ) {
     if (!foreground) {                           // run in background
         daemonize(PID_FILE);
     } else {
-        writeLog(LOG_INFO, "Running in foreground");
+        writeLog(LOG_NOTICE, "Running in foreground");
     }
     
     if ( dumpConfig ) {

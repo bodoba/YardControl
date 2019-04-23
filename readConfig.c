@@ -28,7 +28,7 @@
  * Some globals we can't do without
  * ----------------------------------------------------------------------------------- */
 char *configFile    = CONFIG_FILE;            // configuration file
-char *stateFile     = STATE_FILE;             // file to persist state information
+char *stateDir      = STATE_DIR;              // directory for state files
 sequence_t  sequence[2][MAX_STEP];            // two program sequences of max 40 steps
 starttime_t startTime[2][MAX_STARTTIMES+1];   // 10 start times for each sequence
 connection_t mqttBroker;                      // mqtt broker settings
@@ -96,8 +96,9 @@ bool readConfig(void) {
                             writeLog( LOG_ERR, "[%s:%04d] ERROR: Wrong sequence number '%s' must be 0 or 1",
                                      configFile, lineNo, value );
                         }
-                    } else if (!strcmp(token, "STATEFILE")) {
-                        
+                    } else if (!strcmp(token, "STATEDIR")) {
+                        stateDir = strdup(value);
+                        writeLog(LOG_DEBUG, "  > state kept in %s", stateDir);
                     } else if (!strcmp(token, "TIME")) {
                         // expected format is "TIME hh:mm s
                         char *hh, *mm, *seq;
@@ -137,14 +138,20 @@ bool readConfig(void) {
                             writeLog(LOG_DEBUG, "  > automatic mode");
                         } else if (!strcmp(value, "PERSIST")) {
                             // read setting from state file
-                            writeLog(LOG_DEBUG, "  > reading mode from state file");
-
-                            
+                            writeLog(LOG_DEBUG, "  > reading old state");
+                            char *fname = malloc( sizeof(char) * ( strlen(stateDir)+strlen("automatic")+1 ) );
+                            struct stat buf;
+                            sprintf( fname, "%s/automatic", stateDir );
+                            if (!stat(fname, &buf)) {
+                                systemMode = AUTOMATIC_MODE;
+                            } else {
+                                systemMode = MANUAL_MODE;
+                            }
+                            free (fname);
                         } else {
                             systemMode = MANUAL_MODE;
                             writeLog(LOG_DEBUG, "  > manual mode");
                         }
-
                     } else if (!strcmp(token, "PAUSE")) {
                         int time  = atoi(value);
                         if (time > 0 ) {

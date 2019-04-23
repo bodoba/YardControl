@@ -27,7 +27,7 @@
 #define TIME_SCALE       60  // unit scale fpr secuence, set to 60 to get minutes
 #define MAX_STARTTIMES   10  // allow for 10 different starttimes
 #define CONFIG_FILE  "/etc/yardControl.cfg"            // read config from etc
-#define STATE_FILE   "/var/lib/yardcontrol/state"      // store state in /var/lib
+#define STATE_DIR    "/var/lib/yardcontrol"            // store state files here
 
 /* ----------------------------------------------------------------------------------- *
  * A step in a sequence
@@ -61,11 +61,10 @@ typedef struct starttime_t {
  * Some globals we can't do without
  * ----------------------------------------------------------------------------------- */
 extern char *configFile;                            // configuration file
+extern char *stateDir;                              // directory for state files
 extern sequence_t  sequence[2][MAX_STEP];           // two program sequences of max 40 steps
 extern starttime_t startTime[2][MAX_STARTTIMES+1];  // start times for each sequence
 extern connection_t mqttBroker;                     // address:port of MQTT broker
-
-extern char *stateFile;                             // file to persist state information
 
 /* ----------------------------------------------------------------------------------- *
  * Prototypes

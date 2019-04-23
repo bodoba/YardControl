@@ -64,6 +64,8 @@ extern sequence_t  sequence[2][MAX_STEP];           // two program sequences of 
 extern starttime_t startTime[2][MAX_STARTTIMES+1];  // start times for each sequence
 extern connection_t mqttBroker;                     // address:port of MQTT broker
 
+extern char *stateFile;                             // file to persist state information
+
 /* ----------------------------------------------------------------------------------- *
  * Prototypes
  * ----------------------------------------------------------------------------------- */

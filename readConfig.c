@@ -28,10 +28,10 @@
  * Some globals we can't do without
  * ----------------------------------------------------------------------------------- */
 char *configFile    = CONFIG_FILE;            // configuration file
+char *stateFile     = STATE_FILE;             // file to persist state information
 sequence_t  sequence[2][MAX_STEP];            // two program sequences of max 40 steps
 starttime_t startTime[2][MAX_STARTTIMES+1];   // 10 start times for each sequence
 connection_t mqttBroker;                      // mqtt broker settings
-char *stateFile;                              // file to persist state information
 
 
 /* ----------------------------------------------------------------------------------- *
@@ -96,6 +96,8 @@ bool readConfig(void) {
                             writeLog( LOG_ERR, "[%s:%04d] ERROR: Wrong sequence number '%s' must be 0 or 1",
                                      configFile, lineNo, value );
                         }
+                    } else if (!strcmp(token, "STATEFILE")) {
+                        
                     } else if (!strcmp(token, "TIME")) {
                         // expected format is "TIME hh:mm s
                         char *hh, *mm, *seq;
@@ -133,10 +135,16 @@ bool readConfig(void) {
                         if (!strcmp(value, "ON")) {
                             systemMode = AUTOMATIC_MODE;
                             writeLog(LOG_DEBUG, "  > automatic mode");
+                        } else if (!strcmp(value, "PERSIST")) {
+                            // read setting from state file
+                            writeLog(LOG_DEBUG, "  > reading mode from state file");
+
+                            
                         } else {
                             systemMode = MANUAL_MODE;
                             writeLog(LOG_DEBUG, "  > manual mode");
                         }
+
                     } else if (!strcmp(token, "PAUSE")) {
                         int time  = atoi(value);
                         if (time > 0 ) {

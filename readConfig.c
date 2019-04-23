@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-
+#include <sys/stat.h>
 #include "yardControl.h"
 #include "readConfig.h"
 #include "logging.h"

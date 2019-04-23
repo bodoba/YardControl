@@ -31,6 +31,8 @@ char *configFile    = CONFIG_FILE;            // configuration file
 sequence_t  sequence[2][MAX_STEP];            // two program sequences of max 40 steps
 starttime_t startTime[2][MAX_STARTTIMES+1];   // 10 start times for each sequence
 connection_t mqttBroker;                      // mqtt broker settings
+char *stateFile;                              // file to persist state information
+
 
 /* ----------------------------------------------------------------------------------- *
  * Read config file

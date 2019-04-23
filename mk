@@ -21,11 +21,13 @@
 #build_host=192.168.101.10
 build_host=192.168.100.201
 build_dir=yardControl
+build_branch=persist
 
 # git repository to get source from
 git_repo=192.168.100.26:git/yardControl
 
 # commit and push source locally, retrieve it remptely and build it
+git checkout $build_branch;\
 git commit . -m "update";\
 git push $git_repo &&\
-ssh -x $build_host "(cd $build_dir && git pull && cmake . && make )"
+ssh -x $build_host "(cd $build_dir && git checkout $build_branch && git pull && cmake . && make )"

@@ -27,7 +27,6 @@
 #define TIME_SCALE       60  // unit scale fpr secuence, set to 60 to get minutes
 #define MAX_STARTTIMES   10  // allow for 10 different starttimes
 #define CONFIG_FILE  "/etc/yardControl.cfg"            // read config from etc
-#define STATE_DIR    "/var/lib/yardcontrol"            // store state files here
 
 /* ----------------------------------------------------------------------------------- *
  * A step in a sequence

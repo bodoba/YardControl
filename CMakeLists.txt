@@ -27,7 +27,7 @@ find_library(LIB_WIRING wiringPi)
 # all executables end up in bin
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
-add_executable(yardControl yardControl.c pushButton.c readConfig.c logging.c daemon.c mqttGateway.c)
+add_executable(yardControl yardControl.c pushButton.c readConfig.c logging.c daemon.c mqttGateway.c persistState.c)
 
 target_link_libraries(yardControl "${LIB_MQTT}")
 target_link_libraries(yardControl "${LIB_WIRING}")

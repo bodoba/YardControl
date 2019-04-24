@@ -434,6 +434,7 @@ int main( int argc, char *argv[] ) {
                     timeIdx++;
                 }
             }
+            
             if (sequenceInProgress) {         // forward sequence
                 processSequence();
             }

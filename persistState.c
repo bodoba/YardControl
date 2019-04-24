@@ -1,0 +1,57 @@
+/* *********************************************************************************** */
+/*  Copyright (c) 2019 by Bodo Bauer <bb@bb-zone.com>                                  */
+/*                                                                                     */
+/*  This program is free software: you can redistribute it and/or modify               */
+/*  it under the terms of the GNU General Public License as published by               */
+/*  the Free Software Foundation, either version 3 of the License, or                  */
+/*  (at your option) any later version.                                                */
+/*                                                                                     */
+/*  This program is distributed in the hope that it will be useful,                    */
+/*  but WITHOUT ANY WARRANTY; without even the implied warranty of                     */
+/*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                      */
+/*  GNU General Public License for more details.                                       */
+/*                                                                                     */
+/*  You should have received a copy of the GNU General Public License                  */
+/*  along with this program.  If not, see <http://www.gnu.org/licenses/>.              */
+/* *********************************************************************************** */
+
+#include <unistd.h>
+
+#include "persistState.h"
+
+/* ----------------------------------------------------------------------------------- *
+ * Some globals we can't do without
+ * ----------------------------------------------------------------------------------- */
+char *stateDir      = STATE_DIR;              // directory for state files
+
+/* ----------------------------------------------------------------------------------- *
+ * Safe state by creating/removing a file in the state file directory
+ * ----------------------------------------------------------------------------------- */
+void saveState ( const char *name, bool value ) {
+    if ( readState(name) != value ) {
+        char *fname = malloc( sizeof(char) * ( strlen(stateDir)+strlen(name) + 2 ) );
+        sprintf( fname, "%s/%s", stateDir, name );
+        if ( value ) {
+            int fd = open(fname, O_CREAT | O_WRONLY, S_IRWXU );
+            close ( fd );
+        } else {
+            unlink(fname);
+        }
+        free fname;
+    }
+}
+
+/* ----------------------------------------------------------------------------------- *
+ * Read state by checking if a file of the given name exists
+ * ----------------------------------------------------------------------------------- */
+bool readState ( const char *name ) {
+    bool state = FALSE;
+    char *fname = malloc( sizeof(char) * ( strlen(stateDir)+strlen(name) + 2 ) );
+    struct stat buf;
+    sprintf( fname, "%s/%s", stateDir, name );
+    if (!stat(fname, &buf)) {
+        state = TRUE;
+    }
+    free (fname);
+    return state;
+}

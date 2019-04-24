@@ -28,7 +28,6 @@
  * Some globals we can't do without
  * ----------------------------------------------------------------------------------- */
 char *configFile    = CONFIG_FILE;            // configuration file
-char *stateDir      = STATE_DIR;              // directory for state files
 sequence_t  sequence[2][MAX_STEP];            // two program sequences of max 40 steps
 starttime_t startTime[2][MAX_STARTTIMES+1];   // 10 start times for each sequence
 connection_t mqttBroker;                      // mqtt broker settings
@@ -137,17 +136,7 @@ bool readConfig(void) {
                             systemMode = AUTOMATIC_MODE;
                             writeLog(LOG_DEBUG, "  > automatic mode");
                         } else if (!strcmp(value, "PERSIST")) {
-                            // read setting from state file
-                            writeLog(LOG_DEBUG, "  > reading old state");
-                            char *fname = malloc( sizeof(char) * ( strlen(stateDir)+strlen("automatic")+1 ) );
-                            struct stat buf;
-                            sprintf( fname, "%s/automatic", stateDir );
-                            if (!stat(fname, &buf)) {
-                                systemMode = AUTOMATIC_MODE;
-                            } else {
-                                systemMode = MANUAL_MODE;
-                            }
-                            free (fname);
+                            systemMode = readState("automatic") ? AUTOMATIC_MODE : MANUAL_MODE;
                         } else {
                             systemMode = MANUAL_MODE;
                             writeLog(LOG_DEBUG, "  > manual mode");

@@ -365,8 +365,8 @@ int main( int argc, char *argv[] ) {
     readConfig();
 
     // restore sequence setting
-    pushButtons[BUTTON_IDX_SELET].state = readState("sequence");
-    activeSequence = pushButtons[BUTTON_IDX_SELET].state 1:0;
+    pushButtons[BUTTON_IDX_SELECT].state = readState("sequence");
+    activeSequence = pushButtons[BUTTON_IDX_SELECT].state 1:0;
     
     if (!foreground) {                           // run in background
         daemonize(PID_FILE);

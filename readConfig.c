@@ -23,6 +23,7 @@
 #include "yardControl.h"
 #include "readConfig.h"
 #include "logging.h"
+#include "persistState.h"
 
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without
@@ -31,7 +32,6 @@ char *configFile    = CONFIG_FILE;            // configuration file
 sequence_t  sequence[2][MAX_STEP];            // two program sequences of max 40 steps
 starttime_t startTime[2][MAX_STARTTIMES+1];   // 10 start times for each sequence
 connection_t mqttBroker;                      // mqtt broker settings
-
 
 /* ----------------------------------------------------------------------------------- *
  * Read config file

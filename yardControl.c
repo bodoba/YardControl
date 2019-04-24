@@ -40,7 +40,7 @@
  * Some globals we can't do without... ;)
  * ----------------------------------------------------------------------------------- */
 int    debug              = DEBUG;             // debug level
-int    activeSequence     = SEQUENCE;          // sequence to run
+int    activeSequence     = 0;                 // sequence to run
 bool   foreground         = false;             // run in foreground, not as daemon
 int    sequenceInProgress = false;             // sequence in progress
 time_t sequenceStartTime;                      // time sequence was started
@@ -364,6 +364,9 @@ int main( int argc, char *argv[] ) {
     // read configuration from file
     readConfig();
 
+    // restore sequence setting
+    activeSequence = readState("sequence") ? 1 : 0;
+    
     if (!foreground) {                           // run in background
         daemonize(PID_FILE);
     } else {

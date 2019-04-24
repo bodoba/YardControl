@@ -21,7 +21,7 @@
 #build_host=192.168.101.10
 build_host=192.168.100.201
 build_dir=yardControl
-build_branch=persist
+build_branch=master
 
 # git repository to get source from
 git_repo=192.168.100.26:git/yardControl

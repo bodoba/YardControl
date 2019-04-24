@@ -33,7 +33,7 @@ char *stateDir      = STATE_DIR;              // directory for state files
  * Safe state by creating/removing a file in the state file directory
  * ----------------------------------------------------------------------------------- */
 void saveState (const char *name, bool state) {
-    if (readState(name) != value) {
+    if (readState(name) != state) {
         char *fname = malloc( sizeof(char) * ( strlen(stateDir)+strlen(name) + 2 ) );
         sprintf( fname, "%s/%s", stateDir, name );
         if (state) {

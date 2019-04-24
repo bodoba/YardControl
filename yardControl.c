@@ -363,10 +363,6 @@ int main( int argc, char *argv[] ) {
     
     // read configuration from file
     readConfig();
-
-    // restore sequence setting
-    pushButtons[BUTTON_IDX_SELECT].state = readState("sequence");
-    selectSequence( &pushButtons[BUTTON_IDX_SELECT] );
     
     if (!foreground) {
         // run in background
@@ -399,9 +395,13 @@ int main( int argc, char *argv[] ) {
             writeLog(LOG_INFO, "Connected MQTT boker at %s:%d", mqttBroker.address, mqttBroker.port);
         }
     }
-    
+
     // Initialize IO ports
     setupIO();
+
+    // restore sequence setting
+    pushButtons[BUTTON_IDX_SELECT].state = readState("sequence");
+    selectSequence( &pushButtons[BUTTON_IDX_SELECT] );
     
     if (systemMode == AUTOMATIC_MODE) {
         writeLog(LOG_INFO, "Starting up in automatic mode");

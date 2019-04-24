@@ -366,7 +366,7 @@ int main( int argc, char *argv[] ) {
 
     // restore sequence setting
     pushButtons[BUTTON_IDX_SELECT].state = readState("sequence");
-    activeSequence = pushButtons[BUTTON_IDX_SELECT].state ? 1 : 0;
+    selectSequence( &pushButtons[BUTTON_IDX_SELECT] );
     
     if (!foreground) {
         // run in background

@@ -21,6 +21,7 @@
 #include <sys/stat.h>
 #include <string.h>
 
+#include "logging.h"
 #include "persistState.h"
 
 /* ----------------------------------------------------------------------------------- *
@@ -31,11 +32,11 @@ char *stateDir      = STATE_DIR;              // directory for state files
 /* ----------------------------------------------------------------------------------- *
  * Safe state by creating/removing a file in the state file directory
  * ----------------------------------------------------------------------------------- */
-void saveState (const char *name, bool value) {
+void saveState (const char *name, bool state) {
     if (readState(name) != value) {
         char *fname = malloc( sizeof(char) * ( strlen(stateDir)+strlen(name) + 2 ) );
         sprintf( fname, "%s/%s", stateDir, name );
-        if (value) {
+        if (state) {
             int fd = open(fname, O_CREAT | O_WRONLY, S_IRWXU );
             close ( fd );
         } else {
@@ -43,6 +44,7 @@ void saveState (const char *name, bool value) {
         }
         free(fname);
     }
+    writeLog(LOG_DEBUG, "writeState( %s, %s )", name, state ? "TRUE" : "FALSE" );
 }
 
 /* ----------------------------------------------------------------------------------- *
@@ -57,5 +59,6 @@ bool readState (const char *name) {
         state = true;
     }
     free (fname);
+    writeLog(LOG_DEBUG, "readState( %s ) -> %s", name, state ? "TRUE" : "FALSE" );
     return state;
 }

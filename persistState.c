@@ -31,26 +31,26 @@ char *stateDir      = STATE_DIR;              // directory for state files
 /* ----------------------------------------------------------------------------------- *
  * Safe state by creating/removing a file in the state file directory
  * ----------------------------------------------------------------------------------- */
-void saveState ( const char *name, bool value ) {
-    if ( readState(name) != value ) {
+void saveState (const char *name, bool value) {
+    if (readState(name) != value) {
         char *fname = malloc( sizeof(char) * ( strlen(stateDir)+strlen(name) + 2 ) );
         sprintf( fname, "%s/%s", stateDir, name );
-        if ( value ) {
+        if (value) {
             int fd = open(fname, O_CREAT | O_WRONLY, S_IRWXU );
             close ( fd );
         } else {
             unlink(fname);
         }
-        free fname;
+        free(fname);
     }
 }
 
 /* ----------------------------------------------------------------------------------- *
  * Read state by checking if a file of the given name exists
  * ----------------------------------------------------------------------------------- */
-bool readState ( const char *name ) {
+bool readState (const char *name) {
     bool state = false;
-    char *fname = malloc( sizeof(char) * ( strlen(stateDir)+strlen(name) + 2 ) );
+    char *fname = malloc(sizeof(char) * ( strlen(stateDir)+strlen(name) + 2 ) );
     struct stat buf;
     sprintf( fname, "%s/%s", stateDir, name );
     if (!stat(fname, &buf)) {

@@ -16,6 +16,7 @@
 /* *********************************************************************************** */
 
 #include <unistd.h>
+#include <fcntl.h>
 
 #include "persistState.h"
 
@@ -45,12 +46,12 @@ void saveState ( const char *name, bool value ) {
  * Read state by checking if a file of the given name exists
  * ----------------------------------------------------------------------------------- */
 bool readState ( const char *name ) {
-    bool state = FALSE;
+    bool state = false;
     char *fname = malloc( sizeof(char) * ( strlen(stateDir)+strlen(name) + 2 ) );
     struct stat buf;
     sprintf( fname, "%s/%s", stateDir, name );
     if (!stat(fname, &buf)) {
-        state = TRUE;
+        state = true;
     }
     free (fname);
     return state;

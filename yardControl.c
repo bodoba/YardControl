@@ -34,7 +34,7 @@
 #include "logging.h"
 #include "daemon.h"
 #include "mqttGateway.h"
-#include "persistState.c"
+#include "persistState.h"
 
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without... ;)

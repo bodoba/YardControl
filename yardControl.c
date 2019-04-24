@@ -34,6 +34,7 @@
 #include "logging.h"
 #include "daemon.h"
 #include "mqttGateway.h"
+#include "persistState.c"
 
 /* ----------------------------------------------------------------------------------- *
  * Some globals we can't do without... ;)
@@ -217,6 +218,7 @@ void selectSequence( pushbutton_t *button ) {
     digitalWrite ( LED_S0, button->state ? LOW : HIGH);
     digitalWrite ( LED_S1, button->state ? HIGH : LOW);
     activeSequence = button->state ? 1:0;
+    saveState("sequence", button->state);
     publishStatus(button);
     writeLog(LOG_INFO,"Activated Sequence %d", button->state ? 1:0);
 }
@@ -242,6 +244,9 @@ void automaticMode( pushbutton_t *button ) {
     
     // set system mode
     systemMode = button->state ? AUTOMATIC_MODE:MANUAL_MODE;
+
+    // safe state
+    saveState("automatic", button->state);
 
     writeLog(LOG_INFO, "Set mode to %s", systemMode == MANUAL_MODE ? "manual" : "automatic");
 }
